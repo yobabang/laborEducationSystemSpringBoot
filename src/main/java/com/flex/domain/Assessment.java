@@ -8,12 +8,11 @@ public class Assessment {
     private String assMajor;
     private String assUnit;
     private String assInstructor;
+    private String assDep;
     private Integer assGrade;
+    private String assOpi;
 
-    public Assessment() {
-    }
-
-    public Assessment(Integer assId, String assName, String assNumber, String assClasses, String assMajor, String assUnit, String assInstructor, Integer assGrade) {
+    public Assessment(Integer assId, String assName, String assNumber, String assClasses, String assMajor, String assUnit, String assInstructor, String assDep, Integer assGrade, String assOpi) {
         this.assId = assId;
         this.assName = assName;
         this.assNumber = assNumber;
@@ -21,7 +20,9 @@ public class Assessment {
         this.assMajor = assMajor;
         this.assUnit = assUnit;
         this.assInstructor = assInstructor;
+        this.assDep = assDep;
         this.assGrade = assGrade;
+        this.assOpi = assOpi;
     }
 
     public Integer getAssId() {
@@ -80,12 +81,28 @@ public class Assessment {
         this.assInstructor = assInstructor;
     }
 
+    public String getAssDep() {
+        return assDep;
+    }
+
+    public void setAssDep(String assDep) {
+        this.assDep = assDep;
+    }
+
     public Integer getAssGrade() {
         return assGrade;
     }
 
     public void setAssGrade(Integer assGrade) {
         this.assGrade = assGrade;
+    }
+
+    public String getAssOpi() {
+        return assOpi;
+    }
+
+    public void setAssOpi(String assOpi) {
+        this.assOpi = assOpi;
     }
 
     @Override
@@ -98,7 +115,15 @@ public class Assessment {
                 ", assMajor='" + assMajor + '\'' +
                 ", assUnit='" + assUnit + '\'' +
                 ", assInstructor='" + assInstructor + '\'' +
+                ", assDep='" + assDep + '\'' +
                 ", assGrade=" + assGrade +
+                ", assOpi='" + assOpi + '\'' +
                 '}';
     }
+
+    public Assessment() {
+    }
+
+
+
 }

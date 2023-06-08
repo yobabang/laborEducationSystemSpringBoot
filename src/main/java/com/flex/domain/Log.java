@@ -5,6 +5,7 @@ import java.util.Date;
 public class Log {
     private Integer logId;
     private Integer logType;
+    private Integer userNumber;
     private Integer uType;
     private String logName;
     private String logUnit;
@@ -19,12 +20,10 @@ public class Log {
     private Integer logState;
     private Integer logMark;
 
-    public Log() {
-    }
-
-    public Log(Integer logId, Integer logType, Integer uType, String logName, String logUnit, String logClasses, String logContent, String location, String logProcess, String effect, String result, Date logTime, String logScore, Integer logState, Integer logMark) {
+    public Log(Integer logId, Integer logType, Integer userNumber, Integer uType, String logName, String logUnit, String logClasses, String logContent, String location, String logProcess, String effect, String result, Date logTime, String logScore, Integer logState, Integer logMark) {
         this.logId = logId;
         this.logType = logType;
+        this.userNumber = userNumber;
         this.uType = uType;
         this.logName = logName;
         this.logUnit = logUnit;
@@ -54,6 +53,14 @@ public class Log {
 
     public void setLogType(Integer logType) {
         this.logType = logType;
+    }
+
+    public Integer getUserNumber() {
+        return userNumber;
+    }
+
+    public void setUserNumber(Integer userNumber) {
+        this.userNumber = userNumber;
     }
 
     public Integer getuType() {
@@ -165,6 +172,7 @@ public class Log {
         return "Log{" +
                 "logId=" + logId +
                 ", logType=" + logType +
+                ", userNumber=" + userNumber +
                 ", uType=" + uType +
                 ", logName='" + logName + '\'' +
                 ", logUnit='" + logUnit + '\'' +
@@ -180,4 +188,9 @@ public class Log {
                 ", logMark=" + logMark +
                 '}';
     }
+
+    public Log() {
+    }
+
+
 }

@@ -4,16 +4,15 @@ import java.util.Date;
 
 public class ListPlan {
     private Integer listId;
+    private String listObj;
     private String listName;
     private Date listTime;
     private String listUnit;
     private String listGrade;
 
-    public ListPlan() {
-    }
-
-    public ListPlan(Integer listId, String listName, Date listTime, String listUnit, String listGrade) {
+    public ListPlan(Integer listId, String listObj, String listName, Date listTime, String listUnit, String listGrade) {
         this.listId = listId;
+        this.listObj = listObj;
         this.listName = listName;
         this.listTime = listTime;
         this.listUnit = listUnit;
@@ -26,6 +25,14 @@ public class ListPlan {
 
     public void setListId(Integer listId) {
         this.listId = listId;
+    }
+
+    public String getListObj() {
+        return listObj;
+    }
+
+    public void setListObj(String listObj) {
+        this.listObj = listObj;
     }
 
     public String getListName() {
@@ -64,10 +71,15 @@ public class ListPlan {
     public String toString() {
         return "ListPlan{" +
                 "listId=" + listId +
+                ", listObj='" + listObj + '\'' +
                 ", listName='" + listName + '\'' +
                 ", listTime=" + listTime +
                 ", listUnit='" + listUnit + '\'' +
                 ", listGrade='" + listGrade + '\'' +
                 '}';
     }
+
+    public ListPlan() {
+    }
+
 }

@@ -41,4 +41,6 @@ public interface UserService {
      * @return
      */
     public List<User> getAll();
+
+    public User login(String userAccount,String userPassword);
 }

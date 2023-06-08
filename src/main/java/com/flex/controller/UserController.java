@@ -1,6 +1,7 @@
 package com.flex.controller;
 
 import com.flex.domain.User;
+import com.flex.pojo.dto.LoginUserDto;
 import com.flex.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -8,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -57,4 +60,5 @@ public class UserController {
         String msg = userList != null ? "数据查询成功" : "数据查询失败";
         return  new Result(code,userList,msg);
     }
+
 }

@@ -22,4 +22,9 @@ public interface UserDao {
 
     @Select("select * from user")
     public List<User> getAll();
+
+    @Select("select * from user where user_account = #{userAccount} and user_password = #{userPassword}")
+    public User select(String userAccount,String userPassword);
+
+
 }
