@@ -1,5 +1,6 @@
 package com.flex.pojo.dto;
 
+
 public class LoginUserDto {
     private String userAccount;
     private String userPassword;

@@ -21,7 +21,6 @@ public class UserController {
     private UserService userService;
 
     @ApiOperation(value = "添加用户", notes = "添加用户信息")
-    @PostMapping
     public Result save(@RequestBody User user){
         boolean flag = userService.save(user);
         return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
@@ -59,6 +58,22 @@ public class UserController {
         Integer code = userList != null ? Code.GET_OK : Code.GET_ERR;
         String msg = userList != null ? "数据查询成功" : "数据查询失败";
         return  new Result(code,userList,msg);
+    }
+
+    @ApiOperation(value = "添加用户", notes = "添加用户信息")
+    @PostMapping
+    public Result login(@RequestBody LoginUserDto loginUserDto){
+        User user = userService.login(loginUserDto.getUserAccount(), loginUserDto.getUserPassword());
+        Integer code;
+        String msg;
+        if(user != null ){
+            code = Code.LOGIN_OK;
+            msg = "登陆成功";
+        }else {
+            code = Code.LOGIN_ERR;
+            msg = "登陆失败";
+        }
+        return new Result(code,msg);
     }
 
 }
