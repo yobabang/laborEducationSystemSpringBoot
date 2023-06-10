@@ -60,7 +60,8 @@ public class UserController {
         return  new Result(code,userList,msg);
     }
 
-    @ApiOperation(value = "用户登陆", notes = "登陆")
+    @ApiOperation(value = "用户登陆", notes = "用户登陆")
+    @ApiImplicitParam(name = "LoginUserDto", value = "用户Dto", required = true, dataType = "json",paramType = "post")
     @PostMapping
     public Result login(@RequestBody LoginUserDto loginUserDto){
         User user = userService.login(loginUserDto.getUserAccount(), loginUserDto.getUserPassword());
