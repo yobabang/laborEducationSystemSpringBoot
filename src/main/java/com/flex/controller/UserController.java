@@ -60,7 +60,7 @@ public class UserController {
         return  new Result(code,userList,msg);
     }
 
-    @ApiOperation(value = "添加用户", notes = "添加用户信息")
+    @ApiOperation(value = "用户登陆", notes = "登陆")
     @PostMapping
     public Result login(@RequestBody LoginUserDto loginUserDto){
         User user = userService.login(loginUserDto.getUserAccount(), loginUserDto.getUserPassword());
