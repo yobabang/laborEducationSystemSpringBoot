@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8080
 
 spring:
   datasource:
@@ -8,3 +8,12 @@ spring:
     url: jdbc:mysql://1.14.60.12/lab_sys_v2 #?servierTimezone=UTC
     username: root
     password: digcow.com
+  main:
+    banner-mode: off
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+

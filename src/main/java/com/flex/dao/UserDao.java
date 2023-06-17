@@ -1,12 +1,13 @@
 package com.flex.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.flex.domain.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface UserDao {
+public interface UserDao extends BaseMapper<User> {
     @Insert("INSERT INTO user (user_id, user_name, user_account, user_password, obj, alter_sign, id_number, unit, grade, major, classes, phone, email, remark) " +
             "VALUES (#{userId}, #{userName}, #{userAccount}, #{userPassword}, #{obj}, #{alterSign}, #{idNumber}, #{unit}, #{grade}, #{major}, #{classes}, #{phone}, #{email}, #{remark})")
     public int save(User user);

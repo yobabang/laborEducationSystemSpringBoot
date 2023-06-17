@@ -1,6 +1,7 @@
 package com.flex.dao;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.flex.domain.Register;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -10,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface RegisterDao {
+public interface RegisterDao extends BaseMapper<Register> {
     @Insert("INSERT INTO register (registerid, undergraduate_type, user_name, classes, college, id_number, sex, start_time, end_time, `form`, instructor, project, unit, register_location, head, phone_number, email, item, status, major, object_introduction, register_log) " +
             "VALUES (#{registerId}, #{undergraduateType}, #{userName}, #{classes}, #{college}, #{idNumber}, #{sex}, #{startTime}, #{endTime}, #{form}, #{instructor}, #{project}, #{unit}, #{registerLocation}, #{head}, #{phoneNumber}, #{email}, #{item}, #{status}, #{major}, #{objectIntroduction}, #{registerLog})")
     public int save(Register register);

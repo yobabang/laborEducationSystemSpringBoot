@@ -1,12 +1,13 @@
 package com.flex.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.flex.domain.Assessment;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface AssessmentDao {
+public interface AssessmentDao extends BaseMapper<Assessment> {
     @Insert("INSERT INTO assessment(ass_id, ass_name, ass_number, ass_classes, ass_major, ass_unit, ass_instructor, ass_grade) " +
             "VALUES (#{assId}, #{assName}, #{assNumber}, #{assClasses}, #{assMajor}, #{assUnit}, #{assInstructor}, #{assGrade})")
     public int save(Assessment blog);

@@ -1,12 +1,13 @@
 package com.flex.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.flex.domain.Blog;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface BlogDao {
+public interface BlogDao extends BaseMapper<Blog> {
     @Insert("INSERT INTO blog(blog_id, blog_title, blog_content, au_name, release_time, label, blog_read, likes, comments, file_add, blog_state, save_time) " +
             "VALUES (#{blogId}, #{blogTitle}, #{blogContent}, #{auName}, #{releaseTime}, #{label}, #{blogRead}, #{likes}, #{comments}, #{fileAdd}, #{blogState}, #{saveTime})")
     public int save(Blog blog);
