@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>吉利学院劳动教育平台</title>
+    <link href="//unpkg.com/layui@2.8.4/dist/css/layui.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+    <style>
+        .asdf{
+            margin-left: auto;
+            margin-right: auto;
+            width: 10%;}
+        .layui-form-label{
+            width: 140px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" id="headername">
+        <ul class="layui-nav ">
+            <li class="layui-nav-item layui-this"><a href="http://localhost:63342/labour/webapp/student/head.html?_ijt=2vgpls49jtg4ro1egcrkbuei73&_ij_reload=RELOAD_ON_SAVE">首页</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="../static/img/head.png" class="layui-nav-img">
+                    {{user.user_name}}
+                </a>
+
+            </li>
+            <li class="layui-nav-item"><a href="login.html">退出</a></li>
+        </ul>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<!-- 给容器追加 class="layui-form-pane"，即可显示为方框风格 -->
+<form class="layui-form layui-form-pane" action="">
+    <!--直接调用数据库-->
+    <div class="layui-form-item">
+        <label class="layui-form-label axsw">本科类型</label>
+        <div class="layui-input-inline">
+        <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+
+        <label class="layui-form-label axsw">专业</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+
+        <label class="layui-form-label axsw">政治面貌</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+
+        <label class="layui-form-label axsw">性别</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+
+    </div>
+<!--日期选择-->
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label axsw">日期选择</label>
+            <div class="layui-input-block">
+                <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+<!--日期选择-->
+        <div class="layui-form-item">
+            <label class="layui-form-label axsw">社会实践形式</label>
+            <div class="layui-input-inline">
+                <input type="text" name="number" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label axsw">指导老师</label>
+            <div class="layui-input-inline">
+                <input type="text" name="number" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">社会实践项目</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">社会实践单位（或对象）</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">社会实践地址</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">社会实践单位属性</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+
+        <label class="layui-form-label">单位负责人</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">对象调查联系方式</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+
+        <label class="layui-form-label">电子邮箱</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">主要产品（或事项）</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+
+        <label class="layui-form-label">产值或现状</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">人员需求（或专业方向）</label>
+        <div class="layui-input-inline">
+            <input type="text" name="number" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">实践单位或调查对象简介：</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">实践单位或调查对象评价：</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容" class="layui-textarea" ></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item asdf">
+        <button class="layui-btn" lay-submit lay-filter="demo2">确认</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="//unpkg.com/layui@2.8.6/dist/layui.js"></script>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form;
+        var layer = layui.layer;
+        // 提交事件
+        form.on('submit(demo2)', function(data){
+            var field = data.field; // 获取表单字段值
+            // 显示填写结果，仅作演示用
+            layer.alert(JSON.stringify(field), {
+                title: '当前填写的字段值'
+            });
+            // 此处可执行 Ajax 等操作
+            // …
+            return false; // 阻止默认 form 跳转
+        });
+    });
+</script>
+</body>
+</html>

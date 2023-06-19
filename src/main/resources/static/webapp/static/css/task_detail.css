@@ -1,0 +1,55 @@
+div {
+    display: block;
+}
+.container{
+    float: left;
+    text-align:left;
+    width: 1200px;
+    height: 535px;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+.tBorderTop_box:first-child h2, .tBorderTop_box.table_list h2, .tCompany_sidebar .tBorderTop_box h2 {
+    border-top: 0 none;
+}
+.tBorderTop_box h2 .bname {
+    height: 20px;
+    line-height: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-indent: 0;
+    margin-top: 15px;
+    padding-left: 15px;
+    border-left: 4px solid #84bf96;
+}
+.tBorderTop_box h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    padding: 18px 0;
+    border-top: 1px solid #e8e8e8;
+}
+.bmsg {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.inbox {
+    line-height: 28px;
+    color: #333;
+    word-wrap: break-word;
+}
+a:hover {
+    background: #d3d7d4;
+}
+.apply_btn{
+    width: 93px;
+    height: 38px;
+    background-color: #84bf96;
+    border: 1px solid #ffffff;
+    color: #fff;
+    cursor: pointer;
+}
+.apply_btn:hover{
+    background: #d3d7d4;
+}

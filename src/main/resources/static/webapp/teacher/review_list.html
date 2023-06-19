@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>吉利学院劳动教育平台</title>
+    <link href="//unpkg.com/layui@2.8.4/dist/css/layui.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" id="headername">
+        <ul class="layui-nav ">
+            <li class="layui-nav-item layui-this"><a href="http://localhost:63342/labour/webapp/student/head.html?_ijt=2vgpls49jtg4ro1egcrkbuei73&_ij_reload=RELOAD_ON_SAVE">首页</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="../static/img/head.png" class="layui-nav-img">
+                    {{user.user_name}}
+                </a>
+
+            </li>
+            <li class="layui-nav-item"><a href="login.html">退出</a></li>
+        </ul>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="layui-panel">
+    <div style="padding: 32px;">
+        <table >
+            <tr >
+                <td align="center">
+                    <div class="layui-form layui-row layui-col-space16">
+
+                        <div class="layui-col-md6">
+                            <select disabled>
+                                <option value="">禁用选择框</option>
+
+                            </select>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>
+                    <div class="layui-form layui-row layui-col-space16">
+                    <div class="layui-col-md6">
+                        <select>
+                            <option value="">请选择班级</option>
+                            <option value="AAA">log_name: <%=request.getAttribute("log_name")%></option>
+                            <option value="BBB">log_name: <%=request.getAttribute("log_name")%></option>
+                            <option value="CCC">log_name: <%=request.getAttribute("log_name")%></option>
+                        </select>
+                    </div>
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<table class="layui-table" lay-data="{url:'/static/2.8/json/table/demo2.json?v=2', page: true, limit: 6, limits:[6]}" id="ID-table-demo-theads-1">
+    <thead>
+    <tr>
+        <th lay-data="{checkbox:true}" rowspan="2"></th>
+        <th lay-data="{field:'username', width:80}" rowspan="2">姓名</th>
+        <th lay-data="{field:'id'}" colspan="2">学号</th>
+        <th lay-data="{field:'times'}" rowspan="2">提交时间</th>
+        <th lay-data="{field:'state'}" rowspan="2">状态</th>
+        <th lay-data="{field:'reader'}" rowspan="2">批阅人</th>
+        <th lay-data="{field:'grade'}" rowspan="2">成绩</th>
+        <th lay-data="{fixed: 'right', width: 160, align: 'center', toolbar: '#templet-demo-theads-tool'}" rowspan="2">操作</th>
+    </tr>
+
+    </thead>
+</table>
+
+<script type="text/html" id="templet-demo-theads-tool">
+    <div class="layui-clear-space">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">批阅</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">打回</a>
+    </div>
+</script>
+
+
+
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="//unpkg.com/layui@2.8.6/dist/layui.js"></script>
+</body>
+</html>

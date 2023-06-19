@@ -1,0 +1,8 @@
+body{
+    background: url(../img/login_bg.jpg);/*图片路径*/
+    background-size:cover;
+}
+errormsg{
+    text-align: center;
+    color:red;
+}

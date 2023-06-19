@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no" />
+  <title>吉利学院劳动教育平台</title>
+  <link rel="shortcut icon" href="static/img/head2.png" type="image/x-icon">
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="static/layui/css/layui.css">
+  <link rel="stylesheet" href="static/css/login_bg.css">
+  <script src="static/layui/layui.js"></script>
+  <script src="static/js/jquery-3.6.0.min.js"></script>
+</head>
+
+<body >
+<div class="content">
+  <div class="form sign-in">
+    <h2>吉利学院劳动教育平台</h2>
+    <form class="layui-form">
+      <div class="demo-login-container">
+      <label>
+
+          <div class="layui-form-item">
+            <div class="layui-input-wrap">
+              <div class="layui-input-prefix">
+                <i class="layui-icon layui-icon-username"></i>
+              </div>
+              <input type="text" name="username" value="" lay-verify="required" placeholder="请输入学号或教师工号" lay-reqtext="请填写用户名" autocomplete="off" class="layui-input" lay-affix="clear">
+            </div>
+          </div>
+
+      </label>
+      <label>
+
+        <div class="layui-input-wrap">
+          <div class="layui-input-prefix">
+            <i class="layui-icon layui-icon-password"></i>
+          </div>
+          <input type="password" name="password" value="" lay-verify="required" placeholder="请输入密码" lay-reqtext="请填写密码" autocomplete="off" class="layui-input" lay-affix="eye">
+        </div>
+      </label>
+      </div>
+
+      <!--判断身份是教师还是学生-->
+
+      <div class="layui-form" >
+        <input type="radio" name="identity" value="0" title="学生" >
+        <div lay-radio>
+          <span style="color: #909399;">学生</span>
+        </div>
+        <input type="radio" name="identity" value="1" title="教师">
+        <div lay-radio>
+          <span style="color: #909399;">教师</span>
+        </div>
+      </div>
+
+      <div class="password_op">
+        <p class="remember" style="margin-left: 0;"><input type="radio" name="remember" id="remember" value="1000" title="记住密码" onclick="if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"/>
+        <p class="change-pass" style="margin-left: 0;"><a href="changePass.html" class="change">修改密码</a></p>
+        <p class="forgot-pass" onclick="forget_password()" style="margin-left: 0;"><a href="javascript:" class="forgot">忘记密码</a></p>
+      </div>
+
+      <!-- layui插入 -->
+      <center>
+        <button type="button" class="submit" onclick="login()" id="butn">登 录</button>
+      </center>
+    </form>
+  </div>
+</div>
+
+<!-- 注册与登录的跳转与事件处理 -->
+<script src="static/js/home-script.js"></script>
+<script src="static/js/axios-0.18.0.js"></script>
+
+<script>
+  document.getElementById("butn").onclick = function (){
+    var formDate = {
+      user_account:"",
+      user_password:"",
+    };
+    let user_account = document.getElementById("useraccount").value;
+    formDate.user_account = user_account;
+
+    let user_password = document.getElementById("password").value;
+    formDate.user_password = user_password;
+
+    console.log(formDate);
+    console.log(formDate);
+
+    axios({
+      method:"post",
+      url:"http://localhost:8080/users",
+      data:formDate
+    }).then(function (resp){
+      if(resp.data == "success"){
+        location.href = "user_projectList.html"
+      }else if(resp.data == "adSuccess"){
+        location.href = "superAdmin_index.html"
+      }else if(resp.data == "successf" || resp.data == "adSuccessf"){
+        var truthBeTold = window.confirm("第一次登录请修改密码")
+        if (truthBeTold) {
+          window.location.href = "changePass.html";
+        } else
+          window.location.href = "login.html"
+      }
+      else if(resp.data == "defeat"){
+        var truthBeTold = window.confirm("密码错误请重新输入")
+        if (truthBeTold) {
+          window.location.href = "login.html";
+        } else
+          window.location.href = "login.html"
+      }
+
+    })
+  }
+
+
+</script>
+</body>
+
+</html>
