@@ -17,6 +17,7 @@ public class RegisterServiceImpl implements RegisterService {
         return registerDao.save(register) > 0;
     }
 
+    @Override
     public boolean update(Register register) {
         return registerDao.updata(register) > 0;
     }

@@ -21,10 +21,11 @@ class LaborEducationSystemSpringBootApplicationTests {
     @Autowired
     private UserService userService;
 
+    @Autowired
+
     @Test
     void contextLoads() {
-        User user = userService.login("10000001","123456");
-        System.out.println(user);
+
     }
 
 }
