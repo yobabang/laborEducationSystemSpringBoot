@@ -25,7 +25,7 @@
               <div class="layui-input-prefix">
                 <i class="layui-icon layui-icon-username"></i>
               </div>
-              <input type="text" name="username" value="" lay-verify="required" placeholder="请输入学号或教师工号" lay-reqtext="请填写用户名" autocomplete="off" class="layui-input" lay-affix="clear">
+              <input type="text" name="username" id="useraccount" value="" lay-verify="required" placeholder="请输入学号或教师工号" lay-reqtext="请填写用户名" autocomplete="off" class="layui-input" lay-affix="clear">
             </div>
           </div>
 
@@ -36,7 +36,7 @@
           <div class="layui-input-prefix">
             <i class="layui-icon layui-icon-password"></i>
           </div>
-          <input type="password" name="password" value="" lay-verify="required" placeholder="请输入密码" lay-reqtext="请填写密码" autocomplete="off" class="layui-input" lay-affix="eye">
+          <input type="password" name="password" id="password" value="" lay-verify="required" placeholder="请输入密码" lay-reqtext="请填写密码" autocomplete="off" class="layui-input" lay-affix="eye">
         </div>
       </label>
       </div>
@@ -75,14 +75,14 @@
 <script>
   document.getElementById("butn").onclick = function (){
     var formDate = {
-      user_account:"",
-      user_password:"",
+      userAccount:"",
+      userPassword:"",
     };
     let user_account = document.getElementById("useraccount").value;
-    formDate.user_account = user_account;
+    formDate.userAccount = user_account;
 
     let user_password = document.getElementById("password").value;
-    formDate.user_password = user_password;
+    formDate.userPassword = user_password;
 
     console.log(formDate);
     console.log(formDate);
@@ -92,10 +92,11 @@
       url:"http://localhost:8080/users",
       data:formDate
     }).then(function (resp){
-      if(resp.data == "success"){
-        location.href = "user_projectList.html"
-      }else if(resp.data == "adSuccess"){
-        location.href = "superAdmin_index.html"
+      console.log(resp.data)
+      if(resp.data.msg == "登陆成功"){
+        location.href = "webapp/student/task_list.html"
+      }else if(resp.data.msg== "登陆失败"){
+       alert("1")
       }else if(resp.data == "successf" || resp.data == "adSuccessf"){
         var truthBeTold = window.confirm("第一次登录请修改密码")
         if (truthBeTold) {

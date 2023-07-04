@@ -22,7 +22,7 @@ public class UserController {
 
     @ApiOperation(value = "添加用户", notes = "添加用户信息")
     public Result save(@RequestBody User user){
-        System.out.println("123");
+        System.out.println("123.");
         boolean flag = userService.save(user);
         return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
     }
