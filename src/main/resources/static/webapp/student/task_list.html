@@ -24,7 +24,7 @@
     <li class="layui-nav-item">
         <a href="javascript:;">
             <img src="../static/img/head.png" class="layui-nav-img">
-            {{user.user_name}}
+            {{user.userName}}
         </a>
 
     </li>
@@ -44,7 +44,7 @@
         <div class="layui-col-md6">
             <div class="layui-card">
                 <div class="layui-card-header" style="font-size: larger;" >学生信息表</div>
-                <div class="layui-card-body">
+                <div class="layui-card-body" id="demo1">
                      <!--需修改为从数据库提取信息-->
                     <table>
                         <tr>
@@ -105,14 +105,9 @@
             max-height="1000">
         <el-table-column
                 fixed
-                prop="city"
-                label="性质"
-                min-width="20%">
-        </el-table-column>
-        <el-table-column
                 prop="name"
                 label="任务名称"
-                min-width="30%">
+                min-width="50%">
         </el-table-column>
         <el-table-column
                 prop="province"
@@ -154,7 +149,27 @@
 <script src="../static/element-ui/package/lib/index.js"></script>
 <link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
 <link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+<script>
+    // 使用XMLHttpRequest对象发送Ajax请求
+   var xhr = new XMLHttpRequest();
+   xhr.open('GET', 'http://localhost:8080/users/session', true);
+   xhr.onreadystatechange = function() {
+     if (xhr.readyState === 4 && xhr.status === 200) {
+       var data = JSON.parse(xhr.responseText);
+       console.log(data)
+       console.log(data.data.userName)
+       var table = document.getElementById('demo1');
+       var html = '';
+       html += '<tr><td>' + '姓名：'+ '</td>' + '<td>' + data.data.userName + '</td></tr><br>'
+       + '<tr><td>' + "所属学院："+ '</td>' + '<td>' + data.data.unit + '</td></tr><br>'
+       + '<tr><td>' + "所属班级："+ '</td>' + '<td>' + data.data.classes + '</td></tr><br>'
+       + '<tr><td>' + "学号："+ '</td>' + '<td>'+ data.data.userId + '</td></tr><br>';
+       table.innerHTML = html;
+     }
+   };
+   xhr.send();
 
+</script>
 <script>
     let conVue = new Vue({
         el: ".con",
@@ -167,48 +182,42 @@
             return {
                 tableData: [{
                     date: '2016-05-03',
-                    name: '劳动日志',
+                    name: '劳动日志（日常劳动）',
                     province: '状态',
                     city: '统一',
 
                 }, {
                     date: '2016-05-02',
-                    name: '劳动日志',
+                    name: '劳动日志（社会劳动）',
                     province: '状态',
                     city: '统一',
 
                 }, {
                     date: '2016-05-04',
-                    name: '劳动日志',
+                    name: '劳动日志（服务劳动）',
                     province: '状态',
                     city: '统一',
 
                 }, {
                     date: '2016-05-01',
-                    name: '劳动日志',
+                    name: '社会实践报告',
                     province: '状态',
                     city: '统一',
 
 
                 }, {
                     date: '2016-05-08',
-                    name: '劳动日志',
+                    name: '社会实践登记表',
                     province: '状态',
                     city: '统一',
 
 
                 }, {
                     date: '2016-05-06',
-                    name: '劳动日志',
+                    name: '社会实践日志',
                     province: '状态',
                     city: '统一',
 
-
-                }, {
-                    date: '2016-05-07',
-                    name: '劳动日志',
-                    province: '状态',
-                    city: '统一',
 
                 }]
             }
@@ -221,7 +230,7 @@
         data(){
             return{
                 user:{
-                    user_name:'测试',
+                    userName:'测试',
                 },
             }
         },
@@ -230,9 +239,9 @@
             var _this = this;
             axios({
                 method:"get",
-                url:"user/usersession",
+                url:"http://localhost:8080/users/session",
             }).then(function (resp){
-                _this.user = resp.data;
+                _this.user = resp.data.data;
                 console.log(user)
             })
         },
