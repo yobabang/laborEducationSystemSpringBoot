@@ -6,83 +6,73 @@
     <title>吉利学院劳动教育平台</title>
     <link href="//unpkg.com/layui@2.8.4/dist/css/layui.css" rel="stylesheet">
     <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" id="headername">
         <ul class="layui-nav ">
-            <li class="layui-nav-item layui-this"><a href="http://localhost:63342/labour/webapp/student/head.html?_ijt=2vgpls49jtg4ro1egcrkbuei73&_ij_reload=RELOAD_ON_SAVE">首页</a></li>
-        </ul>
+            <li class="layui-nav-item layui-this"><a href="/laborEducationSystemSpringBoot/src/main/resources/static/webapp/student/task_list.html?_ijt=je7o0f6u333h6mk92ig4hm8i86&_ij_reload=RELOAD_ON_SAVE">首页</a></li>
+            <li class="layui-nav-item layui-this"><a href="/labour/webapp/student/head.html?_ijt=2vgpls49jtg4ro1egcrkbuei73&_ij_reload=RELOAD_ON_SAVE">日常生活劳动日志</a></li>
+            <li class="layui-nav-item layui-this"><a href="/labour/webapp/student/head.html?_ijt=2vgpls49jtg4ro1egcrkbuei73&_ij_reload=RELOAD_ON_SAVE">服务性劳动日志</a></li>
+            <li class="layui-nav-item layui-this"><a href="/labour/webapp/student/head.html?_ijt=2vgpls49jtg4ro1egcrkbuei73&_ij_reload=RELOAD_ON_SAVE">生产性劳动日志</a></li>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="../static/img/head.png" class="layui-nav-img">
-                    {{user.user_name}}
+                    {{user.userName}}
                 </a>
 
             </li>
-            <li class="layui-nav-item"><a href="login.html">退出</a></li>
+            <li class="layui-nav-item"><a href="../../login.html">退出</a></li>
+        </ul>
         </ul>
     </div>
+
 </div>
 <br>
 <br>
 <br>
 <br>
 <form class="layui-form layui-form-pane" action="" method="post"><!--未指定uil-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">本科类型</label>
+        <div class="layui-input-inline">
+            <input type="text" name="degree_type" autocomplete="off" class="layui-input" required>
+        </div>
 
-    <table class="layui-table">
-        <colgroup>
-            <col width="20%">
-            <col width="20%">
-            <col width="20%">
-            <col width="20%">
-            <col width="20%">
+        <label class="layui-form-label">年级班级</label>
+        <div class="layui-input-inline">
+            <input type="text" name="grade_class" autocomplete="off" class="layui-input" required>
+        </div>
 
-        </colgroup>
-        <thead >
-        <tr >
-            <th>
-                <label class="layui-form-label">本科类型</label>
-            </th>
-            <th>
-                <label class="layui-form-label">年级班级</label>
-            </th>
-            <th>
-                <label class="layui-form-label">劳动类型</label>
-            </th>
-            <th>
-                <label class="layui-form-label">劳动内容</label>
-            </th>
-            <th>
-                <label class="layui-form-label">劳动地点</label>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>user_type: <%=request.getAttribute("user_type")%></td>
-            <td>major: <%=request.getAttribute("major")%></td>
-            <td>
-                <div class="layui-input-inline">
-                    <input type="text" name="log_type" autocomplete="off" class="layui-input" required>
-                </div>
-            </td>
-            <td>
-                <div class="layui-input-inline">
-                    <input type="text" name="log_content" autocomplete="off" class="layui-input" required>
-                </div>
-            </td>
-            <td>
-                <div class="layui-input-inline">
-                    <input type="text" name="location" autocomplete="off" class="layui-input" required>
-                </div>
-            </td>
-        </tr>
+        <label class="layui-form-label">劳动类型</label>
+        <div class="layui-input-inline">
+            <input type="text" name="grade_class" autocomplete="off" class="layui-input" required>
+        </div>
+    </div>
 
-        </tbody>
-    </table>
-</div>
+    <div class="layui-form-item">
+
+            <label class="layui-form-label">劳动内容</label>
+            <div class="layui-input-inline">
+                <input type="text" name="log_content" autocomplete="off" class="layui-input" required>
+            </div>
+
+            <label class="layui-form-label">劳动地点</label>
+            <div class="layui-input-inline">
+                <input type="text" name="location" autocomplete="off" class="layui-input" required>
+            </div>
+    </div>
+
+
 
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">劳动过程</label>
@@ -123,10 +113,19 @@
         </div>
     </div>
 
-<div class="layui-form-item">
-    <button class="layui-btn" lay-submit lay-filter="demo2">确认</button>
-    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-</div>
+    <div class="layui-form-item" style="text-align: center">
+        <div class="layui-row">
+
+            <div class="layui-col-md6">
+                <button class="layui-btn" lay-submit lay-filter="demo2">确认</button>
+            </div>
+
+            <div class="layui-col-md6">
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+    </div>
 </form>
 
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
@@ -443,6 +442,7 @@
                         return [now, new Date()];
                     }()
                 },
+                {
                     text: "未来一年",
                     value: function(){
                         var now = new Date();
@@ -586,6 +586,31 @@
             ]
         });
     });
+</script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/vue.js"></script>
+<script>
+    let userName = new Vue({
+        el: "#headername",
+        data(){
+            return{
+                user:{
+                    userName:'测试',
+                },
+            }
+        },
+        mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            var _this = this;
+            axios({
+                method:"get",
+                url:"/users/session",
+            }).then(function (resp){
+                _this.user = resp.data.data;
+            })
+        },
+    })
 </script>
 </body>
 </html>
