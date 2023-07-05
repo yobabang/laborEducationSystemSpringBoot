@@ -209,6 +209,16 @@
 					return row.province === value;
 				  },
         },
+        mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            var _this = this;
+            axios({
+                method:"get",
+                url:"/logs/userName/" + ,
+            }).then(function (resp){
+                _this.user = resp.data.data;
+            })
+        },
         data() {
             return {
                 reState: [
@@ -221,14 +231,10 @@
                     date: '2016-05-03',
                     name: '劳动日志（日常劳动）',
                     province: '打回待修改',
-
-
                 }, {
                     date: '2016-05-02',
                     name: '劳动日志（社会劳动）',
                     province: '待完成',
-
-
                 }, {
                     date: '2016-05-04',
                     name: '劳动日志（服务劳动）',
@@ -253,9 +259,6 @@
                     date: '2016-05-06',
                     name: '社会实践日志',
                     province: '已通过',
-
-
-
                 }]
             }
         }
@@ -276,7 +279,7 @@
             var _this = this;
             axios({
                 method:"get",
-                url:"http://localhost:8080/users/session",
+                url:"/users/session",
             }).then(function (resp){
                 _this.user = resp.data.data;
             })
