@@ -64,8 +64,8 @@ public class LogController {
         return new Result(code,logs,msg);
     }
 
-    /*@ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
-    @PostMapping
+    @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
+    @PostMapping("/insert")
     public Result insert(@RequestBody LogDto logDto){
         Integer code;
         String msg;
@@ -81,7 +81,9 @@ public class LogController {
             code = Code.SAVE_ERR;
             msg = "添加失败";
         }
-        return new Result(Code.GET_OK,"ok");
-    }*/
+        return new Result(code,msg);
+    }
+
+
 
 }
