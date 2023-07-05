@@ -198,13 +198,16 @@
         el: ".con",
         methods: {
             changeEdit(row){
-            let reUrl = 'practice_log.html?name='+ row.name;
+            let reUrl = 'labour_log.html?name='+ row.name;
     		window.open(reUrl);
             },
             changeCheck(row){
-            let reUrl = 'practice_log.html?name='+ row.name;
+            let reUrl = 'labour_log.html?name='+ row.name;
     		window.open(reUrl);
             },
+            filterState(value, row) {
+					return row.province === value;
+				  },
         },
         data() {
             return {
