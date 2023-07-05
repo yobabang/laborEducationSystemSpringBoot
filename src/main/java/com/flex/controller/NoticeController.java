@@ -1,8 +1,6 @@
 package com.flex.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.flex.dao.NoticeDao;
 import com.flex.domain.Notice;
 import io.swagger.annotations.Api;
@@ -40,14 +38,11 @@ public class NoticeController {
     @ApiImplicitParam(name = "noticeReceiver", value = "接受用户ID", required = true, dataType = "Integer",paramType = "path")
     @GetMapping("/{noticeReceiver}")
     public Result getById(@PathVariable Integer noticeReceiver){
-        LambdaQueryWrapper<Notice> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Notice::getNoticeReceiver, noticeReceiver);
+        QueryWrapper<Notice> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("notice_receiver",noticeReceiver);
         List<Notice> notices = noticeDao.selectList(queryWrapper);
-
-        if (CollectionUtils.isEmpty(notices)) {
-            return new Result(Code.GET_ERR, null, "数据查询失败");
-        } else {
-            return new Result(Code.GET_OK, notices, "数据查询成功");
-        }
+        Integer code = notices != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = notices != null ? "数据查询成功" : "数据查询失败";
+        return  new Result(code,notices,msg);
     }
 }
