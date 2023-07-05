@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>吉利学院劳动教育平台</title>
+  <link rel="shortcut icon" href="static/img/head2.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="static/css/task.css">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="static/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header" id="headername">
+    <ul class="layui-nav ">
+      <li class="layui-nav-item layui-this"><a href="ClassList.html">首页</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="static/img/head.png" class="layui-nav-img">
+          {{user.user_name}}
+        </a>
+
+      </li>
+      <li class="layui-nav-item"><a href="login.html">退出</a></li>
+    </ul>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="con">
+  <template>
+    <el-form :inline="true" :model="tableSearch" class="demo-form-inline" style="text-align: center;">
+      <el-form-item label="班级">
+        <el-input v-model="tableSearch.class" placeholder="班级"></el-input>
+      </el-form-item>
+      <el-form-item label="作业类型">
+        <el-input v-model="tableSearch.kindWork" placeholder="作业类型"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+      </el-form-item>
+    </el-form>
+    <el-table
+            :data="tableData"
+            style="width: 100%"
+            :default-sort = "{prop: 'startTime', order: 'descending'}"
+            :default-sort = "{prop: 'endTime', order: 'descending'}"
+            max-height="100%">
+      <el-table-column
+              prop="class"
+              label="班级"
+              min-width="20%">
+        <template slot-scope="scope">
+          <el-link :href="'StuList.html?id='+scope.row['class']" target="_blank" class="buttonText"  type="primary" :underline="false">{{ scope.row.class }}</el-link>
+        </template>
+      </el-table-column>
+      <el-table-column
+              prop="name"
+              label="辅导员"
+              min-width="10%">
+        <template slot-scope="scope">
+
+            <div slot="reference" class="name-wrapper">
+              <el-tag size="medium">{{ scope.row.name }}</el-tag>
+            </div>
+        </template>
+      </el-table-column>
+      <el-table-column
+              prop="department"
+              label="学院"
+              min-width="15%">
+      </el-table-column>
+      <el-table-column
+              prop="startTime"
+              label="开始时间"
+              sortable
+              min-width="15%">
+      </el-table-column>
+      <el-table-column
+              prop="endTime"
+              label="截止时间"
+              sortable
+              min-width="15%">
+      </el-table-column>
+      <el-table-column
+              prop="kindWork"
+              label="作业类型"
+              min-width="15%"
+              :filters="[{ text: '日常生活劳动', value: '日常生活劳动' }, { text: '服务性劳动', value: '服务性劳动' }, { text: '生产劳动', value: '生产劳动' }, { text: '社会实践登记表', value: '社会实践登记表' }, { text: '社会实践日志', value: '社会实践日志' }]"
+              :filter-method="filterKind"
+              filter-placement="bottom-end">
+        <template slot-scope="scope">
+          <el-tag v-for="item in workTable" v-show="scope.row.kindWork == item.label" :key="item.label" :type="item.cssName" >
+            {{item.label}}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+              prop="sum"
+              label="未提交人数"
+              min-width="10%">
+      </el-table-column>
+    </el-table>
+  </template>
+
+</div>
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="static/layui/layui.js" charset="utf-8"></script>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/axios-0.18.0.js"></script>
+<script src="static/js/axios-0.18.0.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/element-ui/package/lib/index.js"></script>
+<link rel="stylesheet" href="static/element-ui/package/lib/theme-chalk/index.css">
+<link rel="stylesheet" type="text/css" href="static/css/task_detail.css">
+
+<script>
+ let tableVue = new Vue({
+    el: ".con",
+    methods: {
+      selectAll(){
+		var _this = this;
+		axios({
+		method:"post",
+		url:"",
+		data:_this.tableSearch
+		}).then(function (resp){
+		_this.tableData = resp.data;
+		})
+	  },
+
+	  onSubmit(){
+	    this.selectAll();
+	  },
+
+	  filterKind(value, row) {
+	    return row.kindWork === value;
+	  },
+    },
+    mounted(){
+	},
+    data() {
+      return {
+        workTable: [
+          {label: '日常生活劳动', cssName: 'success'},
+          {label: '服务性劳动', cssName: 'primary'},
+          {label: '生产劳动', cssName: 'primary'},
+          {label: '社会实践登记表', cssName: 'info'},
+          {label: '社会实践日志', cssName: 'danger'}
+        ],
+        tableData: [{
+          class: '2020级电子信息一班',
+          name: '王小虎',
+          department: '智能科技学院',
+          startTime: '2023-2-13',
+          endTime: '2023-6-20',
+          kindWork: '日常生活劳动',
+          sum: '0'
+        }, {
+          class: '2020级电子信息一班',
+          name: '王小虎',
+          department: '智能科技学院',
+          startTime: '2023-2-15',
+          endTime: '2023-6-20',
+          kindWork: '服务性劳动',
+          sum: '3'
+        }, {
+          class: '2020级人工智能二班',
+          name: '王小虎',
+          department: '智能科技学院',
+          startTime: '2023-2-17',
+          endTime: '2023-6-28',
+          kindWork: '社会实践登记表',
+          sum: '2'
+        }, {
+          class: '2020级人工智能一班',
+          name: '王小虎',
+          department: '智能科技学院',
+          startTime: '2023-2-13',
+          endTime: '2023-6-29',
+          kindWork: '社会实践日志',
+          sum: '1'
+        }, {
+          class: '2020级人工智能一班',
+          name: '王小虎',
+          department: '智能科技学院',
+          startTime: '2023-2-13',
+          endTime: '2023-6-20',
+          kindWork: '日常生活劳动',
+          sum: '0'
+        }, {
+          class: '2020级人工智能二班',
+          name: '王小虎',
+          department: '智能科技学院',
+          startTime: '2023-2-13',
+          endTime: '2023-6-20',
+          kindWork: '日常生活劳动',
+          sum: '3'
+        }, {
+          class: '2020级大数据一班',
+          name: '王小虎',
+          department: '智能科技学院',
+          startTime: '2023-2-13',
+          endTime: '2023-6-20',
+          kindWork: '日常生活劳动',
+          sum: '2'
+        }],
+        tableSearch:{
+          class: '',
+          kindWork: ''
+        },
+      }
+    }
+  })
+</script>
+
+<script>
+    let userName = new Vue({
+        el: "#headername",
+        data(){
+            return{
+                user:{
+                    user_name:'测试',
+                },
+            }
+        },
+        mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            var _this = this;
+            axios({
+                method:"get",
+                url:"user/usersession",
+            }).then(function (resp){
+                _this.user = resp.data;
+                console.log(user)
+            })
+        },
+    })
+</script>
+</body>
+</html>

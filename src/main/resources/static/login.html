@@ -83,8 +83,6 @@
     let identity = document.querySelector('input[name="identity"]:checked').value;
     let user_password = document.getElementById("password").value;
     formData.userPassword = user_password;
-    alert(identity);
-    alert(typeof(identity));
     console.log(formData);
     axios({
       method:"post",
