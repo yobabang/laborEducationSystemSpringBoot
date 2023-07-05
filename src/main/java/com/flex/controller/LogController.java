@@ -1,5 +1,6 @@
 package com.flex.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.flex.dao.LogDao;
 import com.flex.domain.Log;
 import com.flex.pojo.dto.LogDto;
@@ -62,6 +63,20 @@ public class LogController {
         Integer code = logs != null ? Code.GET_OK : Code.GET_ERR;
         String msg = logs != null ? "" : "数据查询失败";
         return new Result(code,logs,msg);
+    }
+
+    @ApiOperation(value = "查询学生劳动日志", notes = "根据学生学号查询劳动日志信息")
+    @ApiImplicitParam(name = "userNumber", value = "学生学号", required = true, dataType = "String",paramType = "path")
+    @GetMapping("/userNumber/{userNumber}")
+    public Result getLogByUserNumber(@PathVariable String userNumber){
+
+        QueryWrapper<Log> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_number",userNumber);
+        List<Log> logs = logDao.selectList(queryWrapper);
+
+        Integer code = logs != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = logs != null ? "" : "数据查询失败";
+        return  new Result(code,logs,msg);
     }
 
     @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
