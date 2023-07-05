@@ -5,7 +5,6 @@ import com.flex.dao.AdUserDao;
 import com.flex.domain.AdUser;
 import com.flex.domain.User;
 import com.flex.pojo.dto.LoginUserDto;
-import com.flex.service.AdUSerService;
 import com.flex.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -13,7 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -21,6 +20,9 @@ import java.util.List;
 @RequestMapping("/users")
 @Api(tags = "用户管理")
 public class UserController {
+    @Autowired
+    private HttpServletRequest request;
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -71,17 +73,18 @@ public class UserController {
     @ApiImplicitParam(name = "LoginUserDto", value = "用户Dto", required = true, dataType = "json",paramType = "post")
     @PostMapping("/{identity}")
     public Result login(@RequestBody LoginUserDto loginUserDto,@PathVariable Integer identity){
+        HttpSession session = request.getSession();
         User user1 = null;
         AdUser user2 = null;
         if(identity == 1){
             user1 = userService.login(loginUserDto.getUserAccount(), loginUserDto.getUserPassword());
-            System.out.println(user1);
+            session.setAttribute("user", user1);
         }else{
             QueryWrapper<AdUser> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("ad_account", loginUserDto.getUserAccount());
             queryWrapper.eq("ad_password", loginUserDto.getUserPassword());
             user2 = adUserDao.selectOne(queryWrapper);
-            System.out.println(user2);
+            session.setAttribute("user", user2);
         }
         Integer code;
         String msg;
@@ -93,6 +96,16 @@ public class UserController {
             msg = "登陆失败";
         }
         return new Result(code,msg);
+    }
+
+    @ApiOperation(value = "获取session", notes = "获取session")
+    @GetMapping("/session")
+    public Result getSession(){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        System.out.println(session);
+        System.out.println(user+"我来了");
+        return new Result(001,user,"session获取成功");
     }
 
 }

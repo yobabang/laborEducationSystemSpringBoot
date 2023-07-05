@@ -10,6 +10,8 @@ spring:
     password: digcow.com
   main:
     banner-mode: off
+  session:
+    store-type: none
 
 mybatis-plus:
   configuration:
