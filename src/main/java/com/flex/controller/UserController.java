@@ -103,8 +103,6 @@ public class UserController {
     public Result getSession(){
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        System.out.println(session);
-        System.out.println(user+"我来了");
         return new Result(001,user,"session获取成功");
     }
 

@@ -14,11 +14,11 @@ public class Register {
     private String registerUnit;
     private String registerNumber;
     private String politics;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Date startTime;
+    private Date endTime;
     private Integer form;
     private Integer praId;
-    private LocalDateTime registerLogTime;
+    private Date registerLogTime;
     private String registerLog;
     private Integer registerState;
     private Integer registerMark;

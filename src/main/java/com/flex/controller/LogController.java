@@ -1,5 +1,6 @@
 package com.flex.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.flex.dao.LogDao;
 import com.flex.domain.Log;
@@ -69,14 +70,18 @@ public class LogController {
     @ApiImplicitParam(name = "userNumber", value = "学生学号", required = true, dataType = "String",paramType = "path")
     @GetMapping("/userNumber/{userNumber}")
     public Result getLogByUserNumber(@PathVariable String userNumber){
+        try {
+            LambdaQueryWrapper<Log> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(Log::getUserNumber, userNumber);
+            List<Log> logs = logDao.selectList(queryWrapper);
 
-        QueryWrapper<Log> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_number",userNumber);
-        List<Log> logs = logDao.selectList(queryWrapper);
-
-        Integer code = logs != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = logs != null ? "" : "数据查询失败";
-        return  new Result(code,logs,msg);
+            Integer code = logs != null ? Code.GET_OK : Code.GET_ERR;
+            String msg = logs != null ? "" : "数据查询失败";
+            return new Result(code, logs, msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(5001, null, "数据查询报错");
+        }
     }
 
     @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")

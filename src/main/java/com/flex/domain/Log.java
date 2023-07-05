@@ -3,6 +3,7 @@ package com.flex.domain;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 public class Log {
@@ -18,7 +19,7 @@ public class Log {
     private String logProcess;
     private String effect;
     private String result;
-    private LocalDateTime logTime;
+    private Date logTime;
     private String logScore;
     private Integer logState;
     private Integer logMark;

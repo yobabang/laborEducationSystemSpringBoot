@@ -1,7 +1,9 @@
 package com.flex.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.flex.dao.RegisterDao;
+import com.flex.domain.Log;
 import com.flex.domain.Register;
 import com.flex.service.RegisterService;
 import io.swagger.annotations.Api;
@@ -64,15 +66,21 @@ public class RegisterController {
         return new Result(code,registers,msg);
     }
 
-    @ApiOperation(value = "查询社会实践活动登记", notes = "根据学生学号查询社会实践活动登记信息")
-    @ApiImplicitParam(name = "registerNumber", value = "学生学号", required = true, dataType = "Integer",paramType = "path")
-    @GetMapping("/{registerNumber}")
-    public Result getByRegNum(@PathVariable Integer registerNumber){
-        QueryWrapper<Register> queryWapper = new QueryWrapper<>();
-        queryWapper.eq("registerNumber",registerNumber);
-        List<Register> registers = registerDao.selectList(queryWapper);
-        Integer code = registers != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = registers != null ? "" : "数据查询失败";
-        return  new Result(code,registers,msg);
+    @ApiOperation(value = "查询学生社会活动登记表", notes = "根据学生学号查询社会活动登记表")
+    @ApiImplicitParam(name = "registerNumber", value = "学生学号", required = true, dataType = "String",paramType = "path")
+    @GetMapping("/registerNumber/{registerNumber}")
+    public Result getLogByUserNumber(@PathVariable String registerNumber){
+        try {
+            LambdaQueryWrapper<Register> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(Register::getRegisterNumber, registerNumber);
+            List<Register> registers = registerDao.selectList(queryWrapper);
+
+            Integer code = registers != null ? Code.GET_OK : Code.GET_ERR;
+            String msg = registers != null ? "" : "数据查询失败";
+            return new Result(code, registers, msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(5001, null, "数据查询报错");
+        }
     }
 }

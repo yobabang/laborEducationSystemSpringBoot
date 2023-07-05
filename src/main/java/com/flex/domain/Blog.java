@@ -11,14 +11,14 @@ public class Blog {
     private String blogTitle;
     private String blogContent;
     private String auName;
-    private LocalDateTime releaseTime;
+    private Date releaseTime;
     private String label;
     private Integer blogRead;
     private Integer likes;
     private Integer comments;
     private String fileAdd;
     private Integer blogState;
-    private LocalDateTime saveTime;
+    private Date saveTime;
 
 
 }

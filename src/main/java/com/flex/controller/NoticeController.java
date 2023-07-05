@@ -35,14 +35,20 @@ public class NoticeController {
     }
 
     @ApiOperation(value = "获取用户通知", notes = "根据接受用户ID获取用户通知")
-    @ApiImplicitParam(name = "noticeReceiver", value = "接受用户ID", required = true, dataType = "Integer",paramType = "path")
+    @ApiImplicitParam(name = "noticeReceiver", value = "接受用户ID", required = true, dataType = "String",paramType = "path")
     @GetMapping("/{noticeReceiver}")
-    public Result getById(@PathVariable Integer noticeReceiver){
-        QueryWrapper<Notice> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("notice_receiver",noticeReceiver);
-        List<Notice> notices = noticeDao.selectList(queryWrapper);
-        Integer code = notices != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = notices != null ? "数据查询成功" : "数据查询失败";
-        return  new Result(code,notices,msg);
+    public Result getById(@PathVariable String noticeReceiver){
+        try {
+            QueryWrapper<Notice> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("notice_receiver", noticeReceiver);
+            List<Notice> notices = noticeDao.selectList(queryWrapper);
+
+            Integer code = notices != null ? Code.GET_OK : Code.GET_ERR;
+            String msg = notices != null ? "数据查询成功" : "数据查询失败";
+            return new Result(code, notices, msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(5001, null, "数据查询报错");
+        }
     }
 }

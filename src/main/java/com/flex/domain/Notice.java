@@ -11,5 +11,5 @@ public class Notice {
     private String noticeContent;
     private Integer noticeObj;
     private Integer noticeType;
-    private Integer noticeReceiver;
+    private String noticeReceiver;
 }

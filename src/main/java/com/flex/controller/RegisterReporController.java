@@ -1,5 +1,7 @@
 package com.flex.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.flex.domain.Log;
 import com.flex.domain.RegisterReport;
 import com.flex.service.RegisterReportService;
 import io.swagger.annotations.Api;
@@ -59,4 +61,5 @@ public class RegisterReporController {
         String msg = registerReports != null ? "" : "数据查询失败";
         return new Result(code,registerReports,msg);
     }
+
 }
