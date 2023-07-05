@@ -44,11 +44,11 @@
       <!--判断身份是教师还是学生-->
 
       <div class="layui-form" >
-        <input type="radio" name="identity" value="1" title="学生" >
+        <input type="radio" name="identity" value="0" title="学生" >
         <div lay-radio>
           <span style="color: #909399;">学生</span>
         </div>
-        <input type="radio" name="identity" value="2" title="教师">
+        <input type="radio" name="identity" value="1" title="教师">
         <div lay-radio>
           <span style="color: #909399;">教师</span>
         </div>
@@ -74,46 +74,43 @@
 
 <script>
   document.getElementById("butn").onclick = function (){
-    var formData = {
+    var formDate = {
       userAccount:"",
       userPassword:"",
     };
     let user_account = document.getElementById("useraccount").value;
-    formData.userAccount = user_account;
-    let identity = document.querySelector('input[name="identity"]:checked').value;
+    formDate.userAccount = user_account;
+
     let user_password = document.getElementById("password").value;
-    formData.userPassword = user_password;
-    alert(identity);
-    alert(typeof(identity));
-    console.log(formData);
+    formDate.userPassword = user_password;
+
+    console.log(formDate);
+    console.log(formDate);
+
     axios({
       method:"post",
-      url:"http://localhost:8080/users/" + identity,
-      data:formData
+      url:"http://localhost:8080/users",
+      data:formDate
     }).then(function (resp){
-      console.log(identity)
-      if(resp.data.msg == "登陆成功" && identity == "1"){
+      console.log(resp.data)
+      if(resp.data.msg == "登陆成功"){
         location.href = "webapp/student/task_list.html"
-      }else if(resp.data.msg== "登陆成功" && identity == "2"){
-        location.href = "webapp/teacher/class.html"
-       }
-      else if(resp.data.msg== "登陆失败"){
-       alert("用户名或密码错误")
-       }
-<!--      }else if(resp.data == "successf" || resp.data == "adSuccessf"){-->
-<!--        var truthBeTold = window.confirm("第一次登录请修改密码")-->
-<!--        if (truthBeTold) {-->
-<!--          window.location.href = "changePass.html";-->
-<!--        } else-->
-<!--          window.location.href = "login.html"-->
-<!--      }-->
-<!--      else if(resp.data == "defeat"){-->
-<!--        var truthBeTold = window.confirm("密码错误请重新输入")-->
-<!--        if (truthBeTold) {-->
-<!--          window.location.href = "login.html";-->
-<!--        } else-->
-<!--          window.location.href = "login.html"-->
-<!--      }-->
+      }else if(resp.data.msg== "登陆失败"){
+       alert("1")
+      }else if(resp.data == "successf" || resp.data == "adSuccessf"){
+        var truthBeTold = window.confirm("第一次登录请修改密码")
+        if (truthBeTold) {
+          window.location.href = "changePass.html";
+        } else
+          window.location.href = "login.html"
+      }
+      else if(resp.data == "defeat"){
+        var truthBeTold = window.confirm("密码错误请重新输入")
+        if (truthBeTold) {
+          window.location.href = "login.html";
+        } else
+          window.location.href = "login.html"
+      }
 
     })
   }

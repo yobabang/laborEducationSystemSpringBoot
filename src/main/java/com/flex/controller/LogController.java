@@ -66,10 +66,10 @@ public class LogController {
 
     @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
     @PostMapping
-    public Result save(@RequestBody LogDto logDto){
+    public Result insert(@RequestBody LogDto logDto){
         Integer code;
         String msg;
-        Log log = new Log();
+        /*Log log = new Log();
         // 使用BeanUtils进行属性赋值
         BeanUtils.copyProperties(logDto, log);
         // 调用持久化操作将log保存到数据库中
@@ -80,8 +80,8 @@ public class LogController {
         }else{
             code = Code.SAVE_ERR;
             msg = "添加失败";
-        }
-        return new Result(code,msg);
+        }*/
+        return new Result(Code.GET_OK,"ok");
     }
 
 }
