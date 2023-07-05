@@ -208,15 +208,19 @@
             filterState(value, row) {
 					return row.province === value;
 				  },
+
         },
         mounted(){
             //当页面加载完成后来发送异步请求获取数据
             var _this = this;
+            let userNumber  = document.getElementById('user_id').innerHTML;
             axios({
                 method:"get",
-                url:"/logs/userName/" + ,
+                url:"/logs/userNumber/" + userNumber,
             }).then(function (resp){
-                _this.user = resp.data.data;
+                _this.tableData = resp.data.data;
+                console.log(resp.data)
+                console.log("111")
             })
         },
         data() {
@@ -239,22 +243,14 @@
                     date: '2016-05-04',
                     name: '劳动日志（服务劳动）',
                     province: '待评阅',
-
-
                 }, {
                     date: '2016-05-01',
                     name: '社会实践报告',
                     province: '已通过',
-
-
-
                 }, {
                     date: '2016-05-08',
                     name: '社会实践登记表',
                     province: '已通过',
-
-
-
                 }, {
                     date: '2016-05-06',
                     name: '社会实践日志',
