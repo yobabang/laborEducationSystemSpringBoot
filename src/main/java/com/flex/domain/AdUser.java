@@ -1,8 +1,10 @@
 package com.flex.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
+@TableName("ad_user")
 public class AdUser {
     private String adName;
     private String adAccount;

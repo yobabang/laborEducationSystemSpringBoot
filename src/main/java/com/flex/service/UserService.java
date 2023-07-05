@@ -42,5 +42,11 @@ public interface UserService {
      */
     public List<User> getAll();
 
+    /**
+     * 用户登录
+     * @param userAccount
+     * @param userPassword
+     * @return
+     */
     public User login(String userAccount,String userPassword);
 }

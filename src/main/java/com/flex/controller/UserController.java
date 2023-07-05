@@ -1,7 +1,11 @@
 package com.flex.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.flex.dao.AdUserDao;
+import com.flex.domain.AdUser;
 import com.flex.domain.User;
 import com.flex.pojo.dto.LoginUserDto;
+import com.flex.service.AdUSerService;
 import com.flex.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,6 +23,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AdUserDao adUserDao;
 
     @ApiOperation(value = "添加用户", notes = "添加用户信息")
     public Result save(@RequestBody User user){
@@ -63,12 +69,23 @@ public class UserController {
 
     @ApiOperation(value = "用户登陆", notes = "用户登陆")
     @ApiImplicitParam(name = "LoginUserDto", value = "用户Dto", required = true, dataType = "json",paramType = "post")
-    @PostMapping
-    public Result login(@RequestBody LoginUserDto loginUserDto){
-        User user = userService.login(loginUserDto.getUserAccount(), loginUserDto.getUserPassword());
+    @PostMapping("/{identity}")
+    public Result login(@RequestBody LoginUserDto loginUserDto,@PathVariable Integer identity){
+        User user1 = null;
+        AdUser user2 = null;
+        if(identity == 1){
+            user1 = userService.login(loginUserDto.getUserAccount(), loginUserDto.getUserPassword());
+            System.out.println(user1);
+        }else{
+            QueryWrapper<AdUser> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("ad_account", loginUserDto.getUserAccount());
+            queryWrapper.eq("ad_password", loginUserDto.getUserPassword());
+            user2 = adUserDao.selectOne(queryWrapper);
+            System.out.println(user2);
+        }
         Integer code;
         String msg;
-        if(user != null ){
+        if( user1 != null || user2 != null){
             code = Code.LOGIN_OK;
             msg = "登陆成功";
         }else {
