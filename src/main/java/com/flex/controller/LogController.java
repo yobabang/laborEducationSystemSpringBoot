@@ -1,10 +1,13 @@
 package com.flex.controller;
 
+import com.flex.dao.LogDao;
 import com.flex.domain.Log;
+import com.flex.pojo.dto.LogDto;
 import com.flex.service.LogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,9 @@ import java.util.List;
 public class LogController {
     @Autowired
     private LogService logService;
+
+    @Autowired
+    private LogDao logDao;
 
     @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
     @PostMapping
@@ -57,4 +63,25 @@ public class LogController {
         String msg = logs != null ? "" : "数据查询失败";
         return new Result(code,logs,msg);
     }
+
+    @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
+    @PostMapping
+    public Result save(@RequestBody LogDto logDto){
+        Integer code;
+        String msg;
+        Log log = new Log();
+        // 使用BeanUtils进行属性赋值
+        BeanUtils.copyProperties(logDto, log);
+        // 调用持久化操作将log保存到数据库中
+        int insert = logDao.insert(log);
+        if (insert == 1 ){
+             code = Code.SAVE_OK;
+             msg = "添加成功";
+        }else{
+            code = Code.SAVE_ERR;
+            msg = "添加失败";
+        }
+        return new Result(code,msg);
+    }
+
 }
