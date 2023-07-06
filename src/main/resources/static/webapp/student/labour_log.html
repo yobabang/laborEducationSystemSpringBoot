@@ -50,14 +50,14 @@
         <div class="layui-inline">
             <label class="layui-form-label">本科类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="degree_type" autocomplete="off" class="layui-input" required>
+                <input type="text" name="user_type" autocomplete="off" class="layui-input" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">年级班级</label>
             <div class="layui-input-inline">
-                <input type="text" name="grade_class" autocomplete="off" class="layui-input" required>
+                <input type="text" name="log_classes" autocomplete="off" class="layui-input" required>
             </div>
         </div>
 
@@ -626,7 +626,28 @@
         },
     })
 </script>
-<script>
+
+<!--<script>
+    // 获取输入框元素
+    const userTypeInput = document.querySelector('input[name="userType"]');
+    const logClassesInput = document.querySelector('input[name="logClasses"]');
+    const logTypeInput = document.querySelector('input[name="logType"]');
+
+    // 发起异步请求
+    fetch('/logs')
+        .then(response => response.json())
+        .then(data => {
+            // 将数据填充到输入框中
+            userTypeInput.value = data.user_type;
+            logClassesInput.value = data.log_classes;
+            logTypeInput.value = data.log_type;
+        })
+        .catch(error => {
+            console.error('请求失败:', error);
+        });
+</script>-->
+
+<!--<script>
     layui.use(['layer', 'upload'], function () {
         var layer = layui.layer;
         var upload = layui.upload;
@@ -661,6 +682,6 @@
             // TODO: 将删除的图片URL从文本框中移除
         });
     });
-</script>
+</script>-->
 </body>
 </html>
