@@ -67,12 +67,12 @@ public class LogController {
     }
 
     @ApiOperation(value = "查询学生劳动日志", notes = "根据学生学号查询劳动日志信息")
-    @ApiImplicitParam(name = "userNumber", value = "学生学号", required = true, dataType = "String",paramType = "path")
-    @GetMapping("/userNumber/{userNumber}")
-    public Result getLogByUserNumber(@PathVariable String userNumber){
+    @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "String",paramType = "path")
+    @GetMapping("/userId/{userId}")
+    public Result getLogByUserNumber(@PathVariable Long userId){
         try {
             LambdaQueryWrapper<Log> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(Log::getUserNumber, userNumber);
+            queryWrapper.eq(Log::getUserId, userId);
             List<Log> logs = logDao.selectList(queryWrapper);
 
             Integer code = logs != null ? Code.GET_OK : Code.GET_ERR;

@@ -1,22 +1,22 @@
 package com.flex.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
+@TableName("list_plan")
 public class ListPlan {
-    private Long listId;
-    private Integer listObj;
+    private long listId;
+    private long adId;
     private String listName;
-    private LocalDateTime listTime;
+    private Date listTime;
     private String listUnit;
     private String listGrade;
     private String listMajor;
-    private String listClasses;
-    private String listNumber;
-    private Integer listNoticeId;
-
-
+    private String listClass;
+    private String userId;
+    private long noticeId;
 }
