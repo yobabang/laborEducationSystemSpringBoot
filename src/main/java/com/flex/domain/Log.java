@@ -1,16 +1,17 @@
 package com.flex.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
+@TableName("log")
 public class Log {
-    private Long logId;
-    private Integer logType;
-    private String userNumber;
-    private Integer userType;
+    private long logId;
+    private int logType;
+    private long userId;
+    private int userType;
     private String logName;
     private String logUnit;
     private String logClasses;
@@ -21,7 +22,6 @@ public class Log {
     private String result;
     private Date logTime;
     private String logScore;
-    private Integer logState;
-    private Integer logMark;
-
+    private int logState;
+    private Date logMark;
 }

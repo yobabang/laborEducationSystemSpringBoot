@@ -50,5 +50,6 @@ public class NoticeController {
             e.printStackTrace();
             return new Result(5001, null, "数据查询报错");
         }
+
     }
 }
