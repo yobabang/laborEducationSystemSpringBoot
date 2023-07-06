@@ -105,25 +105,25 @@
             max-height="1000">
         <el-table-column
                 fixed
-                prop="name"
+                prop="logType"
                 label="任务名称"
                 min-width="50%">
         </el-table-column>
         <el-table-column
-                prop="province"
+                prop="logState"
                 label="状态"
                 min-width="20%"
                 :filters="[{ text: '待完成', value: '待完成' }, { text: '已通过', value: '已通过' }, { text: '待评阅', value: '待评阅' },{ text: '打回待修改', value: '打回待修改' }]"
                 :filter-method="filterState"
                 filter-placement="bottom-end">
             <template slot-scope="scope">
-                <el-tag v-for="item in reState" v-show="scope.row.province == item.label" :key="item.label" :type="item.cssName" >
+                <el-tag v-for="item in logState" v-show="scope.row.logState == item.label" :key="item.label" :type="item.cssName" >
                     {{item.label}}
                 </el-tag>
             </template>
         </el-table-column>
         <el-table-column
-                prop="date"
+                prop="logTime"
                 label="最后的修改时间"
                 sortable
                 min-width="20%">
@@ -133,10 +133,10 @@
                 label="操作"
                 min-width="10%">
             <template slot-scope="scope">
-                <el-button v-if="scope.row.province === '待完成'" name="button1" @click="changeEdit(scope.row)" type="text" size="medium">编辑</el-button>
-                <el-button v-if="scope.row.province === '待评阅'" name="button2" @click="changeCheck(scope.row)" type="text" size="medium">查看</el-button>
-                <el-button v-if="scope.row.province === '已通过'" name="button3" @click="changeCheck(scope.row)" type="text" size="medium">查看</el-button>
-                <el-button v-if="scope.row.province === '打回待修改'" name="button4" @click="changeEdit(scope.row)" type="text" size="medium">编辑</el-button>
+                <el-button v-if="scope.row.logState === '待完成'" name="button1" @click="changeEdit(scope.row)" type="text" size="medium">编辑</el-button>
+                <el-button v-if="scope.row.logState === '待评阅'" name="button2" @click="changeCheck(scope.row)" type="text" size="medium">查看</el-button>
+                <el-button v-if="scope.row.logState === '已通过'" name="button3" @click="changeCheck(scope.row)" type="text" size="medium">查看</el-button>
+                <el-button v-if="scope.row.logState === '打回待修改'" name="button4" @click="changeEdit(scope.row)" type="text" size="medium">编辑</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -158,40 +158,44 @@
 <script>
     // 用户信息异步请求
     // 使用XMLHttpRequest对象发送Ajax请求
-   var xhr1 = new XMLHttpRequest();
+   var data = {};
+   let xhr1 = new XMLHttpRequest();
    xhr1.open('GET', '/users/session', true);
    xhr1.onreadystatechange = function() {
      if (xhr1.readyState === 4 && xhr1.status === 200) {
-       var data = JSON.parse(xhr1.responseText);
-       var table = document.getElementById('demo1');
-       var html = '';
+       data = JSON.parse(xhr1.responseText);
+       console.log(data)
+       let table = document.getElementById('demo1');
+       let html = '';
        html += '<tr><td>' + '姓名：'+ '</td>' + '<td>' + data.data.userName + '</td></tr><br>'
        + '<tr><td>' + "所属学院："+ '</td>' + '<td>' + data.data.unit + '</td></tr><br>'
        + '<tr><td>' + "所属班级："+ '</td>' + '<td>' + data.data.classes + '</td></tr><br>'
        + '<tr><td>' + "学号："+ '</td>' + '<td id="user_id">'+ data.data.userId + '</td></tr><br>';
        table.innerHTML = html;
-     }
-   };
-   xhr1.send();
-
-</script>
-<script>
-    // 学生通知信息异步请求
-    // 使用XMLHttpRequest对象发送Ajax请求
-   let noticeReceiver  = document.getElementById('user_id').innerHTML;
-   console.log('user-id为' + noticeReceiver)
-   var xhr2 = new XMLHttpRequest();
-   xhr2.open('GET', '/notice/' + noticeReceiver, true);
-   xhr2.onreadystatechange = function() {
-     if (xhr2.readyState === 4 && xhr2.status === 200) {
-       var data = JSON.parse(xhr2.responseText);
-       console.log(data)
-       var table = document.getElementById('demo2');
-       var html = '';
-
+       let noticeReceiver  = data.data.userId;
+       console.log('user-id为' + noticeReceiver)
+       let xhr2 = new XMLHttpRequest();
+       xhr2.open('GET', '/notice/' + noticeReceiver, true);
+       xhr2.onreadystatechange = function() {
+       if (xhr2.readyState === 4 && xhr2.status === 200) {
+           let data2 = JSON.parse(xhr2.responseText);
+           console.log(data2)
+           let table = document.getElementById('demo2');
+           let html = '';
+           html += '<tr><td>' + data.data.userName'：'+ '</td>' + '<td>' + data.data.userName + '</td></tr><br>'
+       + '<tr><td>' + "所属学院："+ '</td>' + '<td>' + data.data.unit + '</td></tr><br>'
+       + '<tr><td>' + "所属班级："+ '</td>' + '<td>' + data.data.classes + '</td></tr><br>'
+       + '<tr><td>' + "学号："+ '</td>' + '<td id="user_id">'+ data.data.userId + '</td></tr><br>';
+           table.innerHTML = html;
      }
    };
    xhr2.send();
+     }
+   };
+   xhr1.send();
+    // 学生通知信息异步请求
+    // 使用XMLHttpRequest对象发送Ajax请求
+
 </script>
 <script>
     let conVue = new Vue({
@@ -212,49 +216,75 @@
         },
         mounted(){
             //当页面加载完成后来发送异步请求获取数据
-            var _this = this;
-            let userNumber  = document.getElementById('user_id').innerHTML;
-            axios({
-                method:"get",
-                url:"/logs/userNumber/" + userNumber,
-            }).then(function (resp){
-                _this.tableData = resp.data.data;
-                console.log(resp.data)
-                console.log("111")
-            })
+            let _this = this;
+            $.ajax({
+               url: '/users/session',
+               type: 'GET', // 请求类型（GET/POST等）
+               dataType: 'json', // 期望的响应数据类型
+               success: function(response) {
+                   // 请求成功时的回调函数
+                   // 处理响应数据
+                   console.log(response);
+                   let userNumber = response.data.userId;
+                   axios({
+                    method:"get",
+                    url:"/logs/userNumber/" + userNumber,
+                    }).then(function (resp){
+                    _this.tableData = resp.data.data;
+                    console.log(resp.data.data)
+                    console.log("111")
+                     _this.tableData.map(function (val) {
+                        if (val.logState == 0) {
+                            val.logState = '待完成'
+                        } else if (val.logState == 1) {
+                            val.logState = '已通过'
+                        } else if (val.logState == 2) {
+                            val.logState = '打回待修改'
+                        } else if (val.logState == 3) {
+                            val.logState = '待评阅'
+                        }
+                    })
+                  })
+               },
+               error: function(xhr, status, error) {
+                   // 请求失败时的回调函数
+                   // 处理错误
+                   console.log(error);
+               }
+           });
         },
         data() {
             return {
-                reState: [
+                logState: [
 						{label: '待完成', cssName: 'danger'},
 						{label: '打回待修改', cssName: 'info'},
 						{label: '待评阅', cssName: 'primary'},
 						{label: '已通过', cssName: 'success'},
 					],
                 tableData: [{
-                    date: '2016-05-03',
-                    name: '劳动日志（日常劳动）',
-                    province: '打回待修改',
+                    logTime: '2016-05-03',
+                    logType: '劳动日志（日常劳动）',
+                    logState: '打回待修改',
                 }, {
-                    date: '2016-05-02',
-                    name: '劳动日志（社会劳动）',
-                    province: '待完成',
+                    logTime: '2016-05-02',
+                    logType: '劳动日志（社会劳动）',
+                    logState: '待完成',
                 }, {
-                    date: '2016-05-04',
-                    name: '劳动日志（服务劳动）',
-                    province: '待评阅',
+                    logTime: '2016-05-04',
+                    logType: '劳动日志（服务劳动）',
+                    logState: '待评阅',
                 }, {
-                    date: '2016-05-01',
-                    name: '社会实践报告',
-                    province: '已通过',
+                    logTime: '2016-05-01',
+                    logType: '社会实践报告',
+                    logState: '已通过',
                 }, {
-                    date: '2016-05-08',
-                    name: '社会实践登记表',
-                    province: '已通过',
+                    logTime: '2016-05-08',
+                    logType: '社会实践登记表',
+                    logState: '已通过',
                 }, {
-                    date: '2016-05-06',
-                    name: '社会实践日志',
-                    province: '已通过',
+                    logTime: '2016-05-06',
+                    logType: '社会实践日志',
+                    logState: '已通过',
                 }]
             }
         }
@@ -272,7 +302,7 @@
         },
         mounted(){
             //当页面加载完成后来发送异步请求获取数据
-            var _this = this;
+            let _this = this;
             axios({
                 method:"get",
                 url:"/users/session",
