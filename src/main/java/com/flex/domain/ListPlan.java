@@ -9,8 +9,9 @@ import java.util.Date;
 @Data
 @TableName("list_plan")
 public class ListPlan {
-    private long listId;
-    private long adId;
+    private Long listId;
+    private Long adId;
+    private Integer listType;
     private String listName;
     private Date listTime;
     private String listUnit;
@@ -18,5 +19,5 @@ public class ListPlan {
     private String listMajor;
     private String listClass;
     private String userId;
-    private long noticeId;
+    private Long noticeId;
 }

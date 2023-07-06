@@ -1,9 +1,7 @@
 package com.flex.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.flex.dao.RegisterDao;
-import com.flex.domain.Log;
 import com.flex.domain.Register;
 import com.flex.service.RegisterService;
 import io.swagger.annotations.Api;
@@ -69,7 +67,7 @@ public class RegisterController {
     @ApiOperation(value = "查询学生社会活动登记表", notes = "根据学生学号查询社会活动登记表")
     @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "String",paramType = "path")
     @GetMapping("/userId/{userId}")
-    public Result getLogByUserNumber(@PathVariable Long userId){
+    public Result getRegisterByUserId(@PathVariable Long userId){
         try {
             LambdaQueryWrapper<Register> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Register::getUserId, userId);
@@ -83,4 +81,21 @@ public class RegisterController {
             return new Result(5001, null, "数据查询报错");
         }
     }
+
+    @ApiOperation(value = "添加社会活动登记表", notes = "添加社会活动登记表")
+    @PostMapping("/insert")
+    public Result insert(@RequestBody Register register){
+        Integer code;
+        String msg;
+        int insert = registerDao.insert(register);
+        if (insert == 1 ){
+            code = Code.SAVE_OK;
+            msg = "添加成功";
+        }else{
+            code = Code.SAVE_ERR;
+            msg = "添加失败";
+        }
+        return new Result(code,msg);
+    }
+
 }

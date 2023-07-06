@@ -6,13 +6,13 @@ import lombok.Data;
 @Data
 @TableName("assessment")
 public class Assessment {
-    private long assId;
+    private Long assId;
     private String assName;
-    private long userId;
-    private long classId;
+    private Long userId;
+    private Long classId;
     private String assMajor;
     private String assUnit;
-    private long adId;
+    private Long adId;
     private String assDep;
     private String assLog;
     private String assReport;

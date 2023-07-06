@@ -1,5 +1,7 @@
 package com.flex.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.flex.dao.ListPlanDao;
 import com.flex.domain.ListPlan;
 import com.flex.service.ListPlanService;
 import io.swagger.annotations.Api;
@@ -16,6 +18,9 @@ import java.util.List;
 public class ListPlanController {
     @Autowired
     private ListPlanService listPlanService;
+
+    @Autowired
+    private ListPlanDao listPlanDao;
 
     @ApiOperation(value = "添加计划清单", notes = "添加计划清单信息")
     @PostMapping
@@ -57,4 +62,24 @@ public class ListPlanController {
         String msg = listPlans != null ? "" : "数据查询失败";
         return new Result(code,listPlans,msg);
     }
+
+    @ApiOperation(value = "获取计划清单信息", notes = "根据学院年纪专业获取计划清单信息")
+    @GetMapping("/{unit}/{grade}/{major}")
+    public Result getByUnitGradeMajor(@PathVariable String unit,@PathVariable String grade,@PathVariable String major){
+        try{
+            LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(ListPlan::getListUnit,unit)
+                    .eq(ListPlan::getListGrade,grade)
+                    .eq(ListPlan::getListMajor,major);
+            List<ListPlan> listPlans = listPlanDao.selectList(queryWrapper);
+            Integer code = listPlans != null ? Code.GET_OK : Code.GET_ERR;
+            String msg = listPlans != null ? "数据查询成功" : "数据查询失败";
+            return new Result(code, listPlans, msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(5001, null, "数据查询报错");
+        }
+    }
+
+
 }
