@@ -36,11 +36,11 @@ public class NoticeController {
 
     @ApiOperation(value = "获取用户通知", notes = "根据接受用户ID获取用户通知")
     @ApiImplicitParam(name = "noticeReceiver", value = "接受用户ID", required = true, dataType = "String",paramType = "path")
-    @GetMapping("/{noticeReceiver}")
-    public Result getById(@PathVariable String noticeReceiver){
+    @GetMapping("/{userId}")
+    public Result getById(@PathVariable Long userId){
         try {
             QueryWrapper<Notice> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("notice_receiver", noticeReceiver);
+            queryWrapper.eq("user_id", userId);
             List<Notice> notices = noticeDao.selectList(queryWrapper);
 
             Integer code = notices != null ? Code.GET_OK : Code.GET_ERR;

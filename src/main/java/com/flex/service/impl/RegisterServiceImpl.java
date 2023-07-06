@@ -13,6 +13,7 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private RegisterDao registerDao;
 
+    @Override
     public boolean save(Register register) {
         return registerDao.save(register) > 0;
     }
@@ -22,14 +23,17 @@ public class RegisterServiceImpl implements RegisterService {
         return registerDao.updata(register) > 0;
     }
 
+    @Override
     public boolean delete(Integer id) {
         return registerDao.delete(id) > 0;
     }
 
+    @Override
     public Register getById(Integer id) {
         return registerDao.getById(id);
     }
 
+    @Override
     public List<Register> getAll() {
         return registerDao.getAll();
     }

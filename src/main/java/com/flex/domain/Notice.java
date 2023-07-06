@@ -12,4 +12,5 @@ public class Notice {
     private long adId;
     private int noticeType;
     private String noticeReceiver;
+    private Long userId;
 }
