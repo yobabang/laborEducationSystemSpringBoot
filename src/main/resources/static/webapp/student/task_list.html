@@ -169,7 +169,7 @@
        let html = '';
        html += '<tr><td>' + '姓名：'+ '</td>' + '<td>' + data.data.userName + '</td></tr><br>'
        + '<tr><td>' + "所属学院："+ '</td>' + '<td>' + data.data.unit + '</td></tr><br>'
-       + '<tr><td>' + "所属班级："+ '</td>' + '<td>' + data.data.classes + '</td></tr><br>'
+       + '<tr><td>' + "所属班级："+ '</td>' + '<td>' + data.data.classId + '</td></tr><br>'
        + '<tr><td>' + "学号："+ '</td>' + '<td id="user_id">'+ data.data.userId + '</td></tr><br>';
        table.innerHTML = html;
        let noticeReceiver  = data.data.userId;
@@ -182,14 +182,43 @@
            console.log(data2)
            let table = document.getElementById('demo2');
            let html = '';
-           html += '<tr><td>' + data.data.userName'：'+ '</td>' + '<td>' + data.data.userName + '</td></tr><br>'
-       + '<tr><td>' + "所属学院："+ '</td>' + '<td>' + data.data.unit + '</td></tr><br>'
-       + '<tr><td>' + "所属班级："+ '</td>' + '<td>' + data.data.classes + '</td></tr><br>'
-       + '<tr><td>' + "学号："+ '</td>' + '<td id="user_id">'+ data.data.userId + '</td></tr><br>';
+           html += '<tr><td>' + "1: "+ '</td>' + '<td>' + data.data.userName + '</td></tr><br>'
+       + '<tr><td>' + "2:"+ '</td>' + '<td>' + data.data.unit + '</td></tr><br>'
+       + '<tr><td>' + "3:"+ '</td>' + '<td id="log_classes">' + data.data.classId + '</td></tr><br>'
+       + '<tr><td>' + "4:"+ '</td>' + '<td id="user_id">'+ data.data.userId + '</td></tr><br>';
            table.innerHTML = html;
+           /*console.log(data2);
+           let table = document.getElementById('demo2');
+           let html = '';
+           let maxNotices = 4; // 最大显示的通知数量
+
+// 获取最新的四条通知数据
+           let latestNotices = data2.slice(0, maxNotices);
+
+// 遍历最新的通知数据，生成HTML字符串
+           latestNotices.forEach(function(notice, index) {
+               html += '<tr><td>' + (index + 1) + ': </td><td>' + notice.noticeId + '</td></tr>';
+           });
+
+// 判断是否还有更多通知供查看
+           if (data2.length > maxNotices) {
+               html += '<tr><td colspan="2"><button id="viewMoreBtn">查看更多</button></td></tr>';
+           }
+
+// 将生成的HTML内容插入到表格中
+           table.innerHTML = html;
+
+// 点击“查看更多”按钮的事件处理函数
+           if (data2.length > maxNotices) {
+               let viewMoreBtn = document.getElementById('viewMoreBtn');
+               viewMoreBtn.addEventListener('click', function() {
+                   // TODO: 处理点击事件的逻辑，例如将所有通知展示出来或跳转到通知列表页面
+                   console.log("点击了查看更多按钮");
+               });
+           }*/
      }
    };
-   xhr2.send();
+   xhr2.send()
      }
    };
    xhr1.send();
@@ -225,10 +254,10 @@
                    // 请求成功时的回调函数
                    // 处理响应数据
                    console.log(response);
-                   let userNumber = response.data.userId;
+                   let userId = response.data.userId;
                    axios({
                     method:"get",
-                    url:"/logs/userNumber/" + userNumber,
+                    url:"/logs/userId/" + userId,
                     }).then(function (resp){
                     _this.tableData = resp.data.data;
                     console.log(resp.data.data)
@@ -312,5 +341,59 @@
         },
     })
 </script>
+
+<!--确保你能够获取到所有的通知数据，包括通知的标题、内容、类别和用户ID等。你可以通过请求后端接口或从数据库中获取数据，确保数据的数据结构如下-->
+<!--<script>
+    let notices = [
+        {
+            noticeId: 1,
+            noticeTitle: "通知标题1",
+            noticeContent: "通知内容1",
+            noticeCategory: "类别1",
+            userId: 1
+        },
+        {
+            noticeId: 2,
+            noticeTitle: "通知标题2",
+            noticeContent: "通知内容2",
+            noticeCategory: "类别2",
+            userId: 1
+        },
+        // ... 其他通知数据
+    ];
+</script>-->
+
+
+<!--实现获取最新的四条通知并增加可查看更多消息的功能-->
+<!--<script>
+    let table = document.getElementById('demo2');
+    let html = '';
+    let maxNotices = 4; // 最大显示的通知数量
+
+    // 获取最新的四条通知数据
+    let latestNotices = notices.slice(0, maxNotices);
+
+    // 遍历最新的通知数据，生成HTML字符串
+    latestNotices.forEach(function(notice, index) {
+        html += '<tr><td>' + (index + 1) + ': </td><td>' + notice.noticeId + '</td></tr>'
+            + '<tr><td>' + (index + 1) + ': </td><td>' + notice.noticeContent + '</td></tr>'
+            + '<tr><td>' + (index + 1) + ': </td><td id="log_classes">' + notice.noticeCategory + '</td></tr>'
+            + '<tr><td>' + (index + 1) + ': </td><td id="user_id">'+ notice.userId + '</td></tr><br>';
+    });
+
+    // 将生成的HTML内容插入到表格中
+    table.innerHTML = html;
+
+    // 判断是否还有更多通知供查看
+    if (notices.length > maxNotices) {
+        // 添加“查看更多”按钮的代码，你可以根据需求自定义该按钮的样式和行为
+        let viewMoreButton = document.createElement('button');
+        viewMoreButton.innerHTML = '查看更多';
+        // ... 其他按钮的属性和事件设置
+        // 将按钮插入到页面中的适当位置
+        // ...
+    }
+</script>-->
+
 </body>
 </html>
