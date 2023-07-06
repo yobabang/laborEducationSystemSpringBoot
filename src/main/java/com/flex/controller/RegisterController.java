@@ -67,7 +67,7 @@ public class RegisterController {
     }
 
     @ApiOperation(value = "查询学生社会活动登记表", notes = "根据学生学号查询社会活动登记表")
-    @ApiImplicitParam(name = "registerNumber", value = "学生学号", required = true, dataType = "String",paramType = "path")
+    @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "String",paramType = "path")
     @GetMapping("/userId/{userId}")
     public Result getLogByUserNumber(@PathVariable Long userId){
         try {
