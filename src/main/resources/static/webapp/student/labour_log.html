@@ -92,9 +92,17 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">劳动效果</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="labour_result" class="layui-textarea"></textarea>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="uploadBtn">上传图片</button>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="previewContainer"></div>
+                </blockquote>
+                <textarea placeholder="请输入内容" name="labour_result" class="layui-textarea"></textarea>
+            </div>
         </div>
     </div>
+
 
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">劳动感受</label>
@@ -113,12 +121,12 @@
 
             <label class="layui-form-label">本人签字</label>
             <div class="layui-input-inline">
-                <input type="text" name="log_name" autocomplete="off" class="layui-input">
+                <input type="text" name="log_name" autocomplete="off" class="layui-input" placeholder="打印后签字">
             </div>
 
             <label class="layui-form-label">证明人</label>
             <div class="layui-input-inline">
-                <input type="text" name="????" autocomplete="off" class="layui-input">
+                <input type="text" name="????" autocomplete="off" class="layui-input" placeholder="打印后签字">
             </div>
         </div>
     </div>
@@ -617,6 +625,42 @@
             })
         },
     })
+</script>
+<script>
+    layui.use(['layer', 'upload'], function () {
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        // 多图上传
+        upload.render({
+            elem: '#uploadBtn',
+            url: '/upload/???????????????????????????????????',
+            multiple: true,
+            done: function (res) {
+                // 上传完毕回调
+                if (res.code === 0) {
+                    // 成功上传
+                    var previewContainer = document.getElementById('previewContainer');
+                    var imgWidth = '200px';  // 图片宽度
+                    var imgHeight = '200px';  // 图片高度
+                    var html = '<div class="layui-upload-item">';
+                    html += '<img src="' + res.data.url + '" alt="预览图" style="width: ' + imgWidth + '; height: ' + imgHeight + ';">';
+                    html += '<div class="layui-upload-item-del" data-url="' + res.data.url + '"><i class="layui-icon layui-icon-close"></i></div></div>';
+                    previewContainer.innerHTML += html;
+                } else {
+                    // 上传失败
+                    layer.msg('图片上传失败，请重试');
+                }
+            }
+        });
+
+        // 删除已上传图片
+        layui.$(document).on('click', '.layui-upload-item-del', function () {
+            var url = layui.$(this).data('url');
+            layui.$(this).parent().remove();
+            // TODO: 将删除的图片URL从文本框中移除
+        });
+    });
 </script>
 </body>
 </html>
