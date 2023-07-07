@@ -22,19 +22,6 @@ public class ListPlanController {
     @Autowired
     private ListPlanDao listPlanDao;
 
-    @ApiOperation(value = "添加计划清单", notes = "添加计划清单信息")
-    @PostMapping
-    public Result save(@RequestBody ListPlan listPlan){
-        boolean flag = listPlanService.save(listPlan);
-        return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
-    }
-
-    @ApiOperation(value = "更新计划清单", notes = "更新计划清单信息")
-    @PutMapping
-    public Result updata(@RequestBody ListPlan listPlan){
-        boolean flag = listPlanService.update(listPlan);
-        return new Result(flag ? Code.UPDATE_OK:Code.UPDATE_ERR,flag);
-    }
 
     @ApiOperation(value = "删除计划清单", notes = "根据计划清单ID删除计划清单信息")
     @ApiImplicitParam(name = "listPlanId", value = "计划清单ID", required = true, dataType = "Integer",paramType = "path")

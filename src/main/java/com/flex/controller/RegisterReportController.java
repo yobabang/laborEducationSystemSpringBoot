@@ -28,20 +28,6 @@ public class RegisterReportController {
     @Autowired
     private ListPlanDao listPlanDao;
 
-    @ApiOperation(value = "添加社会实践活动报告", notes = "添加社会实践活动报告信息")
-    @PostMapping
-    public Result save(@RequestBody RegisterReport registerReport){
-        boolean flag = registerReportService.save(registerReport);
-        return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
-    }
-
-
-    @ApiOperation(value = "更新社会实践活动报告", notes = "更新社会实践活动报告信息")
-    @PutMapping
-    public Result updata(@RequestBody RegisterReport registerReport){
-        boolean flag = registerReportService.update(registerReport);
-        return new Result(flag ? Code.UPDATE_OK:Code.UPDATE_ERR,flag);
-    }
 
     @ApiOperation(value = "删除社会实践活动报告", notes = "根据社会实践活动报告ID删除社会实践活动报告户信息")
     @ApiImplicitParam(name = "reportId", value = "社会实践活动报告ID", required = true, dataType = "Integer",paramType = "path")
