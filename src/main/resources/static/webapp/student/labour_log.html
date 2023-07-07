@@ -63,7 +63,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">劳动类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="logType" autocomplete="off" class="layui-input" id="logType" required>
+                <input type="text" name="logType" autocomplete="off" disabled class="layui-input" id="logType" required>
             </div>
         </div>
 
@@ -139,6 +139,28 @@
 <script src="//unpkg.com/layui@2.8.4/dist/layui.js"></script>
 <script src="../static/js/jquery.min.js"></script>
 <script>
+function getUrlSearch(name) {
+        // 未传参，返回空
+        if (!name) return null;
+        // 查询参数：先通过search取值，如果取不到就通过hash来取
+        let after = window.location.search;
+        after = after.substr(1) || window.location.hash.split('?')[1];
+        // 地址栏URL没有查询参数，返回空
+        if (!after) return null;
+        // 如果查询参数中没有"name"，返回空
+        if (after.indexOf(name) === -1) return null;
+
+        let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+        // 当地址栏参数存在中文时，需要解码，不然会乱码
+        let r = decodeURI(after).match(reg);
+        // 如果url中"name"没有值，返回空
+        if (!r) return null;
+
+        return r[2];
+    }
+    document.getElementById("logType").value = getUrlSearch("listType")
+</script>
+<script>
 //数据上传
     layui.use(['jquery', 'form'], function () {
         var form = layui.form;
@@ -183,21 +205,64 @@
 				$.ajax({
 					url: '/logs/insert',
 					type: "POST",
-					contentType:false,
-					processData:false,
-					responseType:'blob',
 					data: log,
 					success: function (data) {
 						alert('成功连接到接口insert');
-						if (data === 1) {
-							alert('新增成功');
-						} else {
-							alert('新增失败');
-							return false;
-						}
 					}
 				})
-				parent.layer.closeAll();
+        });
+    });
+</script>
+<script>
+//数据保存
+    layui.use(['jquery', 'form'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+        // 提交事件
+        layui.$('#demo3').on('click', function () {
+                alert("保存按钮")
+                let log = new FormData();
+                alert("FormData创建成功")
+				let userType = document.getElementById("userType").value;
+				let logClasses = document.getElementById("logClasses").value;
+				let logType = document.getElementById("logType").value;
+				let logContent = document.getElementById("logContent").value;
+				let location = document.getElementById("location").value;
+				let logProcess = document.getElementById("logProcess").value;
+				let effect = document.getElementById("effect").value;
+				let result = document.getElementById("result").value;
+				let logTime = document.getElementById("ID-laydate-shortcut-date").value;
+				let logState = 4;
+				alert("数据创建成功")
+				log.append("userType", userType);
+				log.append("logClasses", logClasses);
+				log.append("logType", logType);
+				log.append("logContent", logContent);
+				log.append("location", location);
+				log.append("logProcess", logProcess);
+				log.append("effect", effect);
+				log.append("result", result);
+				log.append("logTime", logTime);
+				log.append("logState", logState);
+				for (var [a, b] of log.entries()) {
+						console.log(a, b);
+				}
+				alert("log数据添加完成")
+				let jsonData = {};
+                for (let [key, value] of log) {
+                  jsonData[key] = value;
+                }
+
+                log = JSON.stringify(jsonData);
+				console.log(log)
+				$.ajax({
+					url: '/logs/insert',
+					type: "POST",
+					data: log,
+					success: function (data) {
+						alert('成功连接到接口insert');
+					}
+				})
         });
     });
 </script>
