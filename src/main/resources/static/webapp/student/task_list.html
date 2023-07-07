@@ -235,16 +235,55 @@
         el: ".con",
         methods: {
             changeEdit(row){
-                let reUrl = 'labour_log.html?listType='+ row.listType;
-                window.location.href = reUrl;
+                if (row.listType.includes("劳动")) {
+                  let reUrl = 'labour_log.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                } else if(row.listType.includes("登记表")){
+                  let reUrl = 'SocialPracticeForm.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                }
+                else if(row.listType.includes("活动日记")){
+                  let reUrl = 'SocialPracticeJournal.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                }
+                else if(row.listType.includes("调查报告")){
+                  let reUrl = 'practice_report.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                }
             },
             changeEdited(row){
-                let reUrl = 'labour_log_ed.html?listType='+ row.listType;
-                window.location.href = reUrl;
+                if (row.listType.includes("劳动")) {
+                  let reUrl = 'labour_log_ed.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                } else if(row.listType.includes("登记表")){
+                  let reUrl = 'SocialPracticeForm.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                }
+                else if(row.listType.includes("活动日记")){
+                  let reUrl = 'SocialPracticeJournal.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                }
+                else if(row.listType.includes("调查报告")){
+                  let reUrl = 'practice_report.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                }
             },
             changeCheck(row){
-                let reUrl = 'labour_log_check.html?listType='+ row.listType;
-                window.location.href = reUrl;
+                if (row.listType.includes("劳动")) {
+                  let reUrl = 'labour_log_check.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                } else if(row.listType.includes("登记表")){
+                  let reUrl = 'SocialPracticeForm.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                }
+                else if(row.listType.includes("活动日记")){
+                  let reUrl = 'SocialPracticeJournal.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                }
+                else if(row.listType.includes("调查报告")){
+                  let reUrl = 'practice_report.html?listType='+ row.listType;
+                  window.location.href = reUrl;
+                }
             },
             filterState(value, row) {
 					return row.listState === value;
