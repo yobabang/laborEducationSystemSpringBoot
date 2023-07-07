@@ -49,28 +49,28 @@
         <div class="layui-inline">
             <label class="layui-form-label">本科类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="user_type" autocomplete="off" class="layui-input" required>
+                <input type="text" name="userType" autocomplete="off" class="layui-input" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">年级班级</label>
             <div class="layui-input-inline">
-                <input type="text" name="log_classes" autocomplete="off" class="layui-input" required>
+                <input type="text" name="logClasses" autocomplete="off" class="layui-input" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">劳动类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="log_type" autocomplete="off" class="layui-input" required>
+                <input type="text" name="logType" autocomplete="off" class="layui-input" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">劳动内容</label>
             <div class="layui-input-inline">
-                <input type="text" name="log_content" autocomplete="off" class="layui-input" required>
+                <input type="text" name="logContent" autocomplete="off" class="layui-input" required>
             </div>
         </div>
 
@@ -84,14 +84,14 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">劳动过程</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="labour_course" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入内容" name="logProcess" class="layui-textarea" id="logProcess"></textarea>
         </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">劳动效果</label>
         <div class="layui-input-block">
-                <textarea placeholder="请输入内容" name="labour_result" class="layui-textarea"></textarea>
+                <textarea placeholder="请输入内容" name="effect" class="layui-textarea" id="effect"></textarea>
         </div>
     </div>
 
@@ -99,7 +99,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">劳动感受</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="labour_feel" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入内容" name="result" class="layui-textarea" id="result"></textarea>
         </div>
     </div>
 
@@ -108,7 +108,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">劳动时间</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input" name="log_time" id="ID-laydate-shortcut-date">
+                <input type="text" class="layui-input" name="logTime" id="ID-laydate-shortcut-date">
             </div>
 
             <label class="layui-form-label">本人签字</label>
@@ -126,8 +126,8 @@
     <div class="layui-form-item" style="text-align: center">
         <div class="layui-row">
             <div class="layui-col-md-6 layui-col-md-offset-3">
-                <button class="layui-btn" lay-submit lay-filter="demo2">确认</button>
-                <button class="layui-btn" lay-submit lay-filter="demo3">保存</button>
+                <button class="layui-btn" lay-submit lay-filter="demo2" id="demo2">确认</button>
+                <button class="layui-btn" lay-submit lay-filter="demo3" id="demo3">保存</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -137,21 +137,45 @@
 </div>
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
 <script src="//unpkg.com/layui@2.8.4/dist/layui.js"></script>
+<script src="../static/js/jquery.min.js"></script>
 <script>
 //数据上传
-    layui.use(['form'], function(){
+    layui.use(['jquery', 'form'], function () {
         var form = layui.form;
         var layer = layui.layer;
         // 提交事件
-        form.on('submit(demo2)', function(data){
-            var field = data.field; // 获取表单字段值
-            // 显示填写结果，仅作演示用
-            layer.alert(JSON.stringify(field), {
-                title: '当前填写的字段值'
-            });
-            // 此处可执行 Ajax 等操作
-            // …
-            return false; // 阻止默认 form 跳转
+        layui.$('#demo2').on('click', function () {
+                let log = new FormData();
+				let userType = document.getElementById("userType").value;
+				let logClasses = document.getElementById("logClasses").value;
+				let logType = document.getElementById("logType").value;
+				let logContent = document.getElementById("logContent").value;
+				let location = document.getElementById("location").value;
+				let logProcess = document.getElementById("logProcess").value;
+				let effect = document.getElementById("effect").value;
+				let result = document.getElementById("result").value;
+				let logTime = document.getElementById("ID-laydate-shortcut-date").value;
+				log.append("userType", JSON.stringify(userType));
+				log.append("logClasses", JSON.stringify(logClasses));
+				log.append("logType", JSON.stringify(logType));
+				log.append("logContent", JSON.stringify(logContent));
+				log.append("location", JSON.stringify(location));
+				log.append("logProcess", JSON.stringify(logProcess));
+				log.append("effect", JSON.stringify(effect));
+				log.append("result", JSON.stringify(result));
+				log.append("logTime", JSON.stringify(logTime));
+				$.ajax({
+					url: '/logs/insert',
+					type: "POST",
+					contentType:false,
+					processData:false,
+					responseType:'blob',
+					data: log,
+					success: function (data) {
+						console.log('成功连接到接口insert');
+						console.log(data)
+					}
+				})
         });
     });
 </script>
