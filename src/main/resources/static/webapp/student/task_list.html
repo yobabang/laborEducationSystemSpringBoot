@@ -182,11 +182,14 @@
            console.log(data2)
            let table = document.getElementById('demo2');
            let html = '';
-           html += '<tr><td>' + "1: "+ '</td>' + '<td>' + data.data.userName + '</td></tr><br>'
-       + '<tr><td>' + "2:"+ '</td>' + '<td>' + data.data.unit + '</td></tr><br>'
-       + '<tr><td>' + "3:"+ '</td>' + '<td id="log_classes">' + data.data.classId + '</td></tr><br>'
-       + '<tr><td>' + "4:"+ '</td>' + '<td id="user_id">'+ data.data.userId + '</td></tr><br>';
+           let num = data2.data.length
+           console.log(data2.data.length)
+           for(let i = 0; i < num; i++){
+                let id = i + 1
+                html += '<tr><td>' + id + '.' +data2.data[i].noticeTitle+ '：</td><br>' + '<td>' + data2.data[i].noticeContent + '</td></tr><br>'
+           }
            table.innerHTML = html;
+
            /*console.log(data2);
            let table = document.getElementById('demo2');
            let html = '';
@@ -231,11 +234,11 @@
         el: ".con",
         methods: {
             changeEdit(row){
-            let reUrl = 'labour_log.html?name='+ row.name;
+            let reUrl = 'labour_log.html?logType='+ row.logType;
     		window.open(reUrl);
             },
             changeCheck(row){
-            let reUrl = 'labour_log.html?name='+ row.name;
+            let reUrl = 'labour_log.html?logType='+ row.logType;
     		window.open(reUrl);
             },
             filterState(value, row) {
@@ -257,22 +260,31 @@
                    let userId = response.data.userId;
                    axios({
                     method:"get",
-                    url:"/logs/userId/" + userId,
+                    url:"/listPlans/" + userId,
                     }).then(function (resp){
                     _this.tableData = resp.data.data;
                     console.log(resp.data.data)
                     console.log("111")
-                     _this.tableData.map(function (val) {
-                        if (val.logState == 0) {
-                            val.logState = '待完成'
-                        } else if (val.logState == 1) {
-                            val.logState = '已通过'
-                        } else if (val.logState == 2) {
-                            val.logState = '打回待修改'
-                        } else if (val.logState == 3) {
-                            val.logState = '待评阅'
-                        }
-                    })
+<!--                    _this.tableData.map(function (val) {-->
+<!--                        if (val.logType == 1) {-->
+<!--                            val.logType = '日常生活劳动'-->
+<!--                        } else if (val.logType == 2) {-->
+<!--                            val.logType = '服务性劳动'-->
+<!--                        } else if (val.logType == 3) {-->
+<!--                            val.logType = '生产劳动'-->
+<!--                        }-->
+<!--                    })-->
+<!--                     _this.tableData.map(function (val) {-->
+<!--                        if (val.logState == 0) {-->
+<!--                            val.logState = '待完成'-->
+<!--                        } else if (val.logState == 1) {-->
+<!--                            val.logState = '已通过'-->
+<!--                        } else if (val.logState == 2) {-->
+<!--                            val.logState = '打回待修改'-->
+<!--                        } else if (val.logState == 3) {-->
+<!--                            val.logState = '待评阅'-->
+<!--                        }-->
+<!--                    })-->
                   })
                },
                error: function(xhr, status, error) {
