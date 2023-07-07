@@ -44,15 +44,6 @@ public class ListPlanController {
         return new Result(flag ? Code.DELETE_OK:Code.DELETE_ERR,flag);
     }
 
-    @ApiOperation(value = "查询计划清单", notes = "根据计划清单ID查询计划清单信息")
-    @ApiImplicitParam(name = "listPlanId", value = "计划清单ID", required = true, dataType = "Integer",paramType = "path")
-    @GetMapping("/{id}")
-    public Result getById(@PathVariable Integer id){
-        ListPlan listPlan = listPlanService.getById(id);
-        Integer code = listPlan != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = listPlan != null ? "" : "数据查询失败";
-        return  new Result(code,listPlan,msg);
-    }
 
     @ApiOperation(value = "获取所有计划清单信息", notes = "获取所有计划清单信息")
     @GetMapping
