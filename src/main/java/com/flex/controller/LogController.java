@@ -83,18 +83,24 @@ public class LogController {
     public Result insert(@RequestBody Log log){
         Integer code;
         String msg;
+        System.out.println(log);
         // 使用BeanUtils进行属性赋值
         //BeanUtils.copyProperties(logDto, log);
         // 调用持久化操作将log保存到数据库中
-        int insert = logDao.insert(log);
-        if (insert == 1 ){
-             code = Code.SAVE_OK;
-             msg = "添加成功";
-        }else{
-            code = Code.SAVE_ERR;
-            msg = "添加失败";
+        try{
+            int insert = logDao.insert(log);
+            if (insert == 1 ){
+                code = Code.SAVE_OK;
+                msg = "添加成功";
+            }else{
+                code = Code.SAVE_ERR;
+                msg = "添加失败";
+            }
+            return new Result(code,msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(1123,"失败");
         }
-        return new Result(code,msg);
     }
 
 }
