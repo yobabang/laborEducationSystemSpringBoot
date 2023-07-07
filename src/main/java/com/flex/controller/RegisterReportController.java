@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.flex.dao.ListPlanDao;
 import com.flex.dao.RegisterReportDao;
 import com.flex.domain.ListPlan;
-import com.flex.domain.Log;
 import com.flex.domain.RegisterReport;
 import com.flex.service.RegisterReportService;
 import io.swagger.annotations.Api;
@@ -19,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/registerReports")
 @Api(tags = "社会实践活动报告管理")
-public class RegisterReporController {
+public class RegisterReportController {
 
     @Autowired
     private RegisterReportService registerReportService;
