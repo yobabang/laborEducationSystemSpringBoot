@@ -5,6 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>吉利学院劳动教育平台</title>
     <link href="//unpkg.com/layui@2.8.4/dist/css/layui.css" rel="stylesheet">
+    <style>
+        .left-cell {
+            text-align: left;
+            width: 10%;
+        }
+
+        .center-cell {
+            text-align: right;
+            width: 40%;
+        }
+
+        .right-cell {
+            text-align: right;
+            width: 8%;
+        }
+
+        .layui-row {
+            margin-top: 5px;
+        }
+
+        .center-aligned-select {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .center-aligned-select {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200%;
+            height: 50%;
+        }
+        .checkbox-cell {
+            text-align: center;
+            width: 10%;
+
+        }
+
+        .display-cell {
+            text-align: right;
+            width: 10%;
+        }
+
+
+    </style>
 
 </head>
 <body>
@@ -31,39 +76,55 @@
 <br>
 <div class="layui-panel">
     <div style="padding: 32px;">
-        <table >
+        <table>
             <tr >
-                <td align="center">
-                    <div class="layui-form layui-row layui-col-space16">
-
+                <td class="center-aligned">
+                    <div class="layui-form layui-row layui-col-space16 center-aligned-select">
                         <div class="layui-col-md6">
                             <select disabled>
                                 <option value="">禁用选择框</option>
-
                             </select>
                         </div>
-
                     </div>
                 </td>
             </tr>
-        </table>
-        <table>
             <tr>
-                <td>
+                <td class="left-cell">
                     <div class="layui-form layui-row layui-col-space16">
-                    <div class="layui-col-md6">
-                        <select>
-                            <option value="">请选择班级</option>
-                            <option value="AAA">log_name: <%=request.getAttribute("log_name")%></option>
-                            <option value="BBB">log_name: <%=request.getAttribute("log_name")%></option>
-                            <option value="CCC">log_name: <%=request.getAttribute("log_name")%></option>
-                        </select>
-                    </div>
+                        <div class="layui-col-md6">
+                            <select>
+                                <option value="">请选择班级</option>
+                                <option value="AAA">log_name: <%=request.getAttribute("log_name")%></option>
+                                <option value="BBB">log_name: <%=request.getAttribute("log_name")%></option>
+                                <option value="CCC">log_name: <%=request.getAttribute("log_name")%></option>
+                            </select>
+                        </div>
                     </div>
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="center-cell">
+                    <button class="layui-btn layui-btn-normal" onclick="exportScore()">成绩导出</button>
+                </td>
+                <td class="right-cell">
+                    <div class="layui-row">
+                        <div class="layui-col-md10">
+                            <input type="text" id="searchInput" placeholder="请输入搜索内容" class="layui-input">
+                        </div>
+                        <div class="layui-col-md2">
+                            <button class="layui-btn" onclick="search()">搜索</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="checkbox-cell">
+                    <div>
+                        <label><input type="radio" name="status" value="已交">已交</label>
+                        <label><input type="radio" name="status" value="未交">未交</label>
+                    </div>
+                </td>
+                <td class="display-cell">
+                    <span id="displayArea">已交多少，未交多少</span>
+                </td>
             </tr>
         </table>
     </div>
@@ -91,7 +152,16 @@
     </div>
 </script>
 
+<script>
+    function exportScore() {
+        // 在这里编写成绩导出的逻辑
+    }
 
+    function search() {
+        var searchContent = document.getElementById("searchInput").value;
+        // 在这里编写搜索功能的逻辑，可以根据searchContent的值进行搜索操作
+    }
+</script>
 
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
 <script src="//unpkg.com/layui@2.8.6/dist/layui.js"></script>
