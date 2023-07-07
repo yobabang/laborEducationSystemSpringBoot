@@ -1,7 +1,10 @@
 package com.flex.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.flex.dao.ListPlanDao;
 import com.flex.dao.PracticeDao;
+import com.flex.domain.ListPlan;
 import com.flex.domain.Practice;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -17,6 +20,9 @@ import java.util.List;
 public class PracticeController {
     @Autowired
     private PracticeDao practiceDao;
+
+    @Autowired
+    private ListPlanDao listPlanDao;
 
     @ApiOperation(value = "查询社会实践单位表", notes = "根据学生学号查询社会实践单位表信息")
     @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "String",paramType = "path")
@@ -49,6 +55,7 @@ public class PracticeController {
             code = Code.SAVE_ERR;
             msg = "添加失败";
         }
+
         return new Result(code,msg);
     }
 }
