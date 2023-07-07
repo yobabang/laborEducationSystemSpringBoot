@@ -44,40 +44,40 @@
 <br>
 <br>
 <div class="con" style="margin-top: 60px;">
-<form class="layui-form layui-form-pane" action="" method="post"><!--未指定uil-->
+<form class="layui-form layui-form-pane"  method="post" enctype="multipart/form-data"><!--未指定uil-->
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">本科类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="userType" autocomplete="off" class="layui-input" required>
+                <input type="text" name="userType" autocomplete="off" class="layui-input" id="userType" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">年级班级</label>
             <div class="layui-input-inline">
-                <input type="text" name="logClasses" autocomplete="off" class="layui-input" required>
+                <input type="text" name="logClasses" autocomplete="off" class="layui-input" id="logClasses" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">劳动类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="logType" autocomplete="off" class="layui-input" required>
+                <input type="text" name="logType" autocomplete="off" class="layui-input" id="logType" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">劳动内容</label>
             <div class="layui-input-inline">
-                <input type="text" name="logContent" autocomplete="off" class="layui-input" required>
+                <input type="text" name="logContent" autocomplete="off" class="layui-input" id="logContent" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">劳动地点</label>
             <div class="layui-input-inline">
-                <input type="text" name="location" autocomplete="off" class="layui-input" required>
+                <input type="text" name="location" autocomplete="off" class="layui-input" id="location" required>
             </div>
         </div>
     </div>
@@ -118,7 +118,7 @@
 
             <label class="layui-form-label">证明人</label>
             <div class="layui-input-inline">
-                <input type="text" name="????" autocomplete="off" class="layui-input" placeholder="打印后签字">
+                <input type="text" name="name_admin" autocomplete="off" class="layui-input" placeholder="打印后签字">
             </div>
         </div>
     </div>
@@ -145,7 +145,9 @@
         var layer = layui.layer;
         // 提交事件
         layui.$('#demo2').on('click', function () {
+                alert("确认按钮")
                 let log = new FormData();
+                alert("FormData创建成功")
 				let userType = document.getElementById("userType").value;
 				let logClasses = document.getElementById("logClasses").value;
 				let logType = document.getElementById("logType").value;
@@ -155,15 +157,29 @@
 				let effect = document.getElementById("effect").value;
 				let result = document.getElementById("result").value;
 				let logTime = document.getElementById("ID-laydate-shortcut-date").value;
-				log.append("userType", JSON.stringify(userType));
-				log.append("logClasses", JSON.stringify(logClasses));
-				log.append("logType", JSON.stringify(logType));
-				log.append("logContent", JSON.stringify(logContent));
-				log.append("location", JSON.stringify(location));
-				log.append("logProcess", JSON.stringify(logProcess));
-				log.append("effect", JSON.stringify(effect));
-				log.append("result", JSON.stringify(result));
-				log.append("logTime", JSON.stringify(logTime));
+				let logState = 3;
+				alert("数据创建成功")
+				log.append("userType", userType);
+				log.append("logClasses", logClasses);
+				log.append("logType", logType);
+				log.append("logContent", logContent);
+				log.append("location", location);
+				log.append("logProcess", logProcess);
+				log.append("effect", effect);
+				log.append("result", result);
+				log.append("logTime", logTime);
+				log.append("logState", logState);
+				for (var [a, b] of log.entries()) {
+						console.log(a, b);
+				}
+				alert("log数据添加完成")
+				let jsonData = {};
+                for (let [key, value] of log) {
+                  jsonData[key] = value;
+                }
+
+                log = JSON.stringify(jsonData);
+				console.log(log)
 				$.ajax({
 					url: '/logs/insert',
 					type: "POST",
@@ -172,10 +188,16 @@
 					responseType:'blob',
 					data: log,
 					success: function (data) {
-						console.log('成功连接到接口insert');
-						console.log(data)
+						alert('成功连接到接口insert');
+						if (data === 1) {
+							alert('新增成功');
+						} else {
+							alert('新增失败');
+							return false;
+						}
 					}
 				})
+				parent.layer.closeAll();
         });
     });
 </script>
