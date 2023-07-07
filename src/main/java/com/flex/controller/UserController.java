@@ -28,19 +28,6 @@ public class UserController {
     @Autowired
     private AdUserDao adUserDao;
 
-    @ApiOperation(value = "添加用户", notes = "添加用户信息")
-    public Result save(@RequestBody User user){
-        System.out.println("123.");
-        boolean flag = userService.save(user);
-        return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
-    }
-
-    @ApiOperation(value = "更新用户", notes = "更新用户信息")
-    @PutMapping
-    public Result update(@RequestBody User user){
-        boolean flag = userService.update(user);
-        return new Result(flag ? Code.UPDATE_OK:Code.UPDATE_ERR,flag);
-    }
 
     @ApiOperation(value = "删除用户", notes = "根据用户ID删除用户信息")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Integer",paramType = "path")

@@ -32,19 +32,6 @@ public class LogController {
     @Autowired
     private ListPlanDao listPlanDao;
 
-    @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
-    @PostMapping
-    public Result save(@RequestBody Log log){
-        boolean flag = logService.save(log);
-        return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
-    }
-
-    @ApiOperation(value = "更新劳动日志", notes = "更新劳动日志信息")
-    @PutMapping
-    public Result updata(@RequestBody Log log){
-        boolean flag = logService.update(log);
-        return new Result(flag ? Code.UPDATE_OK:Code.UPDATE_ERR,flag);
-    }
 
     @ApiOperation(value = "删除劳动日志", notes = "根据劳动日志ID删除劳动日志信息")
     @ApiImplicitParam(name = "logId", value = "劳动日志ID", required = true, dataType = "Integer",paramType = "path")
@@ -107,9 +94,6 @@ public class LogController {
             code = Code.SAVE_ERR;
             msg = "添加失败";
         }
-
-
-
         return new Result(code,msg);
     }
 
