@@ -2,7 +2,11 @@ package com.flex.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.flex.dao.ListPlanDao;
 import com.flex.dao.LogDao;
+import com.flex.domain.ListPlan;
 import com.flex.domain.Log;
 import com.flex.pojo.dto.LogDto;
 import com.flex.service.LogService;
@@ -25,19 +29,9 @@ public class LogController {
     @Autowired
     private LogDao logDao;
 
-    @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
-    @PostMapping
-    public Result save(@RequestBody Log log){
-        boolean flag = logService.save(log);
-        return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
-    }
+    @Autowired
+    private ListPlanDao listPlanDao;
 
-    @ApiOperation(value = "更新劳动日志", notes = "更新劳动日志信息")
-    @PutMapping
-    public Result updata(@RequestBody Log log){
-        boolean flag = logService.update(log);
-        return new Result(flag ? Code.UPDATE_OK:Code.UPDATE_ERR,flag);
-    }
 
     @ApiOperation(value = "删除劳动日志", notes = "根据劳动日志ID删除劳动日志信息")
     @ApiImplicitParam(name = "logId", value = "劳动日志ID", required = true, dataType = "Integer",paramType = "path")
@@ -69,7 +63,7 @@ public class LogController {
     @ApiOperation(value = "查询学生劳动日志", notes = "根据学生学号查询劳动日志信息")
     @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "String",paramType = "path")
     @GetMapping("/userId/{userId}")
-    public Result getLogByUserNumber(@PathVariable Long userId){
+    public Result getLogByUserid(@PathVariable Long userId){
         try {
             LambdaQueryWrapper<Log> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Log::getUserId, userId);
@@ -86,12 +80,11 @@ public class LogController {
 
     @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
     @PostMapping("/insert")
-    public Result insert(@RequestBody LogDto logDto){
+    public Result insert(@RequestBody Log log){
         Integer code;
         String msg;
-        Log log = new Log();
         // 使用BeanUtils进行属性赋值
-        BeanUtils.copyProperties(logDto, log);
+        //BeanUtils.copyProperties(logDto, log);
         // 调用持久化操作将log保存到数据库中
         int insert = logDao.insert(log);
         if (insert == 1 ){
@@ -103,7 +96,5 @@ public class LogController {
         }
         return new Result(code,msg);
     }
-
-
 
 }

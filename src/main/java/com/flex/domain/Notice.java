@@ -6,11 +6,11 @@ import lombok.Data;
 @Data
 @TableName("notice")
 public class Notice {
-    private long noticeId;
+    private Long noticeId;
     private String noticeTitle;
     private String noticeContent;
-    private long adId;
-    private int noticeType;
+    private Long adId;
+    private Integer noticeType;
     private String noticeReceiver;
     private Long userId;
 }

@@ -8,10 +8,10 @@ import java.util.Date;
 @Data
 @TableName("log")
 public class Log {
-    private long logId;
-    private int logType;
-    private long userId;
-    private int userType;
+    private Long logId;
+    private Integer logType;
+    private Long userId;
+    private Integer userType;
     private String logName;
     private String logUnit;
     private String logClasses;
@@ -22,6 +22,6 @@ public class Log {
     private String result;
     private Date logTime;
     private String logScore;
-    private int logState;
+    private Integer logState;
     private Date logMark;
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @TableName("blog")
 public class Blog {
-    private long blogId;
+    private Long blogId;
     private String blogTitle;
     private String blogContent;
     private String auName;
@@ -17,7 +17,7 @@ public class Blog {
     private String label;
     private Integer blogRead;
     private Integer likes;
-    private int comments;
+    private Long comments;
     private String fileAdd;
     private Integer blogState;
     private Date saveTime;

@@ -10,11 +10,12 @@ import java.util.Date;
 @Data
 @TableName("register_report")
 public class RegisterReport {
-    private long repId;
+    private Long repId;
+    private Long userId;
     private Integer repNature;
     private String repContent;
     private Date repTime;
-    private int repState;
+    private Integer repState;
     private String repScore;
     private Date reportMark;
 }

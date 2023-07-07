@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>吉利学院劳动教育平台</title>
-    <link href="//unpkg.com/layui@2.8.4/dist/css/layui.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>吉利学院劳动教育平台</title>
+  <link href="//unpkg.com/layui@2.8.4/dist/css/layui.css" rel="stylesheet">
+  <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+  <style>
         body {
             display: flex;
             justify-content: center;
@@ -21,22 +21,22 @@
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header" id="headername">
-        <ul class="layui-nav ">
-            <li class="layui-nav-item"><a href="task_list.html">首页</a></li>
-            <li class="layui-nav-item layui-this"><a href="labour_log.html">日常生活劳动日志</a></li>
-            <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="../static/img/head.png" class="layui-nav-img">
-                    {{user.userName}}
-                </a>
+  <div class="layui-header" id="headername">
+    <ul class="layui-nav ">
+      <li class="layui-nav-item"><a href="task_list.html">首页</a></li>
+      <li class="layui-nav-item layui-this"><a href="labour_log.html">日常生活劳动日志</a></li>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="../static/img/head.png" class="layui-nav-img">
+            {{user.userName}}
+          </a>
 
-            </li>
-            <li class="layui-nav-item"><a href="../../login.html">退出</a></li>
-        </ul>
-        </ul>
-    </div>
+        </li>
+        <li class="layui-nav-item"><a href="../../login.html">退出</a></li>
+      </ul>
+    </ul>
+  </div>
 
 </div>
 <br>
@@ -44,96 +44,96 @@
 <br>
 <br>
 <div class="con" style="margin-top: 60px;">
-<form class="layui-form layui-form-pane" action="" method="post"><!--未指定uil-->
+  <form class="layui-form layui-form-pane" action="" method="post"><!--未指定uil-->
     <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">本科类型</label>
-            <div class="layui-input-inline">
-                <input type="text" name="user_type" autocomplete="off" class="layui-input" required>
-            </div>
+      <div class="layui-inline">
+        <label class="layui-form-label">本科类型</label>
+        <div class="layui-input-inline">
+          <input type="text" name="user_type" autocomplete="off" class="layui-input" required>
         </div>
+      </div>
 
-        <div class="layui-inline">
-            <label class="layui-form-label">年级班级</label>
-            <div class="layui-input-inline">
-                <input type="text" name="log_classes" autocomplete="off" class="layui-input" required>
-            </div>
+      <div class="layui-inline">
+        <label class="layui-form-label">年级班级</label>
+        <div class="layui-input-inline">
+          <input type="text" name="log_classes" autocomplete="off" class="layui-input" required>
         </div>
+      </div>
 
-        <div class="layui-inline">
-            <label class="layui-form-label">劳动类型</label>
-            <div class="layui-input-inline">
-                <input type="text" name="log_type" autocomplete="off" class="layui-input" required>
-            </div>
+      <div class="layui-inline">
+        <label class="layui-form-label">劳动类型</label>
+        <div class="layui-input-inline">
+          <input type="text" name="log_type" autocomplete="off" class="layui-input" required>
         </div>
+      </div>
 
-        <div class="layui-inline">
-            <label class="layui-form-label">劳动内容</label>
-            <div class="layui-input-inline">
-                <input type="text" name="log_content" autocomplete="off" class="layui-input" required>
-            </div>
+      <div class="layui-inline">
+        <label class="layui-form-label">劳动内容</label>
+        <div class="layui-input-inline">
+          <input type="text" name="log_content" autocomplete="off" class="layui-input" required>
         </div>
+      </div>
 
-        <div class="layui-inline">
-            <label class="layui-form-label">劳动地点</label>
-            <div class="layui-input-inline">
-                <input type="text" name="location" autocomplete="off" class="layui-input" required>
-            </div>
+      <div class="layui-inline">
+        <label class="layui-form-label">劳动地点</label>
+        <div class="layui-input-inline">
+          <input type="text" name="location" autocomplete="off" class="layui-input" required>
         </div>
+      </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">劳动过程</label>
-        <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="labour_course" class="layui-textarea"></textarea>
-        </div>
+      <label class="layui-form-label">劳动过程</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" name="labour_course" class="layui-textarea"></textarea>
+      </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">劳动效果</label>
-        <div class="layui-input-block">
-                <textarea placeholder="请输入内容" name="labour_result" class="layui-textarea"></textarea>
-        </div>
+      <label class="layui-form-label">劳动效果</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" name="labour_result" class="layui-textarea"></textarea>
+      </div>
     </div>
 
 
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">劳动感受</label>
-        <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="labour_feel" class="layui-textarea"></textarea>
-        </div>
+      <label class="layui-form-label">劳动感受</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" name="labour_feel" class="layui-textarea"></textarea>
+      </div>
     </div>
 
 
     <div class="center-container">
-        <div class="layui-form-item">
-            <label class="layui-form-label">劳动时间</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input" name="log_time" id="ID-laydate-shortcut-date">
-            </div>
-
-            <label class="layui-form-label">本人签字</label>
-            <div class="layui-input-inline">
-                <input type="text" name="log_name" autocomplete="off" class="layui-input" placeholder="打印后签字">
-            </div>
-
-            <label class="layui-form-label">证明人</label>
-            <div class="layui-input-inline">
-                <input type="text" name="????" autocomplete="off" class="layui-input" placeholder="打印后签字">
-            </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">劳动时间</label>
+        <div class="layui-input-inline">
+          <input type="text" class="layui-input" name="log_time" id="ID-laydate-shortcut-date">
         </div>
+
+        <label class="layui-form-label">本人签字</label>
+        <div class="layui-input-inline">
+          <input type="text" name="log_name" autocomplete="off" class="layui-input" placeholder="打印后签字">
+        </div>
+
+        <label class="layui-form-label">证明人</label>
+        <div class="layui-input-inline">
+          <input type="text" name="????" autocomplete="off" class="layui-input" placeholder="打印后签字">
+        </div>
+      </div>
     </div>
 
     <div class="layui-form-item" style="text-align: center">
-        <div class="layui-row">
-            <div class="layui-col-md-6 layui-col-md-offset-3">
-                <button class="layui-btn" lay-submit lay-filter="demo2">确认</button>
-                <button class="layui-btn" lay-submit lay-filter="demo3">保存</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
+      <div class="layui-row">
+        <div class="layui-col-md-6 layui-col-md-offset-3">
+          <button class="layui-btn" lay-submit lay-filter="demo2">确认</button>
+          <button class="layui-btn" lay-submit lay-filter="demo3">保存</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
+      </div>
     </div>
 
-</form>
+  </form>
 </div>
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
 <script src="//unpkg.com/layui@2.8.4/dist/layui.js"></script>

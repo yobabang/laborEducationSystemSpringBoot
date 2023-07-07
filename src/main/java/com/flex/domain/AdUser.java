@@ -9,9 +9,9 @@ public class AdUser {
     private String adName;
     private String adAccount;
     private String adPassword;
-    private int obj;
+    private Integer obj;
     private Integer adAlter;
-    private long adId;
+    private Long adId;
     private String adPhone;
     private String adEmail;
     private String remark;

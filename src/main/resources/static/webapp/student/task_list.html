@@ -18,7 +18,7 @@
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" id="headername">
 <ul class="layui-nav ">
-    <li class="layui-nav-item layui-this"><a href="http://localhost:63342/labour/webapp/student/head.html?_ijt=2vgpls49jtg4ro1egcrkbuei73&_ij_reload=RELOAD_ON_SAVE">首页</a></li>
+    <li class="layui-nav-item layui-this"><a href="task_list.html">首页</a></li>
 </ul>
 <ul class="layui-nav layui-layout-right">
     <li class="layui-nav-item">
@@ -105,25 +105,25 @@
             max-height="1000">
         <el-table-column
                 fixed
-                prop="logType"
+                prop="listType"
                 label="任务名称"
                 min-width="50%">
         </el-table-column>
         <el-table-column
-                prop="logState"
+                prop="listState"
                 label="状态"
                 min-width="20%"
                 :filters="[{ text: '待完成', value: '待完成' }, { text: '已通过', value: '已通过' }, { text: '待评阅', value: '待评阅' },{ text: '打回待修改', value: '打回待修改' }]"
                 :filter-method="filterState"
                 filter-placement="bottom-end">
             <template slot-scope="scope">
-                <el-tag v-for="item in logState" v-show="scope.row.logState == item.label" :key="item.label" :type="item.cssName" >
+                <el-tag v-for="item in listState" v-show="scope.row.listState == item.label" :key="item.label" :type="item.cssName" >
                     {{item.label}}
                 </el-tag>
             </template>
         </el-table-column>
         <el-table-column
-                prop="logTime"
+                prop="listTime"
                 label="最后的修改时间"
                 sortable
                 min-width="20%">
@@ -133,10 +133,11 @@
                 label="操作"
                 min-width="10%">
             <template slot-scope="scope">
-                <el-button v-if="scope.row.logState === '待完成'" name="button1" @click="changeEdit(scope.row)" type="text" size="medium">编辑</el-button>
-                <el-button v-if="scope.row.logState === '待评阅'" name="button2" @click="changeCheck(scope.row)" type="text" size="medium">查看</el-button>
-                <el-button v-if="scope.row.logState === '已通过'" name="button3" @click="changeCheck(scope.row)" type="text" size="medium">查看</el-button>
-                <el-button v-if="scope.row.logState === '打回待修改'" name="button4" @click="changeEdit(scope.row)" type="text" size="medium">编辑</el-button>
+                <el-button v-if="scope.row.listState === '待完成'" name="button1" @click="changeEdit(scope.row)" type="text" size="medium">编辑</el-button>
+                <el-button v-if="scope.row.listState === '待评阅'" name="button2" @click="changeCheck(scope.row)" type="text" size="medium">查看</el-button>
+                <el-button v-if="scope.row.listState === '已通过'" name="button3" @click="changeCheck(scope.row)" type="text" size="medium">查看</el-button>
+                <el-button v-if="scope.row.listState === '打回待修改'" name="button4" @click="changeEdit(scope.row)" type="text" size="medium">编辑</el-button>
+                <el-button v-if="scope.row.listState === '编辑中'" name="button5" @click="changeEdited(scope.row)" type="text" size="medium">编辑</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -182,11 +183,14 @@
            console.log(data2)
            let table = document.getElementById('demo2');
            let html = '';
-           html += '<tr><td>' + "1: "+ '</td>' + '<td>' + data.data.userName + '</td></tr><br>'
-       + '<tr><td>' + "2:"+ '</td>' + '<td>' + data.data.unit + '</td></tr><br>'
-       + '<tr><td>' + "3:"+ '</td>' + '<td id="log_classes">' + data.data.classId + '</td></tr><br>'
-       + '<tr><td>' + "4:"+ '</td>' + '<td id="user_id">'+ data.data.userId + '</td></tr><br>';
+           let num = data2.data.length
+           console.log(data2.data.length)
+           for(let i = 0; i < num; i++){
+                let id = i + 1
+                html += '<tr><td>' + id + '.' +data2.data[i].noticeTitle+ '：</td><br>' + '<td>' + data2.data[i].noticeContent + '</td></tr><br>'
+           }
            table.innerHTML = html;
+
            /*console.log(data2);
            let table = document.getElementById('demo2');
            let html = '';
@@ -231,15 +235,19 @@
         el: ".con",
         methods: {
             changeEdit(row){
-            let reUrl = 'labour_log.html?name='+ row.name;
-    		window.open(reUrl);
+            let reUrl = 'labour_log.html?listType='+ row.listType;
+    		window.location.href = reUrl;
+            },
+            changeEdited(row){
+            let reUrl = 'labour_log_ed.html?listType='+ row.listType;
+    		window.location.href = reUrl;
             },
             changeCheck(row){
-            let reUrl = 'labour_log.html?name='+ row.name;
-    		window.open(reUrl);
+                let reUrl = 'labour_log_check.html?listType='+ row.listType;
+                window.location.href = reUrl;
             },
             filterState(value, row) {
-					return row.province === value;
+					return row.listState === value;
 				  },
 
         },
@@ -257,20 +265,39 @@
                    let userId = response.data.userId;
                    axios({
                     method:"get",
-                    url:"/logs/userId/" + userId,
+                    url:"/listPlans/" + userId,
                     }).then(function (resp){
-                    _this.tableData = resp.data.data;
-                    console.log(resp.data.data)
-                    console.log("111")
+                    let num = resp.data.data.length
+                    for(let i = 0; i < num; i++){
+                        _this.tableData.push(resp.data.data[i]);
+                    }
+                    console.log(_this.tableData)
+                    _this.tableData.map(function (val) {
+                        if (val.listType == 1) {
+                            val.listType = '日常生活劳动'
+                        } else if (val.listType == 2) {
+                            val.listType = '服务性劳动'
+                        } else if (val.listType == 3) {
+                            val.listType = '生产劳动'
+                        }else if (val.listType == 4) {
+                            val.logType = '社会实践登记表'
+                        }else if (val.listType == 5) {
+                            val.listType = '社会实践报告'
+                        }else if (val.listType == 6) {
+                            val.listType = '社会实践日志'
+                        }
+                    })
                      _this.tableData.map(function (val) {
-                        if (val.logState == 0) {
-                            val.logState = '待完成'
-                        } else if (val.logState == 1) {
-                            val.logState = '已通过'
-                        } else if (val.logState == 2) {
-                            val.logState = '打回待修改'
-                        } else if (val.logState == 3) {
-                            val.logState = '待评阅'
+                        if (val.listState == 0) {
+                            val.listState = '待完成'
+                        } else if (val.listState == 1) {
+                            val.listState = '已通过'
+                        } else if (val.listState == 2) {
+                            val.listState = '打回待修改'
+                        } else if (val.listState == 3) {
+                            val.listState = '待评阅'
+                        } else if (val.listState == 4) {
+                            val.listState = '编辑中'
                         }
                     })
                   })
@@ -284,37 +311,13 @@
         },
         data() {
             return {
-                logState: [
+                listState: [
 						{label: '待完成', cssName: 'danger'},
 						{label: '打回待修改', cssName: 'info'},
 						{label: '待评阅', cssName: 'primary'},
 						{label: '已通过', cssName: 'success'},
 					],
-                tableData: [{
-                    logTime: '2016-05-03',
-                    logType: '劳动日志（日常劳动）',
-                    logState: '打回待修改',
-                }, {
-                    logTime: '2016-05-02',
-                    logType: '劳动日志（社会劳动）',
-                    logState: '待完成',
-                }, {
-                    logTime: '2016-05-04',
-                    logType: '劳动日志（服务劳动）',
-                    logState: '待评阅',
-                }, {
-                    logTime: '2016-05-01',
-                    logType: '社会实践报告',
-                    logState: '已通过',
-                }, {
-                    logTime: '2016-05-08',
-                    logType: '社会实践登记表',
-                    logState: '已通过',
-                }, {
-                    logTime: '2016-05-06',
-                    logType: '社会实践日志',
-                    logState: '已通过',
-                }]
+                tableData: []
             }
         }
     })

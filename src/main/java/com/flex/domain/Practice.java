@@ -7,6 +7,7 @@ import lombok.Data;
 @TableName("practice")
 public class Practice {
     private Integer praId;
+    private Integer userId;
     private String praUnit;
     private String project;
     private String registerLocation;

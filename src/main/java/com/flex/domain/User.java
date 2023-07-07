@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @TableName("user")
 public class User {
-    private long userId;
+    private Long userId;
     private String userName;
     private String userAccount;
     private String userPassword;
@@ -15,12 +15,12 @@ public class User {
     private String unit;
     private String grade;
     private String major;
-    private long classId;
+    private Long classId;
     private String politics;
     private String phone;
     private String email;
     private String remark;
-    private int type;
-    private long adId;
-    private int number;
+    private Integer type;
+    private Long adId;
+    private Integer number;
 }

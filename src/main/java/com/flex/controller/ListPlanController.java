@@ -1,5 +1,7 @@
 package com.flex.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.flex.dao.ListPlanDao;
 import com.flex.domain.ListPlan;
 import com.flex.service.ListPlanService;
 import io.swagger.annotations.Api;
@@ -17,19 +19,9 @@ public class ListPlanController {
     @Autowired
     private ListPlanService listPlanService;
 
-    @ApiOperation(value = "添加计划清单", notes = "添加计划清单信息")
-    @PostMapping
-    public Result save(@RequestBody ListPlan listPlan){
-        boolean flag = listPlanService.save(listPlan);
-        return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
-    }
+    @Autowired
+    private ListPlanDao listPlanDao;
 
-    @ApiOperation(value = "更新计划清单", notes = "更新计划清单信息")
-    @PutMapping
-    public Result updata(@RequestBody ListPlan listPlan){
-        boolean flag = listPlanService.update(listPlan);
-        return new Result(flag ? Code.UPDATE_OK:Code.UPDATE_ERR,flag);
-    }
 
     @ApiOperation(value = "删除计划清单", notes = "根据计划清单ID删除计划清单信息")
     @ApiImplicitParam(name = "listPlanId", value = "计划清单ID", required = true, dataType = "Integer",paramType = "path")
@@ -39,15 +31,6 @@ public class ListPlanController {
         return new Result(flag ? Code.DELETE_OK:Code.DELETE_ERR,flag);
     }
 
-    @ApiOperation(value = "查询计划清单", notes = "根据计划清单ID查询计划清单信息")
-    @ApiImplicitParam(name = "listPlanId", value = "计划清单ID", required = true, dataType = "Integer",paramType = "path")
-    @GetMapping("/{id}")
-    public Result getById(@PathVariable Integer id){
-        ListPlan listPlan = listPlanService.getById(id);
-        Integer code = listPlan != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = listPlan != null ? "" : "数据查询失败";
-        return  new Result(code,listPlan,msg);
-    }
 
     @ApiOperation(value = "获取所有计划清单信息", notes = "获取所有计划清单信息")
     @GetMapping
@@ -57,4 +40,40 @@ public class ListPlanController {
         String msg = listPlans != null ? "" : "数据查询失败";
         return new Result(code,listPlans,msg);
     }
+
+    @ApiOperation(value = "获取计划清单信息", notes = "根据学院年纪专业获取计划清单信息")
+    @GetMapping("/{unit}/{grade}/{major}")
+    public Result getByUnitGradeMajor(@PathVariable String unit,@PathVariable String grade,@PathVariable String major){
+        try{
+            LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(ListPlan::getListUnit,unit)
+                    .eq(ListPlan::getListGrade,grade)
+                    .eq(ListPlan::getListMajor,major);
+            List<ListPlan> listPlans = listPlanDao.selectList(queryWrapper);
+            Integer code = listPlans != null ? Code.GET_OK : Code.GET_ERR;
+            String msg = listPlans != null ? "数据查询成功" : "数据查询失败";
+            return new Result(code, listPlans, msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(5001, null, "数据查询报错");
+        }
+    }
+
+    @ApiOperation(value = "获取计划清单信息", notes = "根据用户id获取计划清单信息")
+    @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "Long",paramType = "path")
+    @GetMapping("/{userId}")
+    public Result getByUserId(@PathVariable Long userId){
+        try{
+            LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(ListPlan::getUserId,userId);
+            List<ListPlan> listPlans = listPlanDao.selectList(queryWrapper);
+            Integer code = listPlans != null ? Code.GET_OK : Code.GET_ERR;
+            String msg = listPlans != null ? "数据查询成功" : "数据查询失败";
+            return new Result(code, listPlans, msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(5001, null, "数据查询报错");
+        }
+    }
+
 }

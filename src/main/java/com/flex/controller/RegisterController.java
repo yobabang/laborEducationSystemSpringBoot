@@ -1,9 +1,10 @@
 package com.flex.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.flex.dao.ListPlanDao;
 import com.flex.dao.RegisterDao;
-import com.flex.domain.Log;
+import com.flex.domain.ListPlan;
 import com.flex.domain.Register;
 import com.flex.service.RegisterService;
 import io.swagger.annotations.Api;
@@ -25,19 +26,11 @@ public class RegisterController {
     @Autowired
     private RegisterService registerService;
 
-    @ApiOperation(value = "添加社会实践活动登记", notes = "添加社会实践活动登记信息")
-    @PostMapping
-    public Result save(@RequestBody Register register){
-        boolean flag = registerService.save(register);
-        return new Result(flag ? Code.SAVE_OK:Code.SAVE_ERR,flag);
-    }
+    @Autowired
+    private ListPlanDao listPlanDao;
 
-    @ApiOperation(value = "更新社会实践活动登记", notes = "更新社会实践活动登记信息")
-    @PutMapping
-    public Result updata(@RequestBody Register register){
-        boolean flag = registerService.update(register);
-        return new Result(flag ? Code.UPDATE_OK:Code.UPDATE_ERR,flag);
-    }
+
+
 
     @ApiOperation(value = "删除社会实践活动登记", notes = "根据社会实践活动登记ID删除社会实践活动登记信息")
     @ApiImplicitParam(name = "registerId", value = "社会实践活动登记ID", required = true, dataType = "Integer",paramType = "path")
@@ -69,7 +62,7 @@ public class RegisterController {
     @ApiOperation(value = "查询学生社会活动登记表", notes = "根据学生学号查询社会活动登记表")
     @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "String",paramType = "path")
     @GetMapping("/userId/{userId}")
-    public Result getLogByUserNumber(@PathVariable Long userId){
+    public Result getRegisterByUserId(@PathVariable Long userId){
         try {
             LambdaQueryWrapper<Register> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Register::getUserId, userId);
@@ -83,4 +76,28 @@ public class RegisterController {
             return new Result(5001, null, "数据查询报错");
         }
     }
+
+    @ApiOperation(value = "添加社会活动登记表", notes = "添加社会活动登记表")
+    @PostMapping("/insert")
+    public Result insert(@RequestBody Register register){
+        Integer code;
+        String msg;
+        int insert = registerDao.insert(register);
+        if (insert == 1 ){
+            code = Code.SAVE_OK;
+            msg = "添加成功";
+        }else{
+            code = Code.SAVE_ERR;
+            msg = "添加失败";
+        }
+        //设置list_pan状态
+        LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ListPlan::getUserId,register.getUserId());
+        LambdaUpdateWrapper<ListPlan> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.set(ListPlan::getListState,register.getRegState());
+        listPlanDao.update(null,updateWrapper);
+
+        return new Result(code,msg);
+    }
+
 }
