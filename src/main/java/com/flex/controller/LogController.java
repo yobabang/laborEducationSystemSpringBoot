@@ -86,6 +86,7 @@ public class LogController {
         // 使用BeanUtils进行属性赋值
         //BeanUtils.copyProperties(logDto, log);
         // 调用持久化操作将log保存到数据库中
+        try{
             int insert = logDao.insert(log);
             if (insert == 1 ){
                 code = Code.SAVE_OK;
@@ -94,13 +95,16 @@ public class LogController {
                 code = Code.SAVE_ERR;
                 msg = "添加失败";
             }
-
-        LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ListPlan::getUserId,log.getUserId());
-        LambdaUpdateWrapper<ListPlan> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.set(ListPlan::getListState,log.getLogState());
-        listPlanDao.update(null,updateWrapper);
+            LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(ListPlan::getUserId,log.getUserId());
+            LambdaUpdateWrapper<ListPlan> updateWrapper = new LambdaUpdateWrapper<>();
+            updateWrapper.set(ListPlan::getListState,log.getLogState());
+            listPlanDao.update(null,updateWrapper);
             return new Result(code,msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(123,"msg");
+        }
     }
 
 }
