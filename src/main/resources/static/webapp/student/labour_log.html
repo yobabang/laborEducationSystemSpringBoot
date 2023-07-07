@@ -45,7 +45,7 @@
 <br>
 <br>
 <br>
-<form class="layui-form layui-form-pane" action="" method="post"><!--未指定uil-->
+<form class="layui-form layui-form-pane" action="" method="post" id="log"><!--未指定uil-->
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">本科类型</label>
@@ -92,14 +92,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">劳动效果</label>
         <div class="layui-input-block">
-            <div class="layui-upload">
-                <button type="button" class="layui-btn" id="uploadBtn">上传图片</button>
-                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
-                    预览图：
-                    <div class="layui-upload-list" id="previewContainer"></div>
-                </blockquote>
-                <textarea placeholder="请输入内容" name="labour_result" class="layui-textarea"></textarea>
-            </div>
+            <textarea placeholder="请输入内容" name="labour_result" class="layui-textarea"></textarea>
         </div>
     </div>
 
@@ -131,10 +124,12 @@
         </div>
     </div>
 
+
     <div class="layui-form-item" style="text-align: center">
         <div class="layui-row">
             <div class="layui-col-md-6 layui-col-md-offset-3">
-                <button class="layui-btn" lay-submit lay-filter="demo2">确认</button>
+                <button class="layui-btn" lay-submit lay-filter="1">提交</button>
+                <button class="layui-btn" lay-submit lay-filter="2">保存</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -647,41 +642,8 @@
         });
 </script>-->
 
-<!--<script>
-    layui.use(['layer', 'upload'], function () {
-        var layer = layui.layer;
-        var upload = layui.upload;
 
-        // 多图上传
-        upload.render({
-            elem: '#uploadBtn',
-            url: '/upload/???????????????????????????????????',
-            multiple: true,
-            done: function (res) {
-                // 上传完毕回调
-                if (res.code === 0) {
-                    // 成功上传
-                    var previewContainer = document.getElementById('previewContainer');
-                    var imgWidth = '200px';  // 图片宽度
-                    var imgHeight = '200px';  // 图片高度
-                    var html = '<div class="layui-upload-item">';
-                    html += '<img src="' + res.data.url + '" alt="预览图" style="width: ' + imgWidth + '; height: ' + imgHeight + ';">';
-                    html += '<div class="layui-upload-item-del" data-url="' + res.data.url + '"><i class="layui-icon layui-icon-close"></i></div></div>';
-                    previewContainer.innerHTML += html;
-                } else {
-                    // 上传失败
-                    layer.msg('图片上传失败，请重试');
-                }
-            }
-        });
 
-        // 删除已上传图片
-        layui.$(document).on('click', '.layui-upload-item-del', function () {
-            var url = layui.$(this).data('url');
-            layui.$(this).parent().remove();
-            // TODO: 将删除的图片URL从文本框中移除
-        });
-    });
-</script>-->
+
 </body>
 </html>
