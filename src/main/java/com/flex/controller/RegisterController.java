@@ -1,7 +1,10 @@
 package com.flex.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.flex.dao.ListPlanDao;
 import com.flex.dao.RegisterDao;
+import com.flex.domain.ListPlan;
 import com.flex.domain.Register;
 import com.flex.service.RegisterService;
 import io.swagger.annotations.Api;
@@ -22,6 +25,9 @@ public class RegisterController {
 
     @Autowired
     private RegisterService registerService;
+
+    @Autowired
+    private ListPlanDao listPlanDao;
 
     @ApiOperation(value = "添加社会实践活动登记", notes = "添加社会实践活动登记信息")
     @PostMapping
@@ -95,6 +101,13 @@ public class RegisterController {
             code = Code.SAVE_ERR;
             msg = "添加失败";
         }
+        //设置list_pan状态
+        LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ListPlan::getUserId,register.getUserId());
+        LambdaUpdateWrapper<ListPlan> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.set(ListPlan::getListState,register.getRegState());
+        listPlanDao.update(null,updateWrapper);
+
         return new Result(code,msg);
     }
 

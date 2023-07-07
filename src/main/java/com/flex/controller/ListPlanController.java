@@ -81,5 +81,21 @@ public class ListPlanController {
         }
     }
 
+    @ApiOperation(value = "获取计划清单信息", notes = "根据用户id获取计划清单信息")
+    @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "Long",paramType = "path")
+    @GetMapping("/{userId}")
+    public Result getByUserId(@PathVariable Long userId){
+        try{
+            LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(ListPlan::getUserId,userId);
+            List<ListPlan> listPlans = listPlanDao.selectList(queryWrapper);
+            Integer code = listPlans != null ? Code.GET_OK : Code.GET_ERR;
+            String msg = listPlans != null ? "数据查询成功" : "数据查询失败";
+            return new Result(code, listPlans, msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(5001, null, "数据查询报错");
+        }
+    }
 
 }

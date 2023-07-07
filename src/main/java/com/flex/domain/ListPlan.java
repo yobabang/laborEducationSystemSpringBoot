@@ -18,6 +18,7 @@ public class ListPlan {
     private String listGrade;
     private String listMajor;
     private String listClass;
-    private String userId;
+    private Long userId;
     private Long noticeId;
+    private Integer listState;
 }

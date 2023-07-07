@@ -2,7 +2,11 @@ package com.flex.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.flex.dao.ListPlanDao;
 import com.flex.dao.LogDao;
+import com.flex.domain.ListPlan;
 import com.flex.domain.Log;
 import com.flex.pojo.dto.LogDto;
 import com.flex.service.LogService;
@@ -24,6 +28,9 @@ public class LogController {
 
     @Autowired
     private LogDao logDao;
+
+    @Autowired
+    private ListPlanDao listPlanDao;
 
     @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
     @PostMapping
@@ -86,12 +93,11 @@ public class LogController {
 
     @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
     @PostMapping("/insert")
-    public Result insert(@RequestBody LogDto logDto){
+    public Result insert(@RequestBody Log log){
         Integer code;
         String msg;
-        Log log = new Log();
         // 使用BeanUtils进行属性赋值
-        BeanUtils.copyProperties(logDto, log);
+        //BeanUtils.copyProperties(logDto, log);
         // 调用持久化操作将log保存到数据库中
         int insert = logDao.insert(log);
         if (insert == 1 ){
@@ -101,6 +107,9 @@ public class LogController {
             code = Code.SAVE_ERR;
             msg = "添加失败";
         }
+
+
+
         return new Result(code,msg);
     }
 
