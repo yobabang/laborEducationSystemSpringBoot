@@ -83,9 +83,10 @@ public class LogController {
     public Result insert(@RequestBody Log log){
         Integer code;
         String msg;
+        System.out.println("接收log:");
+        System.out.println("123123123123123"+log);
         // 使用BeanUtils进行属性赋值
         //BeanUtils.copyProperties(logDto, log);
-        // 调用持久化操作将log保存到数据库中
         try{
             int insert = logDao.insert(log);
             if (insert == 1 ){
