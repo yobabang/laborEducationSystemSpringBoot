@@ -96,7 +96,8 @@ public class LogController {
                 msg = "添加失败";
             }
             LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(ListPlan::getUserId,log.getUserId());
+            queryWrapper.eq(ListPlan::getUserId,log.getUserId())
+                    .eq(ListPlan::getListType,log.getLogType());
             LambdaUpdateWrapper<ListPlan> updateWrapper = new LambdaUpdateWrapper<>();
             updateWrapper.set(ListPlan::getListState,log.getLogState());
             listPlanDao.update(null,updateWrapper);
