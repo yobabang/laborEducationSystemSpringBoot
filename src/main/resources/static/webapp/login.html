@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no" />
   <title>吉利学院劳动教育平台</title>
-  <link rel="shortcut icon" href="webapp/static/img/head2.png" type="image/x-icon">
-  <link rel="stylesheet" href="webapp/static/css/style.css">
-  <link rel="stylesheet" href="webapp/static/layui/css/layui.css">
-  <link rel="stylesheet" href="webapp/static/css/login_bg.css">
-  <script src="webapp/static/layui/layui.js"></script>
-  <script src="webapp/static/js/jquery-3.6.0.min.js"></script>
+  <link rel="shortcut icon" href="static/img/head2.png" type="image/x-icon">
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="static/layui/css/layui.css">
+  <link rel="stylesheet" href="static/css/login_bg.css">
+  <script src="static/layui/layui.js"></script>
+  <script src="static/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body >
@@ -69,8 +69,8 @@
 </div>
 
 <!-- 注册与登录的跳转与事件处理 -->
-<script src="webapp/static/js/home-script.js"></script>
-<script src="webapp/static/js/axios-0.18.0.js"></script>
+<script src="static/js/home-script.js"></script>
+<script src="static/js/axios-0.18.0.js"></script>
 
 <script>
   document.getElementById("butn").onclick = function (){
@@ -91,9 +91,9 @@
     }).then(function (resp){
       console.log(identity)
       if(resp.data.msg == "登陆成功" && identity == "1"){
-        location.href = "webapp/student/task_list.html"
+        location.href = "student/task_list.html"
       }else if(resp.data.msg== "登陆成功" && identity == "2"){
-        location.href = "webapp/teacher/ClassList.html"
+        location.href = "teacher/ClassList.html"
        }
       else if(resp.data.msg== "登陆失败"){
        alert("用户名或密码错误")
