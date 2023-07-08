@@ -44,7 +44,7 @@
 <br>
 <br>
 <div class="con" style="margin-top: 60px;">
-<form class="layui-form layui-form-pane"  method="post" enctype="multipart/form-data"><!--未指定uil-->
+<form class="layui-form layui-form-pane" action="" method="post" enctype="multipart/form-data"><!--未指定uil-->
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">本科类型</label>
@@ -180,6 +180,7 @@ function getUrlSearch(name) {
 				let result = document.getElementById("result").value;
 				let logTime = document.getElementById("ID-laydate-shortcut-date").value;
 				let logState = 3;
+				let userId = 211123120101;
 				alert("数据创建成功")
 				log.append("userType", userType);
 				log.append("logClasses", logClasses);
@@ -191,6 +192,7 @@ function getUrlSearch(name) {
 				log.append("result", result);
 				log.append("logTime", logTime);
 				log.append("logState", logState);
+				log.append("userId", userId);
 				for (var [a, b] of log.entries()) {
 						console.log(a, b);
 				}
@@ -199,15 +201,15 @@ function getUrlSearch(name) {
                 for (let [key, value] of log) {
                   jsonData[key] = value;
                 }
-
                 log = JSON.stringify(jsonData);
-				console.log(log)
+				console.log("log:" + log)
 				$.ajax({
 					url: '/logs/insert',
 					type: "POST",
 					data: log,
 					success: function (data) {
 						alert('成功连接到接口insert');
+						alert(data)
 					}
 				})
         });
@@ -252,7 +254,6 @@ function getUrlSearch(name) {
                 for (let [key, value] of log) {
                   jsonData[key] = value;
                 }
-
                 log = JSON.stringify(jsonData);
 				console.log(log)
 				$.ajax({
