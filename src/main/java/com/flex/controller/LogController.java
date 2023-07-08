@@ -79,7 +79,7 @@ public class LogController {
     }
 
     @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
-    @PostMapping("/insert")
+    @GetMapping("/insert")
     public Result insert(@RequestBody Log log){
         Integer code;
         String msg;
