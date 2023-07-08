@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>吉利学院劳动教育平台</title>
-    <link href="//unpkg.com/layui@2.8.4/dist/css/layui.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
     <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
     <style>
         body {
@@ -63,7 +63,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">劳动类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="logType" autocomplete="off" disabled class="layui-input" id="logType" required>
+                <input type="text" name="logType" autocomplete="off" readonly class="layui-input" id="logType" required>
             </div>
         </div>
 
@@ -113,13 +113,14 @@
 
             <label class="layui-form-label">本人签字</label>
             <div class="layui-input-inline">
-                <input type="text" name="log_name" autocomplete="off" class="layui-input" placeholder="打印后签字">
+                <input type="text" name="log_name" autocomplete="off" disabled class="layui-input" placeholder="打印后签字">
             </div>
 
             <label class="layui-form-label">证明人</label>
             <div class="layui-input-inline">
-                <input type="text" name="name_admin" autocomplete="off" class="layui-input" placeholder="打印后签字">
+                <input type="text" name="????" autocomplete="off" class="layui-input" disabled placeholder="打印后签字">
             </div>
+
         </div>
     </div>
 
@@ -136,8 +137,10 @@
 </form>
 </div>
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-<script src="//unpkg.com/layui@2.8.4/dist/layui.js"></script>
+<script src="../static/layui/layui.js" charset="utf-8"></script>
 <script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/vue.js"></script>
 <script>
 function getUrlSearch(name) {
         // 未传参，返回空
@@ -161,59 +164,65 @@ function getUrlSearch(name) {
     document.getElementById("logType").value = getUrlSearch("listType")
 </script>
 <script>
-//数据上传
-    layui.use(['jquery', 'form'], function () {
-        var form = layui.form;
-        var layer = layui.layer;
-        // 提交事件
-        layui.$('#demo2').on('click', function () {
-                alert("确认按钮")
-                let log = new FormData();
-                alert("FormData创建成功")
-				let userType = document.getElementById("userType").value;
-				let logClasses = document.getElementById("logClasses").value;
-				let logType = document.getElementById("logType").value;
-				let logContent = document.getElementById("logContent").value;
-				let location = document.getElementById("location").value;
-				let logProcess = document.getElementById("logProcess").value;
-				let effect = document.getElementById("effect").value;
-				let result = document.getElementById("result").value;
-				let logTime = document.getElementById("ID-laydate-shortcut-date").value;
-				let logState = 3;
-				let userId = 211123120101;
-				alert("数据创建成功")
-				log.append("userType", userType);
-				log.append("logClasses", logClasses);
-				log.append("logType", logType);
-				log.append("logContent", logContent);
-				log.append("location", location);
-				log.append("logProcess", logProcess);
-				log.append("effect", effect);
-				log.append("result", result);
-				log.append("logTime", logTime);
-				log.append("logState", logState);
-				log.append("userId", userId);
-				for (var [a, b] of log.entries()) {
-						console.log(a, b);
-				}
-				alert("log数据添加完成")
-				let jsonData = {};
-                for (let [key, value] of log) {
-                  jsonData[key] = value;
+// 数据上传
+layui.use(['jquery', 'form'], function () {
+    var form = layui.form;
+    var $ = layui.jquery;
+    // 提交事件
+    layui.$('#demo2').on('click', function () {
+        alert("确认按钮");
+        let log = new FormData();
+        alert("FormData创建成功");
+        let userType = document.getElementById("userType").value;
+        let logClasses = document.getElementById("logClasses").value;
+        let logType = document.getElementById("logType").value;
+        let logContent = document.getElementById("logContent").value;
+        let location = document.getElementById("location").value;
+        let logProcess = document.getElementById("logProcess").value;
+        let effect = document.getElementById("effect").value;
+        let result = document.getElementById("result").value;
+        let logTime = document.getElementById("ID-laydate-shortcut-date").value;
+        let logState = 3;
+        let userId = 211123120101;
+        alert("数据创建成功");
+        log.append("userType", userType);
+        log.append("logClasses", logClasses);
+        log.append("logType", logType);
+        log.append("logContent", logContent);
+        log.append("location", location);
+        log.append("logProcess", logProcess);
+        log.append("effect", effect);
+        log.append("result", result);
+        log.append("logTime", logTime);
+        log.append("logState", logState);
+        log.append("userId", userId);
+        for (var [a, b] of log.entries()) {
+            console.log(a, b);
+        }
+        alert("log数据添加完成");
+        let jsonData = {};
+        for (let [key, value] of log) {
+          jsonData[key] = value;
+        }
+        log = JSON.stringify(jsonData);
+        if (log.length > 0) {
+            alert("log不为空");
+            axios.post('/logs/insert', log, {
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-                log = JSON.stringify(jsonData);
-				console.log("log:" + log)
-				$.ajax({
-					url: '/logs/insert',
-					type: "POST",
-					data: log,
-					success: function (data) {
-						alert('成功连接到接口insert');
-						alert(data)
-					}
-				})
-        });
+            })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        } else {
+            alert("log为空");
+        }
     });
+});
 </script>
 <script>
 //数据保存
@@ -268,7 +277,6 @@ function getUrlSearch(name) {
     });
 </script>
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-<script src="//unpkg.com/layui@2.8.6/dist/layui.js"></script>
 <script>
 //日期组件
     layui.use(function(){
@@ -708,9 +716,6 @@ function getUrlSearch(name) {
         });
     });
 </script>
-<script src="../static/js/axios-0.18.0.js"></script>
-<script src="../static/js/axios-0.18.0.js"></script>
-<script src="../static/js/vue.js"></script>
 <script>
     let userName = new Vue({
         el: "#headername",

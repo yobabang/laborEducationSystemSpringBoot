@@ -190,36 +190,6 @@
                 html += '<tr><td>' + id + '.' +data2.data[i].noticeTitle+ '：</td><br>' + '<td>' + data2.data[i].noticeContent + '</td></tr><br>'
            }
            table.innerHTML = html;
-
-           /*console.log(data2);
-           let table = document.getElementById('demo2');
-           let html = '';
-           let maxNotices = 4; // 最大显示的通知数量
-
-// 获取最新的四条通知数据
-           let latestNotices = data2.slice(0, maxNotices);
-
-// 遍历最新的通知数据，生成HTML字符串
-           latestNotices.forEach(function(notice, index) {
-               html += '<tr><td>' + (index + 1) + ': </td><td>' + notice.noticeId + '</td></tr>';
-           });
-
-// 判断是否还有更多通知供查看
-           if (data2.length > maxNotices) {
-               html += '<tr><td colspan="2"><button id="viewMoreBtn">查看更多</button></td></tr>';
-           }
-
-// 将生成的HTML内容插入到表格中
-           table.innerHTML = html;
-
-// 点击“查看更多”按钮的事件处理函数
-           if (data2.length > maxNotices) {
-               let viewMoreBtn = document.getElementById('viewMoreBtn');
-               viewMoreBtn.addEventListener('click', function() {
-                   // TODO: 处理点击事件的逻辑，例如将所有通知展示出来或跳转到通知列表页面
-                   console.log("点击了查看更多按钮");
-               });
-           }*/
      }
    };
    xhr2.send()
