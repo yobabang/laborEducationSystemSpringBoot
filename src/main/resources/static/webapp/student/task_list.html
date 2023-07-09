@@ -173,6 +173,7 @@
        + '<tr><td>' + "所属班级："+ '</td>' + '<td>' + data.data.classId + '</td></tr><br>'
        + '<tr><td>' + "学号："+ '</td>' + '<td id="user_id">'+ data.data.userId + '</td></tr><br>';
        table.innerHTML = html;
+       console.log(data.data)
        let noticeReceiver  = data.data.userId;
        console.log('user-id为' + noticeReceiver)
        let xhr2 = new XMLHttpRequest();
