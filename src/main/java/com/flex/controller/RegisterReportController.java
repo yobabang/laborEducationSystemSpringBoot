@@ -88,10 +88,10 @@ public class RegisterReportController {
         }
 
         //设置list_pan状态
-        LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ListPlan::getUserId,registerReport.getUserId());
         LambdaUpdateWrapper<ListPlan> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.set(ListPlan::getListState,registerReport.getRepState());
+        updateWrapper.eq(ListPlan::getUserId,registerReport.getUserId())
+                .eq(ListPlan::getListType,5)
+                .set(ListPlan::getListState,registerReport.getRepState());
         listPlanDao.update(null,updateWrapper);
 
         return new Result(code,msg);

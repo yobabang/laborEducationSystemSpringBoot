@@ -91,10 +91,11 @@ public class RegisterController {
             msg = "添加失败";
         }
         //设置list_pan状态
-        LambdaQueryWrapper<ListPlan> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ListPlan::getUserId,register.getUserId());
+
         LambdaUpdateWrapper<ListPlan> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.set(ListPlan::getListState,register.getRegState());
+        updateWrapper.eq(ListPlan::getUserId,register.getUserId())
+                .eq(ListPlan::getListType,4)
+                .set(ListPlan::getListState,register.getRegState());
         listPlanDao.update(null,updateWrapper);
 
         return new Result(code,msg);
