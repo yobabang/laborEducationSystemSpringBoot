@@ -125,7 +125,7 @@ public class UserController {
     @GetMapping("/session")
     public Result getSession(){
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        UserSession user = (UserSession) session.getAttribute("user");
         return new Result(001,user,"session获取成功");
     }
 
