@@ -164,7 +164,7 @@
        let html = '';
        html += '<tr><td>' + '姓名：'+ '</td>' + '<td>' + data.data.userName + '</td></tr><br>'
        + '<tr><td>' + "所属学院："+ '</td>' + '<td>' + data.data.unit + '</td></tr><br>'
-       + '<tr><td>' + "所属班级："+ '</td>' + '<td>' + data.data.classId + '</td></tr><br>'
+       + '<tr><td>' + "所属班级："+ '</td>' + '<td>' + data.data.className + '</td></tr><br>'
        + '<tr><td>' + "学号："+ '</td>' + '<td id="user_id">'+ data.data.userId + '</td></tr><br>';
        table.innerHTML = html;
        console.log(data.data)
@@ -278,17 +278,17 @@
                     console.log(_this.tableData)
                     _this.tableData.map(function (val) {
                         if (val.listType == 1) {
-                            val.listType = '日常生活劳动'
+                            val.listType = '日常生活劳动日志'
                         } else if (val.listType == 2) {
-                            val.listType = '服务性劳动'
+                            val.listType = '服务性劳动日志'
                         } else if (val.listType == 3) {
-                            val.listType = '生产劳动'
+                            val.listType = '生产劳动日志'
                         }else if (val.listType == 4) {
-                            val.listType = '社会实践登记表'
+                            val.listType = '社会实践活动登记表'
                         }else if (val.listType == 5) {
-                            val.listType = '社会实践报告'
+                            val.listType = '社会实践活动日志'
                         }else if (val.listType == 6) {
-                            val.listType = '社会实践日志'
+                            val.listType = '社会实践调查报告'
                         }
                     })
                      _this.tableData.map(function (val) {
