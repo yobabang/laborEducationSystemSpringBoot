@@ -100,6 +100,7 @@ public class UserController {
             userSession.setNumber(user1.getNumber());
             System.out.println("usersession:"+userSession);
             session.setAttribute("user", userSession);
+
         }else{
             QueryWrapper<AdUser> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("ad_account", loginUserDto.getUserAccount());
@@ -122,11 +123,17 @@ public class UserController {
     }
 
     @ApiOperation(value = "获取session", notes = "获取session")
-    @GetMapping("/session")
-    public Result getSession(){
-        HttpSession session = request.getSession();
-        UserSession user = (UserSession) session.getAttribute("user");
-        return new Result(001,user,"session获取成功");
+    @GetMapping("/session/{identity}")
+    public Result getSession(@PathVariable int identity){
+        if(identity == 1) {
+            HttpSession session = request.getSession();
+            UserSession user = (UserSession) session.getAttribute("user");
+            return new Result(001, user, "session获取成功");
+        } else {
+            HttpSession session =request.getSession();
+            AdUser user = (AdUser) session.getAttribute("user");
+            return new Result(002, user, "session获取成功");
+        }
     }
 
 

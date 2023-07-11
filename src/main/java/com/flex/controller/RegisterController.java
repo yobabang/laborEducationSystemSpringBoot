@@ -13,7 +13,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/regs")
@@ -80,6 +82,18 @@ public class RegisterController {
     @ApiOperation(value = "添加社会活动登记表", notes = "添加社会活动登记表")
     @PostMapping("/insert")
     public Result insert(@RequestBody Register register){
+        LambdaQueryWrapper<Register> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Register::getUserId,register.getUserId());
+
+        Register register1 = registerDao.selectOne(queryWrapper);
+
+        if(register1 != null){
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("reg_id",register1.getRegId());
+            registerDao.deleteByMap(condition);
+            register.setRegId(register1.getRegId());
+        }
+
         Integer code;
         String msg;
         int insert = registerDao.insert(register);

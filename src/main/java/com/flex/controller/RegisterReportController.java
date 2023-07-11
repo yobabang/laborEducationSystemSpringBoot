@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.flex.dao.ListPlanDao;
 import com.flex.dao.RegisterReportDao;
 import com.flex.domain.ListPlan;
+import com.flex.domain.Register;
 import com.flex.domain.RegisterReport;
 import com.flex.service.RegisterReportService;
 import io.swagger.annotations.Api;
@@ -13,7 +14,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/registerReports")
@@ -76,6 +79,18 @@ public class RegisterReportController {
     @ApiOperation(value = "添加社会实践活动报告信息", notes = "添加社会实践活动报告信息")
     @PostMapping("/insert")
     public Result insert(@RequestBody RegisterReport registerReport){
+
+        LambdaQueryWrapper<RegisterReport> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(RegisterReport::getUserId,registerReport.getUserId());
+        RegisterReport register1 = registerReportDao.selectOne(queryWrapper);
+
+        if(register1 != null){
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("rep_id",register1.getRepId());
+            registerReportDao.deleteByMap(condition);
+            registerReport.setRepId(register1.getRepId());
+        }
+
         Integer code;
         String msg;
         int insert = registerReportDao.insert(registerReport);
