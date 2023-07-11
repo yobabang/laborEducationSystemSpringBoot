@@ -97,7 +97,6 @@ public class UserController {
             userSession.setEmail(user1.getEmail());
             userSession.setType(user1.getType());
             userSession.setAdId(user1.getAdId());
-            userSession.setNumber(user1.getNumber());
             System.out.println("usersession:"+userSession);
             session.setAttribute("user", userSession);
 

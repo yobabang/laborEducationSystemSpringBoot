@@ -22,5 +22,4 @@ public class User {
     private String remark;
     private Integer type;
     private Long adId;
-    private Integer number;
 }

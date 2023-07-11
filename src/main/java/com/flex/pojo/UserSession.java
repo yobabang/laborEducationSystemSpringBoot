@@ -16,5 +16,4 @@ public class UserSession {
     private String email;
     private Integer type;
     private Long adId;
-    private Integer number;
 }
