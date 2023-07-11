@@ -12,6 +12,11 @@ spring:
     banner-mode: off
   session:
     store-type: none
+  mvc:
+    view:
+      prefix: /webapp
+      suffix: .html
+
 
 mybatis-plus:
   configuration:

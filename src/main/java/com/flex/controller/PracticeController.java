@@ -56,6 +56,7 @@ public class PracticeController {
             msg = "添加失败";
         }
 
+
         return new Result(code,msg);
     }
 }

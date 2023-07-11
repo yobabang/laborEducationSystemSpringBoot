@@ -4,20 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>吉利学院劳动教育平台</title>
-    <link href="//unpkg.com/layui@2.8.4/dist/css/layui.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
     <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .center-container {
-            margin: 0 auto;
-            width: fit-content;
-        }
-    </style>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -39,45 +27,42 @@
     </div>
 
 </div>
-<br>
-<br>
-<br>
-<br>
-<div class="con" style="margin-top: 60px;">
-<form class="layui-form layui-form-pane" action="" method="post"><!--未指定uil-->
+
+<div class="con" style="margin-top: 70px;">
+<form class="layui-form layui-form-pane">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">本科类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="userType" autocomplete="off" class="layui-input" required>
+                <input type="text" name="userType" autocomplete="off" class="layui-input" id="userType" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">年级班级</label>
             <div class="layui-input-inline">
-                <input type="text" name="logClasses" autocomplete="off" class="layui-input" required>
+                <input type="text" name="logClasses" autocomplete="off" class="layui-input" id="logClasses" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">劳动类型</label>
             <div class="layui-input-inline">
-                <input type="text" name="logType" autocomplete="off" class="layui-input" required>
+                <input type="text" name="logType" autocomplete="off" readonly class="layui-input" id="logType" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">劳动内容</label>
             <div class="layui-input-inline">
-                <input type="text" name="logContent" autocomplete="off" class="layui-input" required>
+                <input type="text" name="logContent" autocomplete="off" class="layui-input" id="logContent" required>
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">劳动地点</label>
             <div class="layui-input-inline">
-                <input type="text" name="location" autocomplete="off" class="layui-input" required>
+                <input type="text" name="location" autocomplete="off" class="layui-input" id="location" required>
             </div>
         </div>
     </div>
@@ -113,13 +98,14 @@
 
             <label class="layui-form-label">本人签字</label>
             <div class="layui-input-inline">
-                <input type="text" name="log_name" autocomplete="off" class="layui-input" placeholder="打印后签字">
+                <input type="text" name="log_name" autocomplete="off" disabled class="layui-input" placeholder="打印后签字">
             </div>
 
             <label class="layui-form-label">证明人</label>
             <div class="layui-input-inline">
-                <input type="text" name="????" autocomplete="off" class="layui-input" placeholder="打印后签字">
+                <input type="text" name="????" autocomplete="off" class="layui-input" disabled placeholder="打印后签字">
             </div>
+
         </div>
     </div>
 
@@ -136,51 +122,155 @@
 </form>
 </div>
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-<script src="//unpkg.com/layui@2.8.4/dist/layui.js"></script>
+<script src="../static/layui/layui.js" charset="utf-8"></script>
 <script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/vue.js"></script>
 <script>
-//数据上传
-    layui.use(['jquery', 'form'], function () {
-        var form = layui.form;
-        var layer = layui.layer;
-        // 提交事件
-        layui.$('#demo2').on('click', function () {
-                let log = new FormData();
-				let userType = document.getElementById("userType").value;
-				let logClasses = document.getElementById("logClasses").value;
-				let logType = document.getElementById("logType").value;
-				let logContent = document.getElementById("logContent").value;
-				let location = document.getElementById("location").value;
-				let logProcess = document.getElementById("logProcess").value;
-				let effect = document.getElementById("effect").value;
-				let result = document.getElementById("result").value;
-				let logTime = document.getElementById("ID-laydate-shortcut-date").value;
-				log.append("userType", JSON.stringify(userType));
-				log.append("logClasses", JSON.stringify(logClasses));
-				log.append("logType", JSON.stringify(logType));
-				log.append("logContent", JSON.stringify(logContent));
-				log.append("location", JSON.stringify(location));
-				log.append("logProcess", JSON.stringify(logProcess));
-				log.append("effect", JSON.stringify(effect));
-				log.append("result", JSON.stringify(result));
-				log.append("logTime", JSON.stringify(logTime));
-				$.ajax({
-					url: '/logs/insert',
-					type: "POST",
-					contentType:false,
-					processData:false,
-					responseType:'blob',
-					data: log,
-					success: function (data) {
-						console.log('成功连接到接口insert');
-						console.log(data)
-					}
-				})
-        });
+function getUrlSearch(name) {
+        // 未传参，返回空
+        if (!name) return null;
+        // 查询参数：先通过search取值，如果取不到就通过hash来取
+        let after = window.location.search;
+        after = after.substr(1) || window.location.hash.split('?')[1];
+        // 地址栏URL没有查询参数，返回空
+        if (!after) return null;
+        // 如果查询参数中没有"name"，返回空
+        if (after.indexOf(name) === -1) return null;
+
+        let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+        // 当地址栏参数存在中文时，需要解码，不然会乱码
+        let r = decodeURI(after).match(reg);
+        // 如果url中"name"没有值，返回空
+        if (!r) return null;
+
+        return r[2];
+    }
+    document.getElementById("logType").value = getUrlSearch("listType")
+</script>
+<script>
+// 确认按钮数据提交
+layui.use(['jquery', 'form'], function () {
+    var form = layui.form;
+    var layer = layui.layer;
+    // 提交事件
+    layui.$('#demo2').on('click', function () {
+        alert("确认按钮")
+        let log = {};
+        alert("数据创建成功")
+        var data = {};
+        let xhr1 = new XMLHttpRequest();
+        xhr1.open('GET', '/users/session/1', true);
+        xhr1.onreadystatechange = function() {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                data = JSON.parse(xhr1.responseText);
+                console.log(data)
+                let table = document.getElementById('demo1');
+                let userId  = data.data.userId;
+                console.log('session中user-id为' + userId)
+                log.userType = 1;
+                log.logClasses = document.getElementById("logClasses").value;
+                log.logType = 1;
+                log.logContent = document.getElementById("logContent").value;
+                log.location = document.getElementById("location").value;
+                log.logProcess = document.getElementById("logProcess").value;
+                log.effect = document.getElementById("effect").value;
+                log.result = document.getElementById("result").value;
+                log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
+                log.logState = 3;
+                log.userId = userId;
+                console.log('log中user-id为' + userId)
+                alert("log数据添加完成")
+                axios({
+                    method: 'post',
+                    url: '/logs/insert',
+                    data: JSON.stringify(log),
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                }).then(function (response) {
+                    console.log(response.data);
+                    alert('成功连接到接口insert');
+                    // 解析后端返回的数据
+                    try {
+                    var jsonData = JSON.parse(response.data);
+                    console.log(jsonData);
+                    } catch (error) {
+                    console.error('解析后端返回的数据失败:', error);
+                    alert('解析后端返回的数据失败');
+                    }
+                }).catch(function (error) {
+                    console.error(error);
+                    alert('链接失败' + error)
+                });
+            }
+        }
+        xhr1.send();
     });
+});
+</script>
+<script>
+// 保存按钮的数据提交
+    layui.use(['jquery', 'form'], function () {
+    var form = layui.form;
+    var layer = layui.layer;
+    // 提交事件
+    layui.$('#demo3').on('click', function () {
+        alert("保存按钮")
+        let log = {};
+        alert("数据创建成功")
+        var data = {};
+        let xhr1 = new XMLHttpRequest();
+        xhr1.open('GET', '/users/session/1', true);
+        xhr1.onreadystatechange = function() {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                data = JSON.parse(xhr1.responseText);
+                console.log(data)
+                let table = document.getElementById('demo1');
+                let userId  = data.data.userId;
+                console.log('session中user-id为' + userId)
+                log.userType = 1;
+                log.logClasses = document.getElementById("logClasses").value;
+                log.logType = 1;
+                log.logContent = document.getElementById("logContent").value;
+                log.location = document.getElementById("location").value;
+                log.logProcess = document.getElementById("logProcess").value;
+                log.effect = document.getElementById("effect").value;
+                log.result = document.getElementById("result").value;
+                log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
+                log.logState = 4;
+                log.userId = userId;
+                console.log('log中user-id为' + userId)
+                alert("log数据添加完成")
+                axios({
+                    method: 'post',
+                    url: '/logs/insert',
+                    data: JSON.stringify(log),
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                }).then(function (response) {
+                    console.log(response.data);
+                    alert('成功连接到接口insert');
+                    // 解析后端返回的数据
+                    try {
+                    var jsonData = JSON.parse(response.data);
+                    console.log(jsonData);
+                    } catch (error) {
+                    console.error('解析后端返回的数据失败:', error);
+                    alert('解析后端返回的数据失败');
+                    }
+                }).catch(function (error) {
+                    console.error(error);
+                    alert('链接失败' + error)
+                });
+            }
+        }
+        xhr1.send();
+    });
+});
 </script>
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-<script src="//unpkg.com/layui@2.8.6/dist/layui.js"></script>
 <script>
 //日期组件
     layui.use(function(){
@@ -620,9 +710,6 @@
         });
     });
 </script>
-<script src="../static/js/axios-0.18.0.js"></script>
-<script src="../static/js/axios-0.18.0.js"></script>
-<script src="../static/js/vue.js"></script>
 <script>
     let userName = new Vue({
         el: "#headername",
@@ -638,7 +725,7 @@
             var _this = this;
             axios({
                 method:"get",
-                url:"/users/session",
+                url:"/users/session/1",
             }).then(function (resp){
                 _this.user = resp.data.data;
             })
