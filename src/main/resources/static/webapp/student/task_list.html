@@ -149,13 +149,69 @@
 <script src="../static/js/vue.js"></script>
 <script src="../static/element-ui/package/lib/index.js"></script>
 <link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
-<link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+<link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">、
+<style>
+.popup {
+  position: fixed; /* 绝对定位，使其保持在固定位置 */
+  top: 50%; /* 距离顶部的距离 */
+  left: 50%; /* 距离左边的距离 */
+  transform: translate(-50%, -50%); /* 使其居中 */
+  background-color: white; /* 弹窗背景颜色 */
+  padding: 10px; /* 弹窗内边距 */
+  border: 1px solid black; /* 弹窗边框 */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* 弹窗阴影效果 */
+  z-index: 999; /* 堆叠顺序，使其始终在顶部 */
+  font-size: 16px; /* 文字大小 */
+  width: 300px; /* 弹窗宽度 */
+}
+
+.popup::before {
+  content: ''; /* 使用伪元素创建箭头 */
+  position: absolute;
+  top: -10px; /* 位于弹窗上方 */
+  left: 50%;
+  transform: translateX(-50%); /* 使箭头居中 */
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent; /* 左侧三角形 */
+  border-right: 10px solid transparent; /* 右侧三角形 */
+  border-bottom: 10px solid white; /* 底部三角形 */
+}
+</style>
 <script>
     // 用户信息异步请求
-    // 使用XMLHttpRequest对象发送Ajax请求
+    // 弹窗点击事件
+    function showPopup(title, content) {
+      // 创建弹窗
+      let popup = document.createElement('div');
+      popup.classList.add('popup');
+
+      // 设置弹窗标题
+      let popupTitle = document.createElement('h3');
+      popupTitle.innerText = title;
+      popup.appendChild(popupTitle);
+
+      // 设置弹窗内容
+      let popupContent = document.createElement('p');
+      popupContent.innerText = content;
+      popup.appendChild(popupContent);
+
+      // 创建确定按钮
+      let confirmButton = document.createElement('button');
+      confirmButton.innerText = '确定';
+      confirmButton.addEventListener('click', function() {
+        // 关闭弹窗
+        popup.remove();
+      });
+      popup.appendChild(confirmButton);
+
+      // 将弹窗添加到body元素中
+      document.body.appendChild(popup);
+    }
+        // 使用XMLHttpRequest对象发送Ajax请求
    var data = {};
    let xhr1 = new XMLHttpRequest();
-   xhr1.open('GET', '/users/session', true);
+   xhr1.open('GET', '/users/session/1', true);
    xhr1.onreadystatechange = function() {
      if (xhr1.readyState === 4 && xhr1.status === 200) {
        data = JSON.parse(xhr1.responseText);
@@ -182,7 +238,8 @@
            console.log(data2.data.length)
            for(let i = 0; i < num; i++){
                 let id = i + 1
-                html += '<tr><td>' + id + '.' +data2.data[i].noticeTitle+ '：</td><br>' + '<td>' + data2.data[i].noticeContent + '</td></tr><br>'
+                html += '<tr><td><span onclick="showPopup(\'' + data2.data[i].noticeTitle + '\', \'' + data2.data[i].noticeContent + '\')" style="color: blue;">' + id + '.' + "(" + data2.data[i].noticeTitle + ")" +
+                '</span></td><br>' + '<td>' + data2.data[i].noticeContent + '</td></tr><br>';
            }
            table.innerHTML = html;
      }
@@ -259,7 +316,7 @@
             //当页面加载完成后来发送异步请求获取数据
             let _this = this;
             $.ajax({
-               url: '/users/session',
+               url: '/users/session/1',
                type: 'GET', // 请求类型（GET/POST等）
                dataType: 'json', // 期望的响应数据类型
                success: function(response) {
@@ -341,7 +398,7 @@
             let _this = this;
             axios({
                 method:"get",
-                url:"/users/session",
+                url:"/users/session/1",
             }).then(function (resp){
                 _this.user = resp.data.data;
             })
