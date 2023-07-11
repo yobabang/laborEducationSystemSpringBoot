@@ -3,7 +3,7 @@ package com.flex.pojo.vo;
 import lombok.Data;
 
 @Data
-public class AdClass {
+public class AdClassVo {
     private Long adId;
     private String className;
 }

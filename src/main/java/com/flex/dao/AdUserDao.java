@@ -2,7 +2,7 @@ package com.flex.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.flex.domain.AdUser;
-import com.flex.pojo.vo.AdClass;
+import com.flex.pojo.vo.AdClassVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -21,5 +21,7 @@ public interface AdUserDao extends BaseMapper<AdUser> {
             "INNER JOIN ad_user ad ON ca.ad_id = ad.ad_id\n" +
             "INNER JOIN classes c ON ca.class_id = c.class_id\n" +
             "WHERE ca.ad_id = #{id}")
-    public List<AdClass> getClassById(Long id);
+    public List<AdClassVo> getClassById(Long id);
+
+
 }

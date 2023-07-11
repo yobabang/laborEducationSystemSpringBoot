@@ -2,7 +2,7 @@ package com.flex.controller;
 
 
 import com.flex.dao.AdUserDao;
-import com.flex.pojo.vo.AdClass;
+import com.flex.pojo.vo.AdClassVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +26,7 @@ public class AdUserController {
     @GetMapping("{ad_id}")
     public Result getClassById(@PathVariable Long ad_id){
 
-        List<AdClass> classById = adUserDao.getClassById(ad_id);
+        List<AdClassVo> classById = adUserDao.getClassById(ad_id);
         return new Result(Code.GET_OK,classById,"数据查询成功");
     }
 }

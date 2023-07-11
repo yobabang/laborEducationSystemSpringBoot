@@ -3,6 +3,7 @@ package com.flex.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.flex.dao.ListPlanDao;
 import com.flex.domain.ListPlan;
+import com.flex.pojo.vo.ClassFinishVo;
 import com.flex.service.ListPlanService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -72,4 +73,17 @@ public class ListPlanController {
         return new Result(code, listPlans, msg);
     }
 
+    @ApiOperation(value = "获取计划清单完成信息", notes = "根据班级和计划类型获取计划清单完成信息")
+    @ApiImplicitParam(name = "listClass,listType", value = "班级和计划类型", required = true, dataType = "String，Integer",paramType = "path")
+    @GetMapping("/{listClass}/{listType}")
+    public Result getPlanByClassType(@PathVariable String listClass,@PathVariable Integer listType){
+        try {
+            ClassFinishVo planByClassType = listPlanDao.getPlanByClassType(listClass, listType);
+            System.out.println(planByClassType);
+            return new Result(Code.GET_OK, planByClassType, "查询成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(Code.GET_OK, null, "查询成功");
+        }
+    }
 }

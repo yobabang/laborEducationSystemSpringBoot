@@ -2,6 +2,7 @@ package com.flex.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.flex.domain.ListPlan;
+import com.flex.pojo.vo.ClassFinishVo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -23,4 +24,13 @@ public interface ListPlanDao extends BaseMapper<ListPlan> {
 
     @Select("select * from list_plan")
     public List<ListPlan> getAll();
+
+    @Select("SELECT\n" +
+            "    COUNT(*) AS total_count,\n" +
+            "    SUM(CASE WHEN list_state = 1 THEN 1 ELSE 0 END) AS state1_count,\n" +
+            "    SUM(CASE WHEN list_state = 3 THEN 1 ELSE 0 END) AS state3_count,\n" +
+            "    list_time\n" +
+            "FROM list_plan\n" +
+            "WHERE list_class = #{listClass} AND list_type = #{listType};")
+    public ClassFinishVo getPlanByClassType(String listClass,Integer listType);
 }
