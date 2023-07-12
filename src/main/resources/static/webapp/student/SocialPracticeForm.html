@@ -226,7 +226,7 @@
                 document.getElementById("type").value = data.data.type
                 document.getElementById("major").value = data.data.major
                 document.getElementById("politics").value = data.data.politics
-                document.getElementById("regName").value = data.data.regName
+                document.getElementById("regName").value = data.data.userName
             }
         }
         xhr1.send();
@@ -369,7 +369,6 @@ layui.use(['jquery', 'form'], function () {
                 url:"/users/session/1",
             }).then(function (resp){
                 _this.user = resp.data;
-                console.log(user)
             })
         },
     })
