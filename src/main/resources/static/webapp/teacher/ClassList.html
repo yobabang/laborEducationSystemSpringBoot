@@ -24,7 +24,7 @@
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="../static/img/head.png" class="layui-nav-img">
-          {{user.user_name}}
+          {{user.adName}}
         </a>
 
       </li>
@@ -32,11 +32,8 @@
     </ul>
   </div>
 </div>
-<br>
-<br>
-<br>
-<br>
-<div class="con">
+
+<div class="con" style="margin-top: 70px;">
   <template>
     <el-form :inline="true" :model="tableSearch" class="demo-form-inline" style="text-align: center;">
       <el-form-item label="班级">
@@ -52,11 +49,34 @@
     <el-table
             :data="tableData"
             style="width: 100%"
-            :default-sort = "{prop: 'startTime', order: 'descending'}"
             :default-sort = "{prop: 'endTime', order: 'descending'}"
             max-height="100%">
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="日常生活劳动日志">
+              <span>{{ props.row.log1 }}</span>
+            </el-form-item>
+            <el-form-item label="服务性劳动日志">
+              <span>{{ props.row.log2 }}</span>
+            </el-form-item>
+            <el-form-item label="生产劳动日志">
+              <span>{{ props.row.log3 }}</span>
+            </el-form-item>
+            <el-form-item label="社会实践活动登记表">
+              <span>{{ props.row.social1 }}</span>
+            </el-form-item>
+            <el-form-item label="社会实践活动报告">
+              <span>{{ props.row.social2 }}</span>
+            </el-form-item>
+            <el-form-item label="社会实践活动日志">
+              <span>{{ props.row.social3 }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column
-              prop="class"
+              prop="className"
               label="班级"
               min-width="20%">
         <template slot-scope="scope">
@@ -80,35 +100,12 @@
               min-width="15%">
       </el-table-column>
       <el-table-column
-              prop="startTime"
-              label="开始时间"
-              sortable
-              min-width="15%">
-      </el-table-column>
-      <el-table-column
               prop="endTime"
               label="截止时间"
               sortable
               min-width="15%">
       </el-table-column>
-      <el-table-column
-              prop="kindWork"
-              label="作业类型"
-              min-width="15%"
-              :filters="[{ text: '日常生活劳动', value: '日常生活劳动' }, { text: '服务性劳动', value: '服务性劳动' }, { text: '生产劳动', value: '生产劳动' }, { text: '社会实践登记表', value: '社会实践登记表' }, { text: '社会实践日志', value: '社会实践日志' }]"
-              :filter-method="filterKind"
-              filter-placement="bottom-end">
-        <template slot-scope="scope">
-          <el-tag v-for="item in workTable" v-show="scope.row.kindWork == item.label" :key="item.label" :type="item.cssName" >
-            {{item.label}}
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-              prop="sum"
-              label="未提交人数"
-              min-width="10%">
-      </el-table-column>
+
     </el-table>
   </template>
 
@@ -137,89 +134,86 @@
 		_this.tableData = resp.data;
 		})
 	  },
-
 	  onSubmit(){
 	    this.selectAll();
 	  },
 
-	  filterKind(value, row) {
-	    return row.kindWork === value;
-	  },
     },
-    mounted(){
-	},
     data() {
       return {
-        workTable: [
-          {label: '日常生活劳动', cssName: 'success'},
-          {label: '服务性劳动', cssName: 'primary'},
-          {label: '生产劳动', cssName: 'primary'},
-          {label: '社会实践登记表', cssName: 'info'},
-          {label: '社会实践日志', cssName: 'danger'}
-        ],
         tableData: [{
-          class: '2020级电子信息一班',
+          className: '2020级电子信息一班',
           name: '王小虎',
           department: '智能科技学院',
-          startTime: '2023-2-13',
           endTime: '2023-6-20',
-          kindWork: '日常生活劳动',
-          sum: '0'
+          log1: '应交30篇 实交29篇 待批19篇',
+          log2: '应交30篇 实交29篇 待批19篇',
+          log3: '应交30篇 实交29篇 待批19篇',
+          social1: '应交30篇 实交29篇 待批19篇',
+          social2: '应交30篇 实交29篇 待批19篇',
+          social3: '应交30篇 实交29篇 待批19篇',
         }, {
-          class: '2020级电子信息一班',
+          className: '2020级人工智能二班',
           name: '王小虎',
           department: '智能科技学院',
-          startTime: '2023-2-15',
-          endTime: '2023-6-20',
-          kindWork: '服务性劳动',
-          sum: '3'
-        }, {
-          class: '2020级人工智能二班',
-          name: '王小虎',
-          department: '智能科技学院',
-          startTime: '2023-2-17',
           endTime: '2023-6-28',
-          kindWork: '社会实践登记表',
-          sum: '2'
+          log1: '应交30篇 实交29篇 待批19篇',
+          log2: '应交30篇 实交29篇 待批19篇',
+          log3: '应交30篇 实交29篇 待批19篇',
+          social1: '应交30篇 实交29篇 待批19篇',
+          social2: '应交30篇 实交29篇 待批19篇',
+          social3: '应交30篇 实交29篇 待批19篇',
         }, {
-          class: '2020级人工智能一班',
+          className: '2020级人工智能一班',
           name: '王小虎',
           department: '智能科技学院',
-          startTime: '2023-2-13',
           endTime: '2023-6-29',
-          kindWork: '社会实践日志',
-          sum: '1'
-        }, {
-          class: '2020级人工智能一班',
+          log1: '应交30篇 实交29篇 待批19篇',
+          log2: '应交30篇 实交29篇 待批19篇',
+          log3: '应交30篇 实交29篇 待批19篇',
+          social1: '应交30篇 实交29篇 待批19篇',
+          social2: '应交30篇 实交29篇 待批19篇',
+          social3: '应交30篇 实交29篇 待批19篇',
+        },{
+          className: '2020级大数据一班',
           name: '王小虎',
           department: '智能科技学院',
-          startTime: '2023-2-13',
           endTime: '2023-6-20',
-          kindWork: '日常生活劳动',
-          sum: '0'
-        }, {
-          class: '2020级人工智能二班',
-          name: '王小虎',
-          department: '智能科技学院',
-          startTime: '2023-2-13',
-          endTime: '2023-6-20',
-          kindWork: '日常生活劳动',
-          sum: '3'
-        }, {
-          class: '2020级大数据一班',
-          name: '王小虎',
-          department: '智能科技学院',
-          startTime: '2023-2-13',
-          endTime: '2023-6-20',
-          kindWork: '日常生活劳动',
-          sum: '2'
+          log1: '应交30篇 实交29篇 待批19篇',
+          log2: '应交30篇 实交29篇 待批19篇',
+          log3: '应交30篇 实交29篇 待批19篇',
+          social1: '应交30篇 实交29篇 待批19篇',
+          social2: '应交30篇 实交29篇 待批19篇',
+          social3: '应交30篇 实交29篇 待批19篇',
         }],
         tableSearch:{
           class: '',
           kindWork: ''
         },
-      }
-    }
+        }
+        },
+        mounted(){
+            let _this = this
+            $.ajax({
+               url: '/users/session/2',
+               type: 'GET', // 请求类型（GET/POST等）
+               dataType: 'json', // 期望的响应数据类型
+               success: function(response) {
+                   // 请求成功时的回调函数
+                   // 处理响应数据
+                   console.log(response);
+                   let ad_id = response.data.adId;
+                  //当页面加载完成后来发送异步请求获取数据
+                  axios({
+                      method:"get",
+                      url:"/aduser/" + ad_id,
+                  }).then(function (resp){
+                      console.log(resp)
+                      _this.tableData = resp.data;
+                  })
+               }
+            })
+        },
   })
 </script>
 
@@ -229,7 +223,7 @@
         data(){
             return{
                 user:{
-                    user_name:'测试',
+                    adName:'测试',
                 },
             }
         },
@@ -238,10 +232,10 @@
             var _this = this;
             axios({
                 method:"get",
-                url:"user/usersession",
+                url:"/users/session/2",
             }).then(function (resp){
-                _this.user = resp.data;
-                console.log(user)
+                console.log("username的对接接口" + resp)
+                _this.user = resp.data.data;
             })
         },
     })

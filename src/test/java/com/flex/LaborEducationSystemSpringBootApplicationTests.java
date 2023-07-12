@@ -1,5 +1,6 @@
 package com.flex;
 
+import com.flex.dao.AdUserDao;
 import com.flex.dao.ListPlanDao;
 import com.flex.dao.UserDao;
 import com.flex.domain.ListPlan;
@@ -22,10 +23,11 @@ class LaborEducationSystemSpringBootApplicationTests {
     private UserService userService;
 
     @Autowired
+    private AdUserDao adUserDao;
 
     @Test
     void contextLoads() {
-
+        adUserDao.getClassById(23120101L);
     }
 
 }
