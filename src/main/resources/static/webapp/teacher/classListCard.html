@@ -35,19 +35,23 @@
 
 <div class="con" style="margin-top: 70px;">
   <template>
-    <el-row>
-      <el-col :span="12">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>{{ tableData[0].className }}</span>
-            <el-button style="float: right; padding: 3px 0" type="text">批阅</el-button>
-          </div>
-          <div v-for="o in classData[0].length" :key="o" class="text item">
-            {{classData[0][o-1].listType + "：" + "应提交份数：" + classData[0][o-1].totalCount + "已通过份数：" + classData[0][o-1].state1Count + "待批阅份数：" + classData[0][o-1].state3Count + "截止时间：" + classData[0][o-1].listTime}}
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <ul class="addlmrlist-contanerbox">
+      <li v-for="(item, index) in classData" :key="index">
+        <el-row>
+          <el-col :span="12">
+            <el-card class="box-card">
+              <div slot="header" class="clearfix">
+                <span><el-link :href="'StuList.html?id='+tableData[index].className" target="_blank" class="buttonText"  type="primary" :underline="false">{{ tableData[index].className }}</el-link></span>
+                <el-link :href="'review_list.html?id='+tableData[index].className" target="_blank" class="buttonText"  type="primary" :underline="false" style="float: right; padding: 3px 0" >批阅</el-link>
+              </div>
+              <div v-for="o in item.length" :key="o" class="text item">
+                {{item[o - 1].listType + "：" + "应提交份数：" + item[o - 1].totalCount + "已通过份数：" + item[o - 1].state1Count + "待批阅份数：" + item[o - 1].state3Count + "截止时间：" + item[o - 1].listTime}}
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      </li>
+    </ul>
   </template>
 
 </div>
@@ -140,7 +144,6 @@
                         url:"/listPlans/class/" + _this.tableData[i].className,
                     }).then(function (resp){
                         _this.classData[i] = resp.data.data
-                        console.log(_this.classData[0])
                     })
             }
         },
