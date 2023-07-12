@@ -77,7 +77,7 @@ public class LogController {
         }
     }
 
-    @ApiOperation(value = "添加劳动日志", notes = "添加劳动日志信息")
+    @ApiOperation(value = "添加、修改劳动日志", notes = "添加劳动、修改日志信息")
     @PostMapping("/insert")
     public Result insert(@RequestBody Log log){
         LambdaQueryWrapper<Log> queryWrapper = new LambdaQueryWrapper<>();

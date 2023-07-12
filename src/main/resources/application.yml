@@ -24,3 +24,5 @@ mybatis-plus:
   global-config:
     banner: false
 
+
+
