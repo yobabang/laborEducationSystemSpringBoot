@@ -218,17 +218,17 @@
     var data = {};
     let xhr1 = new XMLHttpRequest();
     xhr1.open('GET', '/users/session/1', true);
-    xhr1.onreadystatechange = function() {
-        if (xhr1.readyState === 4 && xhr1.status === 200) {
-            data = JSON.parse(xhr1.responseText);
-            console.log(data)
-            document.getElementById("type").value = data.data.type
-            document.getElementById("major").value = data.data.major
-            document.getElementById("politics").value = data.data.politics
-            document.getElementById("regName").value = data.data.regName
+        xhr1.onreadystatechange = function() {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                data = JSON.parse(xhr1.responseText);
+                console.log(data)
+                document.getElementById("type").value = data.data.type
+                document.getElementById("major").value = data.data.major
+                document.getElementById("politics").value = data.data.politics
+                document.getElementById("regName").value = data.data.userName
+            }
         }
-    }
-    xhr1.send();
+        xhr1.send();
 </script>
 <script>
     // 确认按钮数据提交

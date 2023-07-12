@@ -3,9 +3,12 @@ package com.flex.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.flex.dao.ListPlanDao;
+import com.flex.dao.PracticeDao;
 import com.flex.dao.RegisterDao;
 import com.flex.domain.ListPlan;
+import com.flex.domain.Practice;
 import com.flex.domain.Register;
+import com.flex.pojo.dto.PraRegDto;
 import com.flex.service.RegisterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -30,6 +33,9 @@ public class RegisterController {
 
     @Autowired
     private ListPlanDao listPlanDao;
+
+    @Autowired
+    private PracticeDao practiceDao;
 
 
 
@@ -81,7 +87,24 @@ public class RegisterController {
 
     @ApiOperation(value = "添加社会活动登记表", notes = "添加社会活动登记表")
     @PostMapping("/insert")
-    public Result insert(@RequestBody Register register){
+    public Result insert(@RequestBody PraRegDto praRegDto){
+        Register register = praRegDto.getRegister();
+        Practice practice = praRegDto.getPractice();
+
+        LambdaQueryWrapper<Practice> queryWrapper1 = new LambdaQueryWrapper<>();
+        queryWrapper1.eq(Practice::getUserId,practice.getUserId());
+
+        Practice practice1 = practiceDao.selectOne(queryWrapper1);
+
+        if(practice1 != null){
+            Map<String, Object> condition = new HashMap<>();
+            condition.put("pra_id",practice1.getPraId());
+            registerDao.deleteByMap(condition);
+            practice.setPraId(practice1.getPraId());
+        }
+
+        practiceDao.insert(practice);
+
         LambdaQueryWrapper<Register> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Register::getUserId,register.getUserId());
 
@@ -112,7 +135,10 @@ public class RegisterController {
                 .set(ListPlan::getListState,register.getRegState());
         listPlanDao.update(null,updateWrapper);
 
+
+
         return new Result(code,msg);
     }
+
 
 }

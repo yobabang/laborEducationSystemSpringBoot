@@ -5,6 +5,7 @@ import com.flex.dao.ListPlanDao;
 import com.flex.dao.UserDao;
 import com.flex.domain.ListPlan;
 import com.flex.domain.User;
+import com.flex.pojo.vo.ClassFinishVo;
 import com.flex.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,12 @@ class LaborEducationSystemSpringBootApplicationTests {
     @Autowired
     private AdUserDao adUserDao;
 
+    @Autowired
+    private ListPlanDao listPlanDao;
+
     @Test
     void contextLoads() {
-        adUserDao.getClassById(23120101L);
+        System.out.println(listPlanDao.getPlanByClassType("2020级车辆工程（本科）1班", 1));
     }
 
 }

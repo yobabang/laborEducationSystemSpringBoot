@@ -25,6 +25,6 @@ public class Register {
     private Date regLogTime;
     private String regLog;
     private Integer regState;
-    private Date registerMark;
+    private Date regMark;
     private Long reportId;
 }

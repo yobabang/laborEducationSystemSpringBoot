@@ -35,90 +35,19 @@
 
 <div class="con" style="margin-top: 70px;">
   <template>
-    <el-form :inline="true" :model="tableSearch" class="demo-form-inline" style="text-align: center;">
-      <el-form-item label="班级">
-        <el-input v-model="tableSearch.class" placeholder="班级"></el-input>
-      </el-form-item>
-      <el-form-item label="作业类型">
-        <el-input v-model="tableSearch.kindWork" placeholder="作业类型"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-      </el-form-item>
-    </el-form>
-    <el-table
-            :data="tableData"
-            style="width: 100%"
-            :default-sort = "{prop: 'endTime', order: 'descending'}"
-            max-height="100%">
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-row>
-            <el-form-item label="日常生活劳动日志">
-              <span>{{ props.row.log1 }}</span>
-            </el-form-item>
-            </el-row>
-            <el-row>
-            <el-form-item label="服务性劳动日志">
-              <span>{{ props.row.log2 }}</span>
-            </el-form-item>
-            </el-row>
-            <el-row>
-            <el-form-item label="生产劳动日志">
-              <span>{{ props.row.log3 }}</span>
-            </el-form-item>
-            </el-row>
-            <el-row>
-            <el-form-item label="社会实践活动登记表">
-              <span>{{ props.row.social1 }}</span>
-            </el-form-item>
-            </el-row>
-            <el-row>
-            <el-form-item label="社会实践活动报告">
-              <span>{{ props.row.social2 }}</span>
-            </el-form-item>
-            </el-row>
-            <el-row>
-            <el-form-item label="社会实践活动日志">
-              <span>{{ props.row.social3 }}</span>
-            </el-form-item>
-            </el-row>
-          </el-form>
-        </template>
-      </el-table-column>
-      <el-table-column
-              prop="className"
-              label="班级"
-              min-width="20%">
-        <template slot-scope="scope">
-          <el-link :href="'StuList.html?id='+scope.row['className']" target="_blank" class="buttonText"  type="primary" :underline="false">{{ scope.row.className }}</el-link>
-        </template>
-      </el-table-column>
-      <el-table-column
-              prop="name"
-              label="辅导员"
-              min-width="10%">
-        <template slot-scope="scope">
-
-            <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            </div>
-        </template>
-      </el-table-column>
-      <el-table-column
-              prop="department"
-              label="学院"
-              min-width="15%">
-      </el-table-column>
-      <el-table-column
-              prop="endTime"
-              label="截止时间"
-              sortable
-              min-width="15%">
-      </el-table-column>
-
-    </el-table>
+    <el-row>
+      <el-col :span="12">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>{{ tableData[0].className }}</span>
+            <el-button style="float: right; padding: 3px 0" type="text">批阅</el-button>
+          </div>
+          <div v-for="o in classData[0].length" :key="o" class="text item">
+            {{classData[0][o-1].listType + "：" + "应提交份数：" + classData[0][o-1].totalCount + "已通过份数：" + classData[0][o-1].state1Count + "待批阅份数：" + classData[0][o-1].state3Count + "截止时间：" + classData[0][o-1].listTime}}
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </template>
 
 </div>
@@ -131,7 +60,28 @@
 <script src="../static/element-ui/package/lib/index.js"></script>
 <link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
 <link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+<style>
+  .text {
+    font-size: 14px;
+  }
 
+  .item {
+    margin-bottom: 18px;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+
+  .box-card {
+    width: 480px;
+  }
+</style>
 <script>
  let tableVue = new Vue({
     el: ".con",
@@ -154,23 +104,12 @@
     data() {
       return {
         tableData: [{},],
-<!--          className: '2020级大数据一班',-->
-<!--          name: '王小虎',-->
-<!--          department: '智能科技学院',-->
-<!--          endTime: '2023-6-20',-->
-<!--          log1: '应交30篇 实交29篇 待批19篇',-->
-<!--          log2: '应交30篇 实交29篇 待批19篇',-->
-<!--          log3: '应交30篇 实交29篇 待批19篇',-->
-<!--          social1: '应交30篇 实交29篇 待批19篇',-->
-<!--          social2: '应交30篇 实交29篇 待批19篇',-->
-        tableSearch:{
-          class: '',
-          kindWork: ''
-        },
+        classData:[[{},],],
         }
         },
         mounted(){
             let _this = this
+            //得到班级列表
             $.ajax({
                url: '/users/session/2',
                type: 'GET', // 请求类型（GET/POST等）
@@ -193,6 +132,17 @@
                   })
                }
             })
+            //通过班级来查询具体的作业完成情况
+            for (let i = 0; i < _this.tableData.length; i++) {
+              _this.classData[i] = [];
+              axios({
+                        method:"get",
+                        url:"/listPlans/class/" + _this.tableData[i].className,
+                    }).then(function (resp){
+                        _this.classData[i] = resp.data.data
+                        console.log(_this.classData[0])
+                    })
+            }
         },
   })
 </script>
