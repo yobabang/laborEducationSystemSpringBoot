@@ -35,7 +35,7 @@
 </div>
 
 <div class="con" style="margin-top: 70px;">
-    <form class="layui-form layui-form-pane" >
+    <form class="layui-form layui-form-pane">
         <div class="layui-row">
             <div class="layui-col-md3">
                 <div class="layui-form-item">
@@ -199,7 +199,7 @@
                     <button class="layui-btn" lay-submit lay-filter="demo3" id="demo3">保存</button>
                 </div>
                 <div class="layui-col-md4">
-                        <button type="reset" style="margin-left: -300px" class="layui-btn layui-btn-primary">重置</button>
+                    <button type="reset" style="margin-left: -300px" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </div>
@@ -210,7 +210,6 @@
 <script src="../static/layui/layui.js" charset="utf-8"></script>
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/axios-0.18.0.js"></script>
-<script src="../static/js/axios-0.18.0.js"></script>
 <script src="../static/js/vue.js"></script>
 <script src="../static/element-ui/package/lib/index.js"></script>
 <link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
@@ -219,138 +218,166 @@
     var data = {};
     let xhr1 = new XMLHttpRequest();
     xhr1.open('GET', '/users/session/1', true);
-        xhr1.onreadystatechange = function() {
-            if (xhr1.readyState === 4 && xhr1.status === 200) {
-                data = JSON.parse(xhr1.responseText);
-                console.log(data)
-                document.getElementById("type").value = data.data.type
-                document.getElementById("major").value = data.data.major
-                document.getElementById("politics").value = data.data.politics
-                document.getElementById("regName").value = data.data.regName
-            }
+    xhr1.onreadystatechange = function() {
+        if (xhr1.readyState === 4 && xhr1.status === 200) {
+            data = JSON.parse(xhr1.responseText);
+            console.log(data)
+            document.getElementById("type").value = data.data.type
+            document.getElementById("major").value = data.data.major
+            document.getElementById("politics").value = data.data.politics
+            document.getElementById("regName").value = data.data.regName
         }
-        xhr1.send();
+    }
+    xhr1.send();
 </script>
 <script>
-// 确认按钮数据提交
-layui.use(['jquery', 'form'], function () {
-    var form = layui.form;
-    var layer = layui.layer;
-    // 提交事件
-    layui.$('#demo2').on('click', function () {
-        alert("确认按钮")
-        let log = {};
-        alert("数据创建成功")
-        var data = {};
-        let xhr1 = new XMLHttpRequest();
-        xhr1.open('GET', '/users/session/1', true);
-        xhr1.onreadystatechange = function() {
-            if (xhr1.readyState === 4 && xhr1.status === 200) {
-                data = JSON.parse(xhr1.responseText);
-                console.log(data)
-                let table = document.getElementById('demo1');
-                log.type = data.data.type
-                log.major = data.data.major
-                log.politics = data.data.politics
-                log.regName = data.data.regName
-                log.location = document.getElementById("location").value;
-                log.logProcess = document.getElementById("logProcess").value;
-                log.effect = document.getElementById("effect").value;
-                log.result = document.getElementById("result").value;
-                log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
-                log.logState = 3;
-                log.userId = userId;
-                console.log('log中user-id为' + userId)
-                alert("log数据添加完成")
-                axios({
-                    method: 'post',
-                    url: '/logs/insert',
-                    data: JSON.stringify(log),
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                }).then(function (response) {
-                    console.log(response.data);
-                    alert('成功连接到接口insert');
-                    // 解析后端返回的数据
-                    try {
-                    var jsonData = JSON.parse(response.data);
-                    console.log(jsonData);
-                    } catch (error) {
-                    console.error('解析后端返回的数据失败:', error);
-                    alert('解析后端返回的数据失败');
-                    }
-                }).catch(function (error) {
-                    console.error(error);
-                    alert('链接失败' + error)
-                });
-            }
-        }
-        xhr1.send();
-    });
-});
-</script>
-<script>
-// 保存按钮的数据提交
+    // 确认按钮数据提交
     layui.use(['jquery', 'form'], function () {
-    var form = layui.form;
-    var layer = layui.layer;
-    // 提交事件
-    layui.$('#demo3').on('click', function () {
-        alert("保存按钮")
-        let log = {};
-        alert("数据创建成功")
-        var data = {};
-        let xhr1 = new XMLHttpRequest();
-        xhr1.open('GET', '/users/session/1', true);
-        xhr1.onreadystatechange = function() {
-            if (xhr1.readyState === 4 && xhr1.status === 200) {
-                data = JSON.parse(xhr1.responseText);
-                console.log(data)
-                let table = document.getElementById('demo1');
-                let userId  = data.data.userId;
-                console.log('session中user-id为' + userId)
-                log.userType = 1;
-                log.logClasses = document.getElementById("logClasses").value;
-                log.logType = 1;
-                log.logContent = document.getElementById("logContent").value;
-                log.location = document.getElementById("location").value;
-                log.logProcess = document.getElementById("logProcess").value;
-                log.effect = document.getElementById("effect").value;
-                log.result = document.getElementById("result").value;
-                log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
-                log.logState = 4;
-                log.userId = userId;
-                console.log('log中user-id为' + userId)
-                alert("log数据添加完成")
-                axios({
-                    method: 'post',
-                    url: '/logs/insert',
-                    data: JSON.stringify(log),
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                }).then(function (response) {
-                    console.log(response.data);
-                    alert('成功连接到接口insert');
-                    // 解析后端返回的数据
-                    try {
-                    var jsonData = JSON.parse(response.data);
-                    console.log(jsonData);
-                    } catch (error) {
-                    console.error('解析后端返回的数据失败:', error);
-                    alert('解析后端返回的数据失败');
-                    }
-                }).catch(function (error) {
-                    console.error(error);
-                    alert('链接失败' + error)
-                });
+        var form = layui.form;
+        var layer = layui.layer;
+        // 提交事件
+        layui.$('#demo2').on('click', function () {
+            alert("确认按钮")
+            let log = {};
+            alert("数据创建成功")
+            var data = {};
+            let xhr1 = new XMLHttpRequest();
+            xhr1.open('GET', '/users/session/1', true);
+            xhr1.onreadystatechange = function() {
+                if (xhr1.readyState === 4 && xhr1.status === 200) {
+                    data = JSON.parse(xhr1.responseText);
+                    console.log(data)
+                    let table = document.getElementById('demo1');
+                    log.type = data.data.type
+                    log.major = data.data.major
+                    log.politics = data.data.politics
+                    log.regName = data.data.regName
+                    log.location = document.getElementById("location").value;
+                    log.logProcess = document.getElementById("logProcess").value;
+                    log.effect = document.getElementById("effect").value;
+                    log.result = document.getElementById("result").value;
+                    log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
+                    log.logState = 3;
+                    // 获取用户id
+                    let userId = data.data.userId;
+                    log.userId = userId;
+                    console.log('log中user-id为' + userId)
+                    alert("log数据添加完成")
+                    axios({
+                        method: 'post',
+                        url: '/logs/insert',
+                        data: JSON.stringify(log),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }).then(function (response) {
+                        console.log(response.data);
+                        alert('成功连接到接口insert');
+                        // 解析后端返回的数据
+                        try {
+                            var jsonData = JSON.parse(response.data);
+                            console.log(jsonData);
+                        } catch (error) {
+                            console.error('解析后端返回的数据失败:', error);
+                            alert('解析后端返回的数据失败');
+                        }
+                    }).catch(function (error) {
+                        console.error(error);
+                        alert('链接失败' + error)
+                    });
+                }
+            }
+            xhr1.send();
+        });
+    });
+</script>
+<script>
+    layui.use(['jquery', 'form'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+        // 提交事件
+        layui.$('#demo3').on('click', function () {
+            let log = {};
+            var data = {};
+            let xhr1 = new XMLHttpRequest();
+            xhr1.open('GET', '/users/session/1', true);
+            xhr1.onreadystatechange = function() {
+                if (xhr1.readyState === 4 && xhr1.status === 200) {
+                    data = JSON.parse(xhr1.responseText);
+                    console.log(data)
+
+                    // 保存按钮被点击后的逻辑
+                    log.userType = 1;
+                    log.logClasses = document.getElementById("logClasses").value;
+                    log.logType = 1;
+                    log.logContent = document.getElementById("logContent").value;
+                    log.location = document.getElementById("location").value;
+                    log.logProcess = document.getElementById("logProcess").value;
+                    log.effect = document.getElementById("effect").value;
+                    log.result = document.getElementById("result").value;
+                    log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
+                    log.logState = 4;
+                    let userId = data.data.userId;
+                    log.userId = userId;
+                    console.log('log中user-id为' + userId)
+
+                    axios({
+                        method: 'post',
+                        url: '/logs/insert',
+                        data: JSON.stringify(log),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }).then(function (response) {
+                        console.log(response.data);
+                        alert('成功连接到接口insert');
+                        // 解析后端返回的数据
+                        try {
+                            var jsonData = JSON.parse(response.data);
+                            console.log(jsonData);
+                            // 回显数据到表单控件
+                            document.getElementById("logClasses").value = jsonData.logClasses;
+                            document.getElementById("logContent").value = jsonData.logContent;
+                            document.getElementById("location").value = jsonData.location;
+                            // 其他控件同理
+                        } catch (error) {
+                            console.error('解析后端返回的数据失败:', error);
+                            alert('解析后端返回的数据失败');
+                        }
+                        // 以下是需要添加的代码
+                        document.cookie = "saveSuccess=true";  // 存储保存成功的提示信息到cookie中
+                        window.location.reload();  // 刷新页面
+                    }).catch(function (error) {
+                        console.error(error);
+                        alert('链接失败' + error)
+                    });
+                }
+            }
+            xhr1.send();
+        });
+    });
+
+    // 需要添加的代码
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var cookieArr = document.cookie.split(";");  // 获取所有cookie
+        var saveSuccess = false;
+        for (var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+            var cookieName = cookiePair[0].trim();
+            var cookieValue = cookiePair[1].trim();
+            if (cookieName === "saveSuccess" && cookieValue === "true") {
+                saveSuccess = true;
+                break;
             }
         }
-        xhr1.send();
+        if (saveSuccess) {
+            alert("保存成功");  // 显示保存成功的提示信息
+            document.cookie = "saveSuccess=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";  // 清除cookie
+        }
     });
-});
 </script>
+
+
 <script>
     let userName = new Vue({
         el: "#headername",
@@ -369,10 +396,12 @@ layui.use(['jquery', 'form'], function () {
                 url:"/users/session/1",
             }).then(function (resp){
                 _this.user = resp.data;
-                console.log(user)
+                console.log(_this.user)
             })
         },
     })
+
+
 </script>
 </body>
 </html>
