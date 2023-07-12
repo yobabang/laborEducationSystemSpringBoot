@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -75,10 +76,12 @@ public class ListPlanController {
 
     @ApiOperation(value = "获取计划清单完成信息", notes = "根据班级和计划类型获取计划清单完成信息")
     @ApiImplicitParam(name = "listClass,listType", value = "班级和计划类型", required = true, dataType = "String，Integer",paramType = "path")
-    @GetMapping("/{listClass}/{listType}")
-    public Result getPlanByClassType(@PathVariable String listClass,@PathVariable Integer listType){
-            ClassFinishVo planByClassType = listPlanDao.getPlanByClassType(listClass, listType);
+    @GetMapping("/class/{listClass}")
+    public Result getPlanByClassType(@PathVariable String listClass){
+        List<ClassFinishVo> planByClassType = new ArrayList<>();
+        for (int listType = 1; listType < 7; listType++) {
+            planByClassType.add(listPlanDao.getPlanByClassType(listClass, listType));
+        }
             return new Result(Code.GET_OK, planByClassType, "查询成功");
-
     }
 }

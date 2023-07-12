@@ -29,7 +29,8 @@ public interface ListPlanDao extends BaseMapper<ListPlan> {
             "    COUNT(*) AS total_count,\n" +
             "    SUM(CASE WHEN list_state = 1 THEN 1 ELSE 0 END) AS state1_count,\n" +
             "    SUM(CASE WHEN list_state = 3 THEN 1 ELSE 0 END) AS state3_count,\n" +
-            "    list_time\n" +
+            "    list_time,\n" +
+            "    list_type\n" +
             "FROM list_plan\n" +
             "WHERE list_class = #{listClass} AND list_type = #{listType};")
     public ClassFinishVo getPlanByClassType(String listClass,Integer listType);

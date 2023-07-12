@@ -13,4 +13,5 @@ public class ClassFinishVo {
     private Integer state1Count;
     private Integer state3Count;
     private String  listTime;
+    private Integer listType;
 }
