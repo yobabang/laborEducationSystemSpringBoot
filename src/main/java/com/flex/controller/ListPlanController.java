@@ -77,13 +77,8 @@ public class ListPlanController {
     @ApiImplicitParam(name = "listClass,listType", value = "班级和计划类型", required = true, dataType = "String，Integer",paramType = "path")
     @GetMapping("/{listClass}/{listType}")
     public Result getPlanByClassType(@PathVariable String listClass,@PathVariable Integer listType){
-        try {
             ClassFinishVo planByClassType = listPlanDao.getPlanByClassType(listClass, listType);
-            System.out.println(planByClassType);
             return new Result(Code.GET_OK, planByClassType, "查询成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(Code.GET_OK, null, "查询成功");
-        }
+
     }
 }
