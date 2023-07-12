@@ -42,8 +42,8 @@
             <span>{{ tableData[0].className }}</span>
             <el-button style="float: right; padding: 3px 0" type="text">批阅</el-button>
           </div>
-          <div v-for="o in 6" :key="o" class="text item">
-            {{classData[0][o].listType + "：" + "应提交份数：" + classData[0][o].totalCount + "已通过份数：" + classData[0][o].state1Count + "待批阅份数：" + classData[0][o].state3Count + "截止时间：" + classData[0][o].listTime}}
+          <div v-for="o in classData[0].length" :key="o" class="text item">
+            {{classData[0][o-1].listType + "：" + "应提交份数：" + classData[0][o-1].totalCount + "已通过份数：" + classData[0][o-1].state1Count + "待批阅份数：" + classData[0][o-1].state3Count + "截止时间：" + classData[0][o-1].listTime}}
           </div>
         </el-card>
       </el-col>
@@ -133,12 +133,14 @@
                }
             })
             //通过班级来查询具体的作业完成情况
-            for (let i = 0; i < tableData.length; i++) {
+            for (let i = 0; i < _this.tableData.length; i++) {
+              _this.classData[i] = [];
               axios({
                         method:"get",
-                        url:"/listPlans/class/" + tableData[i].className,
+                        url:"/listPlans/class/" + _this.tableData[i].className,
                     }).then(function (resp){
                         _this.classData[i] = resp.data.data
+                        console.log(_this.classData[0])
                     })
             }
         },

@@ -107,7 +107,7 @@
                 prop="listState"
                 label="状态"
                 min-width="20%"
-                :filters="[{ text: '待完成', value: '待完成' }, { text: '已通过', value: '已通过' }, { text: '待评阅', value: '待评阅' },{ text: '打回待修改', value: '打回待修改' }]"
+                :filters="[{ text: '待完成', value: '待完成' }, { text: '已通过', value: '已通过' }, { text: '待评阅', value: '待评阅' },{ text: '打回待修改', value: '打回待修改' },{ text: '编辑中', value: '编辑中' }]"
                 :filter-method="filterState"
                 filter-placement="bottom-end">
             <template slot-scope="scope">
@@ -377,6 +377,7 @@
 						{label: '打回待修改', cssName: 'info'},
 						{label: '待评阅', cssName: 'primary'},
 						{label: '已通过', cssName: 'success'},
+						{label: '编辑中', cssName: 'info'},
 					],
                 tableData: []
             }
