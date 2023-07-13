@@ -41,7 +41,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">本科类型</label>
                     <div class="layui-input-block">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="type">
+                        <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="type">
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">专业</label>
                     <div class="layui-input-block">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="major">
+                        <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="major">
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">政治面貌</label>
                     <div class="layui-input-block">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="politics">
+                        <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="politics">
                     </div>
                 </div>
             </div>
@@ -65,15 +65,23 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">姓名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="reg_name" autocomplete="off" class="layui-input" id="regName">
+                        <input type="text" name="reg_name" autocomplete="off" readonly class="layui-input" id="regName">
                     </div>
                 </div>
             </div>
-            <div class="layui-col-md12">
+            <div class="layui-col-md6">
                 <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 120px">社会实践时间</label>
-                    <div class="layui-input-block" style="margin-left: 120px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                    <label class="layui-form-label" style="width: 180px">社会实践开始时间</label>
+                    <div class="layui-input-block" style="margin-left: 180px;">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="startTime">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 180px">社会实践结束时间</label>
+                    <div class="layui-input-block" style="margin-left: 180px;">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="endTime">
                     </div>
                 </div>
             </div>
@@ -81,7 +89,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 120px">社会实践形式</label>
                     <div class="layui-input-block" style="margin-left: 120px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="form">
                     </div>
                 </div>
             </div>
@@ -89,7 +97,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">指导老师</label>
                     <div class="layui-input-block">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="adId">
                     </div>
                 </div>
             </div>
@@ -97,7 +105,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 120px">社会实践项目</label>
                     <div class="layui-input-block" style="margin-left: 120px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="project">
                     </div>
                 </div>
             </div>
@@ -105,7 +113,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 200px">社会实践单位（或对象）</label>
                     <div class="layui-input-block" style="margin-left: 200px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="praUnit">
                     </div>
                 </div>
             </div>
@@ -113,7 +121,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 120px">社会实践地址</label>
                     <div class="layui-input-block" style="margin-left: 120px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="registerLocation">
                     </div>
                 </div>
             </div>
@@ -121,7 +129,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 200px">社会实践单位属性</label>
                     <div class="layui-input-block" style="margin-left: 200px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="unitAttribute">
                     </div>
                 </div>
             </div>
@@ -129,7 +137,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 120px">单位负责人</label>
                     <div class="layui-input-block" style="margin-left: 120px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="head">
                     </div>
                 </div>
             </div>
@@ -137,7 +145,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 200px">对象调查联系方式</label>
                     <div class="layui-input-block" style="margin-left: 200px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="headPhone">
                     </div>
                 </div>
             </div>
@@ -145,7 +153,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 120px">电子邮箱</label>
                     <div class="layui-input-block" style="margin-left: 120px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="headEmail">
                     </div>
                 </div>
             </div>
@@ -153,7 +161,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 200px">主要产品（或事项）</label>
                     <div class="layui-input-block" style="margin-left: 200px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="item">
                     </div>
                 </div>
             </div>
@@ -161,7 +169,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 120px">产值或现状</label>
                     <div class="layui-input-block" style="margin-left: 120px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="registerStatus">
                     </div>
                 </div>
             </div>
@@ -169,7 +177,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 200px">人员需求（或专业方向）</label>
                     <div class="layui-input-block" style="margin-left: 200px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="unitMajor">
                     </div>
                 </div>
             </div>
@@ -177,7 +185,7 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">实践单位或调查对象简介：</label>
                     <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                        <textarea placeholder="请输入内容" class="layui-textarea" id="objIntro"></textarea>
                     </div>
                 </div>
             </div>
@@ -222,9 +230,8 @@
         xhr1.onreadystatechange = function() {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
                 data = JSON.parse(xhr1.responseText);
-                console.log(data)
                 document.getElementById("type").value = data.data.type
-                document.getElementById("major").value = data.data.major
+                document.getElementById("major").value = data.data.className
                 document.getElementById("politics").value = data.data.politics
                 document.getElementById("regName").value = data.data.userName
             }
@@ -239,29 +246,47 @@ layui.use(['jquery', 'form'], function () {
     // 提交事件
     layui.$('#demo2').on('click', function () {
         alert("确认按钮")
-        let log = {};
+        let data = {"practice":{}, "register": {}};
         alert("数据创建成功")
-        var data = {};
-        let xhr1 = new XMLHttpRequest();
-        xhr1.open('GET', '/users/session/1', true);
-        xhr1.onreadystatechange = function() {
-            if (xhr1.readyState === 4 && xhr1.status === 200) {
-                data = JSON.parse(xhr1.responseText);
-                console.log(data)
-                let table = document.getElementById('demo1');
-                log.type = data.data.type
-                log.major = data.data.major
-                log.politics = data.data.politics
-                log.regName = data.data.regName
-                log.location = document.getElementById("location").value;
-                log.logProcess = document.getElementById("logProcess").value;
-                log.effect = document.getElementById("effect").value;
-                log.result = document.getElementById("result").value;
-                log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
-                log.logState = 3;
-                log.userId = userId;
-                console.log('log中user-id为' + userId)
-                alert("log数据添加完成")
+        var sData = {};
+        let xhr2 = new XMLHttpRequest();
+        xhr2.open('GET', '/users/session/1', true);
+        alert("xhr成功创建")
+        xhr2.onreadystatechange = function() {
+            if (xhr2.readyState === 4 && xhr2.status === 200) {
+                alert("进入异步")
+                console.log(JSON.parse(xhr2.responseText))
+                alert("得到session数据")
+                sData = JSON.parse(xhr2.responseText);
+                alert("得到data")
+                console.log(sData)
+                // 社会实践登记表数据
+                register.userType = sData.data.type
+                register.regClass = sData.data.className
+                register.politics = sData.data.politics
+                register.regName = sData.data.userName
+                register.userId = sData.data.userId;
+                register.startTime = document.getElementById("startTime").value;
+                register.endTime = document.getElementById("endTime").value;
+                register.form = document.getElementById("form").value;
+                register.adId = document.getElementById("adId").value;
+                register.regState = 3;
+                // 社会实践单位表数据
+                practice.project = document.getElementById("project").value;
+                practice.praUnit = document.getElementById("praUnit").value;
+                practice.registerLocation = document.getElementById("registerLocation").value;
+                practice.unitAttribute = document.getElementById("unitAttribute").value;
+                practice.head = document.getElementById("head").value;
+                practice.headPhone = document.getElementById("headPhone").value;
+                practice.headEmail = document.getElementById("headEmail").value;
+                practice.item = document.getElementById("item").value;
+                practice.registerStatus = document.getElementById("registerStatus").value;
+                practice.unitMajor = document.getElementById("unitMajor").value;
+                practice.objIntro = document.getElementById("objIntro").value;
+                let data = {register, practice}
+                console.log("1111")
+                console.log(data);
+                alert("数据添加完成")
                 axios({
                     method: 'post',
                     url: '/logs/insert',
@@ -286,7 +311,7 @@ layui.use(['jquery', 'form'], function () {
                 });
             }
         }
-        xhr1.send();
+        xhr2.send();
     });
 });
 </script>
@@ -301,11 +326,11 @@ layui.use(['jquery', 'form'], function () {
         let log = {};
         alert("数据创建成功")
         var data = {};
-        let xhr1 = new XMLHttpRequest();
-        xhr1.open('GET', '/users/session/1', true);
-        xhr1.onreadystatechange = function() {
-            if (xhr1.readyState === 4 && xhr1.status === 200) {
-                data = JSON.parse(xhr1.responseText);
+        let xhr3 = new XMLHttpRequest();
+        xhr3.open('GET', '/users/session/1', true);
+        xhr3.onreadystatechange = function() {
+            if (xhr3.readyState === 4 && xhr3.status === 200) {
+                data = JSON.parse(xhr3.responseText);
                 console.log(data)
                 let table = document.getElementById('demo1');
                 let userId  = data.data.userId;
@@ -347,7 +372,7 @@ layui.use(['jquery', 'form'], function () {
                 });
             }
         }
-        xhr1.send();
+        xhr3.send();
     });
 });
 </script>
@@ -368,7 +393,7 @@ layui.use(['jquery', 'form'], function () {
                 method:"get",
                 url:"/users/session/1",
             }).then(function (resp){
-                _this.user = resp.data;
+                _this.user = resp.data.data;
             })
         },
     })
