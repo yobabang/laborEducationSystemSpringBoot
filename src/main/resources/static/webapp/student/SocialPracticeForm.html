@@ -246,7 +246,7 @@ layui.use(['jquery', 'form'], function () {
     // 提交事件
     layui.$('#demo2').on('click', function () {
         alert("确认按钮")
-        let data = {"practice":{}, "register": {}};
+        let data = {"register":{}, "practice": {}};
         alert("数据创建成功")
         var sData = {};
         let xhr2 = new XMLHttpRequest();
@@ -261,36 +261,34 @@ layui.use(['jquery', 'form'], function () {
                 alert("得到data")
                 console.log(sData)
                 // 社会实践登记表数据
-                register.userType = sData.data.type
-                register.regClass = sData.data.className
-                register.politics = sData.data.politics
-                register.regName = sData.data.userName
-                register.userId = sData.data.userId;
-                register.startTime = document.getElementById("startTime").value;
-                register.endTime = document.getElementById("endTime").value;
-                register.form = document.getElementById("form").value;
-                register.adId = document.getElementById("adId").value;
-                register.regState = 3;
+                data["register"].userType = sData.data.type
+                data["register"].regClass = sData.data.className
+                data["register"].politics = sData.data.politics
+                data["register"].regName = sData.data.userName
+                data["register"].userId = sData.data.userId;
+                data["register"].startTime = document.getElementById("startTime").value;
+                data["register"].endTime = document.getElementById("endTime").value;
+                data["register"].form = document.getElementById("form").value;
+                data["register"].adId = document.getElementById("adId").value;
+                data["register"].regState = 3;
                 // 社会实践单位表数据
-                practice.project = document.getElementById("project").value;
-                practice.praUnit = document.getElementById("praUnit").value;
-                practice.registerLocation = document.getElementById("registerLocation").value;
-                practice.unitAttribute = document.getElementById("unitAttribute").value;
-                practice.head = document.getElementById("head").value;
-                practice.headPhone = document.getElementById("headPhone").value;
-                practice.headEmail = document.getElementById("headEmail").value;
-                practice.item = document.getElementById("item").value;
-                practice.registerStatus = document.getElementById("registerStatus").value;
-                practice.unitMajor = document.getElementById("unitMajor").value;
-                practice.objIntro = document.getElementById("objIntro").value;
-                let data = {register, practice}
-                console.log("1111")
+                data["practice"].project = document.getElementById("project").value;
+                data["practice"].praUnit = document.getElementById("praUnit").value;
+                data["practice"].registerLocation = document.getElementById("registerLocation").value;
+                data["practice"].unitAttribute = document.getElementById("unitAttribute").value;
+                data["practice"].head = document.getElementById("head").value;
+                data["practice"].headPhone = document.getElementById("headPhone").value;
+                data["practice"].headEmail = document.getElementById("headEmail").value;
+                data["practice"].item = document.getElementById("item").value;
+                data["practice"].registerStatus = document.getElementById("registerStatus").value;
+                data["practice"].unitMajor = document.getElementById("unitMajor").value;
+                data["practice"].objIntro = document.getElementById("objIntro").value;
                 console.log(data);
                 alert("数据添加完成")
                 axios({
                     method: 'post',
-                    url: '/logs/insert',
-                    data: JSON.stringify(log),
+                    url: '/regs/insert',
+                    data: data,
                     headers: {
                     'Content-Type': 'application/json',
                     },
@@ -316,42 +314,56 @@ layui.use(['jquery', 'form'], function () {
 });
 </script>
 <script>
-// 保存按钮的数据提交
-    layui.use(['jquery', 'form'], function () {
+// 保存按钮数据提交
+layui.use(['jquery', 'form'], function () {
     var form = layui.form;
     var layer = layui.layer;
     // 提交事件
     layui.$('#demo3').on('click', function () {
         alert("保存按钮")
-        let log = {};
+        let data = {"register":{}, "practice": {}};
         alert("数据创建成功")
-        var data = {};
-        let xhr3 = new XMLHttpRequest();
-        xhr3.open('GET', '/users/session/1', true);
-        xhr3.onreadystatechange = function() {
-            if (xhr3.readyState === 4 && xhr3.status === 200) {
-                data = JSON.parse(xhr3.responseText);
-                console.log(data)
-                let table = document.getElementById('demo1');
-                let userId  = data.data.userId;
-                console.log('session中user-id为' + userId)
-                log.userType = 1;
-                log.logClasses = document.getElementById("logClasses").value;
-                log.logType = 1;
-                log.logContent = document.getElementById("logContent").value;
-                log.location = document.getElementById("location").value;
-                log.logProcess = document.getElementById("logProcess").value;
-                log.effect = document.getElementById("effect").value;
-                log.result = document.getElementById("result").value;
-                log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
-                log.logState = 4;
-                log.userId = userId;
-                console.log('log中user-id为' + userId)
-                alert("log数据添加完成")
+        var sData = {};
+        let xhr2 = new XMLHttpRequest();
+        xhr2.open('GET', '/users/session/1', true);
+        alert("xhr成功创建")
+        xhr2.onreadystatechange = function() {
+            if (xhr2.readyState === 4 && xhr2.status === 200) {
+                alert("进入异步")
+                console.log(JSON.parse(xhr2.responseText))
+                alert("得到session数据")
+                sData = JSON.parse(xhr2.responseText);
+                alert("得到data")
+                console.log(sData)
+                // 社会实践登记表数据
+                data["register"].userType = sData.data.type
+                data["register"].regClass = sData.data.className
+                data["register"].politics = sData.data.politics
+                data["register"].regName = sData.data.userName
+                data["register"].userId = sData.data.userId;
+                data["register"].startTime = document.getElementById("startTime").value;
+                data["register"].endTime = document.getElementById("endTime").value;
+                data["register"].form = document.getElementById("form").value;
+                data["register"].adId = document.getElementById("adId").value;
+                data["register"].regState = 4;
+                // 社会实践单位表数据
+                data["practice"].project = document.getElementById("project").value;
+                data["practice"].praUnit = document.getElementById("praUnit").value;
+                data["practice"].registerLocation = document.getElementById("registerLocation").value;
+                data["practice"].unitAttribute = document.getElementById("unitAttribute").value;
+                data["practice"].head = document.getElementById("head").value;
+                data["practice"].headPhone = document.getElementById("headPhone").value;
+                data["practice"].headEmail = document.getElementById("headEmail").value;
+                data["practice"].item = document.getElementById("item").value;
+                data["practice"].registerStatus = document.getElementById("registerStatus").value;
+                data["practice"].unitMajor = document.getElementById("unitMajor").value;
+                data["practice"].objIntro = document.getElementById("objIntro").value;
+                console.log(data);
+                alert("数据添加完成")
                 axios({
                     method: 'post',
-                    url: '/logs/insert',
-                    data: JSON.stringify(log),
+                    url: '/regs/insert',
+                    data: JSON.stringify(data),
                     headers: {
                     'Content-Type': 'application/json',
                     },
@@ -372,7 +384,7 @@ layui.use(['jquery', 'form'], function () {
                 });
             }
         }
-        xhr3.send();
+        xhr2.send();
     });
 });
 </script>
