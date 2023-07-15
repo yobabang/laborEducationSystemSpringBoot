@@ -264,7 +264,7 @@
                   let reUrl = 'SocialPracticeForm.html?listType='+ row.listType;
                   window.location.href = reUrl;
                 }
-                else if(row.listType.includes("活动日记")){
+                else if(row.listType.includes("活动日志")){
                   let reUrl = 'SocialPracticeJournal.html?listType='+ row.listType;
                   window.location.href = reUrl;
                 }
@@ -278,10 +278,10 @@
                   let reUrl = 'labour_log_ed.html?listType='+ row.listType;
                   window.location.href = reUrl;
                 } else if(row.listType.includes("登记表")){
-                  let reUrl = 'SocialPracticeForm.html?listType='+ row.listType;
+                  let reUrl = 'SocialPracticeForm_ed.html?listType='+ row.listType;
                   window.location.href = reUrl;
                 }
-                else if(row.listType.includes("活动日记")){
+                else if(row.listType.includes("活动日志")){
                   let reUrl = 'SocialPracticeJournal.html?listType='+ row.listType;
                   window.location.href = reUrl;
                 }
@@ -295,10 +295,10 @@
                   let reUrl = 'labour_log_check.html?listType='+ row.listType;
                   window.location.href = reUrl;
                 } else if(row.listType.includes("登记表")){
-                  let reUrl = 'SocialPracticeForm.html?listType='+ row.listType;
+                  let reUrl = 'SocialPracticeForm_check.html?listType='+ row.listType;
                   window.location.href = reUrl;
                 }
-                else if(row.listType.includes("活动日记")){
+                else if(row.listType.includes("活动日志")){
                   let reUrl = 'SocialPracticeJournal.html?listType='+ row.listType;
                   window.location.href = reUrl;
                 }
@@ -330,6 +330,18 @@
                     }).then(function (resp){
                     let num = resp.data.data.length
                     for(let i = 0; i < num; i++){
+                        var date = new Date(resp.data.data[i].listTime); // 使用毫秒时间创建Date对象
+                        var year = date.getFullYear(); // 年份
+                        var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
+                        var day = date.getDate(); // 日期
+                        // 格式化输出时间
+                        var formattedTime = year + "-" + padZero(month) + "-" + padZero(day)
+                        console.log(formattedTime); // 输出格式化后的时间字符串
+                        // 在分钟、小时和秒钟不满两位数时，在其前面补零
+                        function padZero(number) {
+                            return number < 10 ? "0" + number : number;
+                        }
+                        resp.data.data[i].listTime = formattedTime
                         _this.tableData.push(resp.data.data[i]);
                     }
                     console.log(_this.tableData)
