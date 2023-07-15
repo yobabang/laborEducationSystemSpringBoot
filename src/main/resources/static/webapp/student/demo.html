@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>吉利学院劳动教育平台</title>
+  <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../static/css/task.css">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header" id="headername">
+    <ul class="layui-nav ">
+      <li class="layui-nav-item"><a href="task_list.html">首页</a></li>
+      <li class="layui-nav-item layui-this"><a href="SocialPracticeForm.html">社会实践日志</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="../static/img/head.png" class="layui-nav-img">
+          {{user.user_name}}
+        </a>
+
+      </li>
+      <li class="layui-nav-item"><a href="login.html">退出</a></li>
+    </ul>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<h2 style="text-align: center">社会实践日志</h2>
+<div class="con">
+  <form class="layui-form layui-form-pane" action="">
+    <div class="layui-bg-gray" style="padding: 16px;">
+      <div class="layui-row layui-col-space15" id="inputGroup">
+        <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label">日期</label>
+                <div class="layui-input-block">
+                  <input type="text" name="date" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">日志内容：</label>
+                <div class="layui-input-block">
+                  <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-form-item" style="text-align: center">
+      <div class="layui-row">
+        <div class="layui-col-md6">
+          <button class="layui-btn" lay-submit lay-filter="appendInput">添加</button>
+        </div>
+        <div class="layui-col-md6">
+          <button class="layui-btn layui-btn-danger" type="button" lay-submit lay-filter="deleteInput">删除</button>
+        </div>
+      </div>
+    </div>
+    <div class="layui-form-item" style="text-align: center">
+      <div class="layui-row">
+        <div class="layui-col-md4">
+          <button style="margin-left: 300px" class="layui-btn" lay-submit lay-filter="demo2">提交</button>
+        </div>
+        <div class="layui-col-md4">
+          <button class="layui-btn" lay-submit lay-filter="demo2">保存</button>
+        </div>
+        <div class="layui-col-md4">
+          <button type="reset" style="margin-left: -300px" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="../static/layui/layui.js" charset="utf-8"></script>
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/vue.js"></script>
+<script src="../static/element-ui/package/lib/index.js"></script>
+<link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
+<link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+
+<script>
+  let userName = new Vue({
+    el: "#headername",
+    data(){
+      return{
+        user:{
+          user_name:'测试',
+        },
+      }
+    },
+    mounted(){
+//当页面加载完成后来发送异步请求获取数据
+      var _this = this;
+      axios({
+        method:"get",
+        url:"user/usersession",
+      }).then(function (resp){
+        _this.user = resp.data;
+        console.log(user)
+      })
+    },
+  })
+
+  layui.use(['form'], function () {
+    var form = layui.form;
+    var inputGroup = [];
+
+// 获取初始输入框的内容
+    var dateVal = $("input[name=date]").val();
+    var contentVal = $("textarea[name=content]").val();
+    inputGroup.push({date: dateVal, content: contentVal});
+
+// 添加按钮点击事件
+    form.on('submit(appendInput)', function () {
+      var dateVal = $("input[name=date]").val();
+      var contentVal = $("textarea[name=content]").val();
+      inputGroup.push({date: dateVal, content: contentVal});
+// 删除按钮点击事件
+      form.on('submit(deleteInput)', function () {
+        if (inputGroup.length > 1) {
+          inputGroup.pop();
+          renderInputGroup();
+        }
+      });
+
+// 清空输入框内容
+      $("input[name=date]").val("");
+      $("textarea[name=content]").val("");
+
+// 渲染所有输入框
+      renderInputGroup();
+      return false;
+    });
+
+// 渲染所有输入框
+    function renderInputGroup() {
+      var html = "";
+      for (var i = 0; i < inputGroup.length; i++) {
+        html += '<div class="layui-card"><div class="layui-card-body">';
+        html += '<div class="layui-form-item"><label class="layui-form-label">日期</label>';
+        html += '<div class="layui-input-block"> <input type="text" name="date" autocomplete="off" class="layui-input" value="' + inputGroup[i].date + '"></div></div>';
+        html += '<div class="layui-form-item layui-form-text"><label class="layui-form-label">日志内容：</label>';
+        html += '<div class="layui-input-block"> <textarea name="content" placeholder="请输入内容" class="layui-textarea">' + inputGroup[i].content + '</textarea></div></div>';
+        html += '</div></div>';
+      }
+      $("#inputGroup").html(html);
+    }
+  });
+</script>
+</body>
+</html>
