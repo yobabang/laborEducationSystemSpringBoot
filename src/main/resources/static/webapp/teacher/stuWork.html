@@ -36,41 +36,11 @@
 
 <div class="con" style="margin-top: 70px;">
   <template>
-    <el-form :inline="true" :model="tableSearch" class="demo-form-inline" style="text-align: center;">
-      <el-form-item label="班级">
-        <el-input v-model="tableSearch.class" placeholder="班级"></el-input>
-      </el-form-item>
-      <el-form-item label="作业类型">
-        <el-input v-model="tableSearch.kindWork" placeholder="作业类型"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-      </el-form-item>
-    </el-form>
     <el-table
             :data="tableData"
             style="width: 100%"
             :default-sort = "{prop: 'endTime', order: 'descending'}"
             max-height="100%">
-<!--      <el-table-column
-              prop="workType"
-              label="作业类型"
-              min-width="20%">
-        <template slot-scope="scope">
-          <el-link :href="'StuList.html?id='+scope.row['className']" target="_blank" class="buttonText"  type="primary" :underline="false">{{ scope.row.className }}</el-link>
-        </template>
-      </el-table-column>
-      <el-table-column
-              prop="headCount"
-              label="应提交"
-              min-width="10%">
-        <template slot-scope="scope">
-
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-          </div>
-        </template>
-      </el-table-column>-->
       <el-table-column
               prop="workType"
               label="作业类型"
@@ -121,26 +91,38 @@
 <link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
 
 <script>
+function getUrlSearch(name) {
+            // 未传参，返回空
+            if (!name) return null;
+            // 查询参数：先通过search取值，如果取不到就通过hash来取
+            let after = window.location.search;
+            after = after.substr(1) || window.location.hash.split('?')[1];
+            // 地址栏URL没有查询参数，返回空
+            if (!after) return null;
+            // 如果查询参数中没有"name"，返回空
+            if (after.indexOf(name) === -1) return null;
+
+            let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+            // 当地址栏参数存在中文时，需要解码，不然会乱码
+            let r = decodeURI(after).match(reg);
+            // 如果url中"name"没有值，返回空
+            if (!r) return null;
+
+            return r[2];
+        }
+</script>
+<script>
+  let className = getUrlSearch("className")
   let tableVue = new Vue({
     el: ".con",
     methods: {
-      selectAll(){
-        var _this = this;
-        axios({
-          method:"post",
-          url:"",
-          data:_this.tableSearch
-        }).then(function (resp){
-          _this.tableData = resp.data;
-        })
-      },
-      onSubmit(){
-        this.selectAll();
-      },
 
     },
     data() {
       return {
+        className: {
+            className: className
+        },
         tableData: [
           {workType:'日常生活劳动',
           headCount:'43',
@@ -179,36 +161,19 @@
             endTime:'2024/5/1',
             controls:'批阅/查看',},],
 
-        tableSearch:{
-          class: '',
-          kindWork: ''
-        },
+
       }
     },
     mounted(){
-      let _this = this
-      $.ajax({
-        url: '/users/session/2',
-        type: 'GET', // 请求类型（GET/POST等）
-        dataType: 'json', // 期望的响应数据类型
-        success: function(response) {
-          // 请求成功时的回调函数
-          // 处理响应数据
-          console.log(response);
-          let ad_id = response.data.adId;
+        let _this = this
           //当页面加载完成后来发送异步请求获取数据
           axios({
             method:"get",
-            url:"/aduser/" + ad_id,
+            url:"/listPlans/class/" + _this.className.className,
           }).then(function (resp){
-            _this.tableData = Array(resp.data.data.length);
-            for (let i = 0; i < resp.data.data.length; i++) {
-              _this.tableData[i] = { className: resp.data.data[i].className };
-            }
+            _this.tableData = resp.data.data;
             console.log(_this.tableData);
           })
-        }
-      })
     },
   })
 </script>
