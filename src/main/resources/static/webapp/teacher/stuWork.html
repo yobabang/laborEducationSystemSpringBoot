@@ -42,27 +42,27 @@
             :default-sort = "{prop: 'endTime', order: 'descending'}"
             max-height="100%">
       <el-table-column
-              prop="workType"
+              prop="listType"
               label="作业类型"
               min-width="20%">
       </el-table-column>
       <el-table-column
-              prop="headCount"
+              prop="totalCount"
               label="应提交"
               min-width="20%">
       </el-table-column>
       <el-table-column
-              prop="submitted"
+              prop="state1Count"
               label="已提交"
               min-width="20%">
       </el-table-column>
       <el-table-column
-              prop="waitComment"
+              prop="state3Count"
               label="待批阅"
               min-width="15%">
       </el-table-column>
       <el-table-column
-              prop="endTime"
+              prop="listTime"
               label="截止时间"
               sortable
               min-width="20%">
@@ -124,42 +124,43 @@ function getUrlSearch(name) {
             className: className
         },
         tableData: [
-          {workType:'日常生活劳动',
-          headCount:'43',
-          submitted:'16',
-          waitComment:'16',
-          endTime:'2024/5/1',
+          {listType:'日常生活劳动',
+            totalCount:'43',
+            state1Count:'16',
+            state3Count:'16',
+            listTime:'2024/5/1',
             controls:'批阅/查看',},
-          {workType:'服务性劳动',
-            headCount:'43',
-            submitted:'16',
-            waitComment:'16',
-            endTime:'2024/5/1',
+          {listType:'服务性劳动',
+            totalCount:'43',
+            state1Count:'16',
+            state3Count:'16',
+            listTime:'2024/5/1',
             controls:'批阅/查看',},
-          {workType:'生产性劳动',
-            headCount:'43',
-            submitted:'16',
-            waitComment:'16',
-            endTime:'2024/5/1',
+          {listType:'生产性劳动',
+            totalCount:'43',
+            state1Count:'16',
+            state3Count:'16',
+            listTime:'2024/5/1',
             controls:'批阅/查看',},
-          {workType:'社会实践登记表',
-            headCount:'43',
-            submitted:'16',
-            waitComment:'16',
-            endTime:'2024/5/1',
+          {listType:'社会实践登记表',
+            totalCount:'43',
+            state1Count:'16',
+            state3Count:'16',
+            listTime:'2024/5/1',
             controls:'批阅/查看',},
-          {workType:'社会实践日志',
-            headCount:'43',
-            submitted:'16',
-            waitComment:'16',
-            endTime:'2024/5/1',
+          {listType:'社会实践日志',
+            totalCount:'43',
+            state1Count:'16',
+            state3Count:'16',
+            listTime:'2024/5/1',
             controls:'批阅/查看',},
-          {workType:'社会实践调查报告',
-            headCount:'43',
-            submitted:'16',
-            waitComment:'16',
-            endTime:'2024/5/1',
-            controls:'批阅/查看',},],
+          {listType:'社会实践调查报告',
+            totalCount:'43',
+            state1Count:'16',
+            state3Count:'16',
+            listTime:'2024/5/1',
+            controls:'批阅/查看',},
+          ],
 
 
       }
