@@ -18,7 +18,7 @@
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header" id="headername">
     <ul class="layui-nav ">
-      <li class="layui-nav-item "><a href="ClassList.html">首页</a></li>
+      <li class="layui-nav-item "><a href="index.html">首页</a></li>
       <li class="layui-nav-item layui-this"><a href="stuWork.html">作业列表</a></li>
     </ul>
     <ul class="layui-nav layui-layout-right">
@@ -72,8 +72,11 @@
               label="操作"
               min-width="10%">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button
+                  size="medium"
+                  type="primary"
+                  plain
+                  @click="review(scope.row)">批阅</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -116,6 +119,10 @@ function getUrlSearch(name) {
   let tableVue = new Vue({
     el: ".con",
     methods: {
+      review(row){
+          let reUrl = 'review_list.html?className='+ className + '&listType=' + row.listType;
+          window.location.href = reUrl;
+      },
 
     },
     data() {
@@ -173,6 +180,21 @@ function getUrlSearch(name) {
             url:"/listPlans/class/" + _this.className.className,
           }).then(function (resp){
             _this.tableData = resp.data.data;
+            _this.tableData.map(function (val) {
+                        if (val.listType == 1) {
+                            val.listType = '日常生活劳动日志'
+                        } else if (val.listType == 2) {
+                            val.listType = '服务性劳动日志'
+                        } else if (val.listType == 3) {
+                            val.listType = '生产劳动日志'
+                        }else if (val.listType == 4) {
+                            val.listType = '社会实践活动登记表'
+                        }else if (val.listType == 5) {
+                            val.listType = '社会实践活动日志'
+                        }else if (val.listType == 6) {
+                            val.listType = '社会实践调查报告'
+                        }
+                    })
             console.log(_this.tableData);
           })
     },
