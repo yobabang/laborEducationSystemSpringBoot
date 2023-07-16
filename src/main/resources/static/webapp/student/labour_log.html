@@ -147,6 +147,20 @@ function getUrlSearch(name) {
         return r[2];
     }
     document.getElementById("logType").value = getUrlSearch("listType")
+
+</script>
+<script>
+    var data = {};
+    let xhr1 = new XMLHttpRequest();
+    xhr1.open('GET', '/users/session/1', true);
+        xhr1.onreadystatechange = function() {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                data = JSON.parse(xhr1.responseText);
+                document.getElementById("userType").value = data.data.type
+                document.getElementById("logClasses").value = data.data.className
+            }
+        }
+        xhr1.send();
 </script>
 <script>
 // 确认按钮数据提交
@@ -168,9 +182,24 @@ layui.use(['jquery', 'form'], function () {
                 let table = document.getElementById('demo1');
                 let userId  = data.data.userId;
                 console.log('session中user-id为' + userId)
-                log.userType = 1;
+                log.userType = data.data.type;
                 log.logClasses = document.getElementById("logClasses").value;
-                log.logType = 1;
+                let logType = document.getElementById("logType").value;
+                let num;
+                   if (logType === "日常生活劳动日志") {
+                      num = 1;
+                   } else if(logType === "服务性劳动日志"){
+                      num = 2;
+                   }else if(logType === "生产劳动日志"){
+                      num = 3;
+                   }else if(logType === "社会实践活动登记表"){
+                      num = 4;
+                   }else if(logType === "社会实践活动日志"){
+                      num = 5;
+                   }else if(logType === "社会实践调查报告"){
+                      num = 6;
+                   }
+                log.logType = num
                 log.logContent = document.getElementById("logContent").value;
                 log.location = document.getElementById("location").value;
                 log.logProcess = document.getElementById("logProcess").value;
@@ -215,6 +244,12 @@ layui.use(['jquery', 'form'], function () {
     var form = layui.form;
     var layer = layui.layer;
     // 提交事件
+    // 从本地存储中加载数据
+    var savedData = localStorage.getItem('formData');
+    if (savedData) {
+        var data = JSON.parse(savedData);
+        fillFormFields(data);
+    }
     layui.$('#demo3').on('click', function () {
         alert("保存按钮")
         let log = {};
@@ -229,9 +264,24 @@ layui.use(['jquery', 'form'], function () {
                 let table = document.getElementById('demo1');
                 let userId  = data.data.userId;
                 console.log('session中user-id为' + userId)
-                log.userType = 1;
+                log.userType = data.data.type;;
                 log.logClasses = document.getElementById("logClasses").value;
-                log.logType = 1;
+                let logType = document.getElementById("logType").value;
+                let num;
+                   if (logType === "日常生活劳动日志") {
+                      num = 1;
+                   } else if(logType === "服务性劳动日志"){
+                      num = 2;
+                   }else if(logType === "生产劳动日志"){
+                      num = 3;
+                   }else if(logType === "社会实践活动登记表"){
+                      num = 4;
+                   }else if(logType === "社会实践活动日志"){
+                      num = 5;
+                   }else if(logType === "社会实践调查报告"){
+                      num = 6;
+                   }
+                log.logType = num
                 log.logContent = document.getElementById("logContent").value;
                 log.location = document.getElementById("location").value;
                 log.logProcess = document.getElementById("logProcess").value;
@@ -241,6 +291,8 @@ layui.use(['jquery', 'form'], function () {
                 log.logState = 4;
                 log.userId = userId;
                 console.log('log中user-id为' + userId)
+                // 保存数据到本地存储
+                localStorage.setItem('formData', JSON.stringify(log));
                 alert("log数据添加完成")
                 axios({
                     method: 'post',
@@ -268,6 +320,35 @@ layui.use(['jquery', 'form'], function () {
         }
         xhr1.send();
     });
+    // 填充表单字段
+    function fillFormFields(data) {
+        document.getElementById("userType").value = data.userType
+        document.getElementById("logClasses").value = data.logClasses;
+        let eg = data.logType
+        if (eg === 1) {
+            eg = "日常生活劳动日志";
+        } else if (eg === 2) {
+            eg = "服务性劳动日志";
+        } else if (eg === 3) {
+            eg = "生产劳动日志";
+        } else if (eg === 4) {
+            eg = "社会实践活动登记表";
+        } else if (eg === 5) {
+            eg = "社会实践活动日志";
+        } else if (eg === 6) {
+            eg = "社会实践调查报告";
+        }
+        document.getElementById("logType").value = eg
+        document.getElementById("logContent").value = data.logContent;
+        document.getElementById("location").value = data.location;
+        document.getElementById("logProcess").value = data.logProcess;
+        document.getElementById("effect").value = data.effect;
+        document.getElementById("result").value = data.result;
+        document.getElementById("ID-laydate-shortcut-date").value = data.logTime;
+
+        // 触发表单重新渲染
+        form.render();
+        }
 });
 </script>
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->

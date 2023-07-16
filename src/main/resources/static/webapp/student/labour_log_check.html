@@ -143,6 +143,7 @@ function getUrlSearch(name) {
        console.log('user-id为' + noticeReceiver)
        let xhr2 = new XMLHttpRequest();
        let logType = getUrlSearch("listType")
+       document.getElementById("logType").value = getUrlSearch("listType")
        let num;
        if (logType === "日常生活劳动日志") {
           num = 1;
@@ -155,7 +156,7 @@ function getUrlSearch(name) {
        }else if(logType === "社会实践活动日志"){
           num = 5;
        }else if(logType === "社会实践调查报告"){
-          num = 5;
+          num = 6;
        }
        xhr2.open('GET', '/logs/userId/' + noticeReceiver + '/' + num, true);
        xhr2.onreadystatechange = function() {
@@ -164,12 +165,23 @@ function getUrlSearch(name) {
            console.log(data2)
            document.getElementById("userType").value = data2.data[0].userType
            document.getElementById("logClasses").value = data2.data[0].logClasses
-           document.getElementById("logType").value = data2.data[0].logType
            document.getElementById("logContent").value = data2.data[0].logContent
            document.getElementById("location").value = data2.data[0].location
            document.getElementById("logProcess").value = data2.data[0].logProcess
            document.getElementById("effect").value = data2.data[0].effect
            document.getElementById("result").value = data2.data[0].result
+           var date = new Date(data2.data[0].logTime); // 使用毫秒时间创建Date对象
+           var year = date.getFullYear(); // 年份
+           var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
+           var day = date.getDate(); // 日期
+           // 格式化输出时间
+           var formattedTime = year + "-" + padZero(month) + "-" + padZero(day)
+           console.log(formattedTime); // 输出格式化后的时间字符串
+           // 在分钟、小时和秒钟不满两位数时，在其前面补零
+           function padZero(number) {
+           return number < 10 ? "0" + number : number;
+           }
+           data2.data[0].logTime = formattedTime
            document.getElementById("ID-laydate-shortcut-date").value = data2.data[0].logTime
      }
    };
