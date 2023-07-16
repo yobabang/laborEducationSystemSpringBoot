@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.flex.dao.ListPlanDao;
 import com.flex.dao.PracticeDao;
+import com.flex.dao.RegisterDao;
 import com.flex.domain.ListPlan;
 import com.flex.domain.Practice;
+import com.flex.domain.Register;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -24,11 +26,13 @@ public class PracticeController {
     @Autowired
     private ListPlanDao listPlanDao;
 
+    @Autowired
+    private RegisterDao registerDao;
+
     @ApiOperation(value = "查询社会实践单位表", notes = "根据学生学号查询社会实践单位表信息")
-    @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "String",paramType = "path")
+    @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "Long",paramType = "path")
     @GetMapping("/userId/{userId}")
     public Result getPracticeByUserid(@PathVariable Long userId){
-        try{
             LambdaQueryWrapper<Practice> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Practice::getUserId,userId);
             List<Practice> practices = practiceDao.selectList(queryWrapper);
@@ -36,10 +40,7 @@ public class PracticeController {
             Integer code = practices != null ? Code.GET_OK : Code.GET_ERR;
             String msg = practices != null ? "" : "数据查询失败";
             return new Result(code, practices, msg);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(5001, null, "数据查询报错");
-        }
+
     }
 
     @ApiOperation(value = "添加社会实践单位表", notes = "添加社会实践单位表")
@@ -58,5 +59,17 @@ public class PracticeController {
 
 
         return new Result(code,msg);
+    }
+
+    @ApiOperation(value = "查询社会实践单位表", notes = "根据社会实践单位表Id查询社会实践单位表信息")
+    @ApiImplicitParam(name = "praId", value = "社会实践单位表Id", required = true, dataType = "Long",paramType = "path")
+    @GetMapping("/{praId}")
+    public Result getPracticeRegisterByPraId(@PathVariable Long praId){
+        LambdaQueryWrapper<Practice> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Practice::getPraId,praId);
+        Practice practice = practiceDao.selectOne(queryWrapper);
+        Integer code = practice != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = practice != null ? "" : "数据查询失败";
+        return new Result(code, practice, msg);
     }
 }
