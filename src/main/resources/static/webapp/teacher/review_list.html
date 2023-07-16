@@ -4,7 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>吉利学院劳动教育平台</title>
-    <link href="//unpkg.com/layui@2.8.4/dist/css/layui.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../static/css/task.css">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
     <style>
         .left-cell {
             text-align: left;
@@ -56,13 +64,14 @@
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" id="headername">
         <ul class="layui-nav ">
-            <li class="layui-nav-item layui-this"><a href="http://localhost:63342/labour/webapp/student/head.html?_ijt=2vgpls49jtg4ro1egcrkbuei73&_ij_reload=RELOAD_ON_SAVE">首页</a></li>
+            <li class="layui-nav-item "><a href="index.html">首页</a></li>
+            <li class="layui-nav-item layui-this"><a href="review_list.html">批阅列表</a></li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="../static/img/head.png" class="layui-nav-img">
-                    {{user.user_name}}
+                    {{user.userName}}
                 </a>
 
             </li>
@@ -163,6 +172,28 @@
         var searchContent = document.getElementById("searchInput").value;
         // 在这里编写搜索功能的逻辑，可以根据searchContent的值进行搜索操作
     }
+</script>
+<script>
+    let userName = new Vue({
+        el: "#headername",
+        data(){
+            return{
+                user:{
+                    userName:'测试',
+                },
+            }
+        },
+        mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            var _this = this;
+            axios({
+                method:"get",
+                url:"/users/session/1",
+            }).then(function (resp){
+                _this.user = resp.data.data;
+            })
+        },
+    })
 </script>
 
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
