@@ -105,7 +105,7 @@ public class RegisterReportController {
         //设置list_pan状态
         LambdaUpdateWrapper<ListPlan> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(ListPlan::getUserId,registerReport.getUserId())
-                .eq(ListPlan::getListType,5)
+                .eq(ListPlan::getListType,6)
                 .set(ListPlan::getListState,registerReport.getRepState());
         listPlanDao.update(null,updateWrapper);
 
