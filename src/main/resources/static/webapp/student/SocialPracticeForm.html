@@ -193,7 +193,7 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">实践单位或调查对象评价：</label>
                     <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                        <textarea placeholder="请输入内容" class="layui-textarea" id=" praIntro"></textarea>
                     </div>
                 </div>
             </div>
@@ -284,6 +284,7 @@ layui.use(['jquery', 'form'], function () {
                 data["practice"].unitMajor = document.getElementById("unitMajor").value;
                 data["practice"].objIntro = document.getElementById("objIntro").value;
                 data["practice"].userId = sData.data.userId;
+                data["practice"].userId = document.getElementById("praIntro").value;
                 console.log(data);
                 alert("数据添加完成")
                 axios({
@@ -347,7 +348,7 @@ layui.use(['jquery', 'form'], function () {
                 data["register"].endTime = document.getElementById("endTime").value;
                 data["register"].form = Number(document.getElementById("form").value);
                 data["register"].adId = Number(document.getElementById("adId").value);
-                data["register"].regState = 3;
+                data["register"].regState = 4;
                 // 社会实践单位表数据
                 data["practice"].project = document.getElementById("project").value;
                 data["practice"].praUnit = document.getElementById("praUnit").value;
@@ -361,6 +362,7 @@ layui.use(['jquery', 'form'], function () {
                 data["practice"].unitMajor = document.getElementById("unitMajor").value;
                 data["practice"].objIntro = document.getElementById("objIntro").value;
                 data["practice"].userId = sData.data.userId;
+                data["practice"].userId = document.getElementById("praIntro").value;
                 console.log(data);
                 alert("数据添加完成")
                 axios({

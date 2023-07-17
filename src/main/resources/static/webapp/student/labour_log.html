@@ -41,7 +41,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">年级班级</label>
             <div class="layui-input-inline">
-                <input type="text" name="logClasses" autocomplete="off" class="layui-input" id="logClasses" required>
+                <input type="text" name="className" autocomplete="off" class="layui-input" id="className" required>
             </div>
         </div>
 
@@ -157,12 +157,12 @@ function getUrlSearch(name) {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
                 data = JSON.parse(xhr1.responseText);
                 document.getElementById("userType").value = data.data.type
-                document.getElementById("logClasses").value = data.data.className
+                document.getElementById("className").value = data.data.className
             }
         }
         xhr1.send();
 </script>
-// 提交按钮
+<!--// 提交按钮-->
 <script>
 // 确认按钮数据提交
 layui.use(['jquery', 'form'], function () {
@@ -180,7 +180,6 @@ layui.use(['jquery', 'form'], function () {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
                 data = JSON.parse(xhr1.responseText);
                 console.log(data)
-                let table = document.getElementById('demo1');
                 let userId  = data.data.userId;
                 console.log('session中user-id为' + userId)
                 log.userType = data.data.type;
@@ -239,7 +238,7 @@ layui.use(['jquery', 'form'], function () {
     });
 });
 </script>
-// 保存按钮
+<!--// 保存按钮-->
 <script>
 // 保存按钮的数据提交
     layui.use(['jquery', 'form'], function () {
@@ -247,13 +246,15 @@ layui.use(['jquery', 'form'], function () {
     var layer = layui.layer;
     // 提交事件
     // 从本地存储中加载数据
-    var savedData = localStorage.getItem('formData');
-    if (savedData) {
-        var data = JSON.parse(savedData);
-        fillFormFields(data);
-    }
+
     layui.$('#demo3').on('click', function () {
         alert("保存按钮")
+        // 从本地存储中加载数据
+        var savedData = localStorage.getItem('formData');
+        if (savedData && savedData !== '{}') { // 添加判断条件：savedData不为空且不等于空对象{}
+            var data = JSON.parse(savedData);
+            fillFormFields(data);
+        }
         let log = {};
         alert("数据创建成功")
         var data = {};
@@ -263,7 +264,6 @@ layui.use(['jquery', 'form'], function () {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
                 data = JSON.parse(xhr1.responseText);
                 console.log(data)
-                let table = document.getElementById('demo1');
                 let userId  = data.data.userId;
                 console.log('session中user-id为' + userId)
                 log.userType = data.data.type;;

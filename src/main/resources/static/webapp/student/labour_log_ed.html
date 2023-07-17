@@ -321,13 +321,15 @@ layui.use(['jquery', 'form'], function () {
     var layer = layui.layer;
     // 提交事件
     // 从本地存储中加载数据
-    var savedData = localStorage.getItem('formData');
-    if (savedData) {
-        var data = JSON.parse(savedData);
-        fillFormFields(data);
-    }
+
     layui.$('#demo3').on('click', function () {
         alert("保存按钮")
+        // 从本地存储中加载数据
+        var savedData = localStorage.getItem('formData');
+        if (savedData && savedData !== '{}') { // 添加判断条件：savedData不为空且不等于空对象{}
+            var data = JSON.parse(savedData);
+            fillFormFields(data);
+        }
         let log = {};
         alert("数据创建成功")
         var data = {};
