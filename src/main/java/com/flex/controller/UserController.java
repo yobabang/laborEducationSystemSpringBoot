@@ -8,17 +8,19 @@ import com.flex.dao.UserDao;
 import com.flex.domain.AdUser;
 import com.flex.domain.Classes;
 import com.flex.domain.User;
-import com.flex.pojo.UserSession;
+import com.flex.pojo.po.UserPo;
 import com.flex.pojo.dto.LoginUserDto;
 import com.flex.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -83,21 +85,21 @@ public class UserController {
             Classes classes = classesDao.selectOne(qw);
 
 
-            UserSession userSession = new UserSession();
-            userSession.setClassName(classes.getClassName());
-            userSession.setUserId(user1.getUserId());
-            userSession.setUserName(user1.getUserName());
-            userSession.setUserAlter(user1.getUserAlter());
-            userSession.setUnit(user1.getUnit());
-            userSession.setGrade(user1.getGrade());
-            userSession.setMajor(user1.getMajor());
-            userSession.setPolitics(user1.getPolitics());
-            userSession.setPhone(user1.getPhone());
-            userSession.setEmail(user1.getEmail());
-            userSession.setType(user1.getType());
-            userSession.setAdId(user1.getAdId());
-            System.out.println("usersession:"+userSession);
-            session.setAttribute("user", userSession);
+            UserPo userPo = new UserPo();
+            userPo.setClassName(classes.getClassName());
+            userPo.setUserId(user1.getUserId());
+            userPo.setUserName(user1.getUserName());
+            userPo.setUserAlter(user1.getUserAlter());
+            userPo.setUnit(user1.getUnit());
+            userPo.setGrade(user1.getGrade());
+            userPo.setMajor(user1.getMajor());
+            userPo.setPolitics(user1.getPolitics());
+            userPo.setPhone(user1.getPhone());
+            userPo.setEmail(user1.getEmail());
+            userPo.setType(user1.getType());
+            userPo.setAdId(user1.getAdId());
+            System.out.println("usersession:"+ userPo);
+            session.setAttribute("user", userPo);
 
         }else{
             QueryWrapper<AdUser> queryWrapper = new QueryWrapper<>();
@@ -125,7 +127,7 @@ public class UserController {
     public Result getSession(@PathVariable int identity){
         if(identity == 1) {
             HttpSession session = request.getSession();
-            UserSession user = (UserSession) session.getAttribute("user");
+            UserPo user = (UserPo) session.getAttribute("user");
             return new Result(001, user, "session获取成功");
         } else {
             HttpSession session =request.getSession();
@@ -134,5 +136,22 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "获取用户信息", notes = "根据管理员ID获取用户信息")
+    @ApiImplicitParam(name = "adId", value = "管理员ID", required = true, dataType = "Long",paramType = "path")
+    @GetMapping("/adId/{adId}")
+    public Result getUserByAdId(@PathVariable Long adId){
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getAdId,adId);
+        List<User> users = userDao.selectList(queryWrapper);
+        List<UserPo> userPos = new ArrayList<>();
+        for(User user : users) {
+            UserPo userPo = new UserPo();
+            BeanUtils.copyProperties(user, userPo);
+            userPos.add(userPo);
+        }
+        Integer code = userPos != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = userPos != null ? "数据查询成功" : "数据查询失败";
+        return new Result(code,userPos,msg);
+    }
 
 }

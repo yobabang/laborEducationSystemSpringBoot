@@ -1,9 +1,9 @@
-package com.flex.pojo;
+package com.flex.pojo.po;
 
 import lombok.Data;
 
 @Data
-public class UserSession {
+public class UserPo {
     private Long userId;
     private String userName;
     private Integer userAlter;

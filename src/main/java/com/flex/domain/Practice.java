@@ -19,4 +19,5 @@ public class Practice {
     private String registerStatus;
     private String unitMajor;
     private String objIntro;
+    private String praIntro;
 }
