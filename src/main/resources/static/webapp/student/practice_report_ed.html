@@ -169,7 +169,7 @@ function getUrlSearch(name) {
        let noticeReceiver  = data.data.userId;
        console.log('user-id为' + noticeReceiver)
        let xhr2 = new XMLHttpRequest();
-       xhr2.open('GET', '/logs/userId/' + noticeReceiver, true);
+       xhr2.open('GET', '/registerReports/userId/' + noticeReceiver, true);
        xhr2.onreadystatechange = function() {
        if (xhr2.readyState === 4 && xhr2.status === 200) {
            let data2 = JSON.parse(xhr2.responseText);
@@ -194,18 +194,18 @@ function getUrlSearch(name) {
            }
            data2.data[0].reportMark = formattedTime
            document.getElementById("reportMark").value = data2.data[0].reportMark
-           var date = new Date(data2.data[0].repTime); // 使用毫秒时间创建Date对象
-           var year = date.getFullYear(); // 年份
-           var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
-           var day = date.getDate(); // 日期
+           var date1 = new Date(data2.data[0].repTime); // 使用毫秒时间创建Date对象
+           var year1 = date1.getFullYear(); // 年份
+           var month1 = date1.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
+           var day1 = date1.getDate(); // 日期
            // 格式化输出时间
-           var formattedTime = year + "-" + padZero(month) + "-" + padZero(day)
-           console.log(formattedTime); // 输出格式化后的时间字符串
+           var formattedTime1 = year1 + "-" + padZero1(month1) + "-" + padZero1(day1)
+           console.log(formattedTime1); // 输出格式化后的时间字符串
            // 在分钟、小时和秒钟不满两位数时，在其前面补零
-           function padZero(number) {
-           return number < 10 ? "0" + number : number;
+           function padZero1(number) {
+              return number < 10 ? "0" + number : number;
            }
-           data2.data[0].reportMark = formattedTime
+           data2.data[0].repTime = formattedTime1
            document.getElementById("repTime").value = data2.data[0].repTime
      }
    };
