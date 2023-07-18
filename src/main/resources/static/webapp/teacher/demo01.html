@@ -16,8 +16,7 @@
     <meta name="renderer" content="webkit">
 </head>
 <body>
-<style>
-</style>
+
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" id="headername">
         <ul class="layui-nav ">
@@ -56,13 +55,355 @@
         截止：2023-7-17
     </div>
     <div style="width: 100%; height: 1px; background-color: #ccc;"></div>
+    <div>
+        <template>
+            <el-tabs v-model="activeName" @tab-click="handleClick">
+                <el-tab-pane label="全部（20）" name="first">
+                    <div class="flex-between flex-align" style="display: flex;
+                          justify-content: flex-start;
+                          align-items: center;
+                          gap: 30px;">
+                        <el-dropdown>
+                            <el-button class="el-select-button">
+                                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
+                            </el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item v-for="option in options" :key="option" @click="selectOption(option)">
+                                    {{ option }}
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                        <button type="button" class="el-button el-button--primary el-button--medium is-plain">
+                            <span>打回修改</span>
+                        </button>
+                        <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                    </div>
+                    <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
+                    <el-table
+                            ref="multipleTable"
+                            :data="tableData"
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                            @selection-change="handleSelectionChange">
+                        <el-table-column
+                                type="selection"
+                                min-width="5%">
+                        </el-table-column>
+                        <el-table-column
+                                label="姓名"
+                                min-width="10%">
+                            <template slot-scope="scope">{{ scope.row.date }}</template>
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="学号"
+                                min-width="20%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="班级"
+                                min-width="15%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="提交状态"
+                                min-width="10%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="提交时间"
+                                min-width="15%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="成绩"
+                                min-width="10%">
+                        </el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="操作"
+                                min-width="15%">
+                            <template slot-scope="scope">
+                                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>
+                <el-tab-pane label="待批阅（10）" name="second">
+                    <div class="flex-between flex-align" style="display: flex;
+                          justify-content: flex-start;
+                          align-items: center;
+                          gap: 30px;">
+                        <el-dropdown>
+                            <el-button class="el-select-button">
+                                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
+                            </el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item v-for="option in options" :key="option" @click="selectOption(option)">
+                                    {{ option }}
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                        <button type="button" class="el-button el-button--primary el-button--medium is-plain">
+                            <span>打回修改</span>
+                        </button>
+                        <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                    </div>
+                    <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
+                    <el-table
+                            ref="multipleTable"
+                            :data="tableData"
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                            @selection-change="handleSelectionChange">
+                        <el-table-column
+                                type="selection"
+                                min-width="5%">
+                        </el-table-column>
+                        <el-table-column
+                                label="姓名"
+                                min-width="10%">
+                            <template slot-scope="scope">{{ scope.row.date }}</template>
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="学号"
+                                min-width="20%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="班级"
+                                min-width="15%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="提交状态"
+                                min-width="10%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="提交时间"
+                                min-width="15%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="成绩"
+                                min-width="10%">
+                        </el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="操作"
+                                min-width="15%">
+                            <template slot-scope="scope">
+                                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>
+                <el-tab-pane label="已通过（7）" name="third">
+                    <div class="flex-between flex-align" style="display: flex;
+                          justify-content: flex-start;
+                          align-items: center;
+                          gap: 30px;">
+                        <el-dropdown>
+                            <el-button class="el-select-button">
+                                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
+                            </el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item v-for="option in options" :key="option" @click="selectOption(option)">
+                                    {{ option }}
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                        <button type="button" class="el-button el-button--primary el-button--medium is-plain">
+                            <span>打回修改</span>
+                        </button>
+                        <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                    </div>
+                    <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
+                    <el-table
+                            ref="multipleTable"
+                            :data="tableData"
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                            @selection-change="handleSelectionChange">
+                        <el-table-column
+                                type="selection"
+                                min-width="5%">
+                        </el-table-column>
+                        <el-table-column
+                                label="姓名"
+                                min-width="10%">
+                            <template slot-scope="scope">{{ scope.row.date }}</template>
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="学号"
+                                min-width="20%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="班级"
+                                min-width="15%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="提交状态"
+                                min-width="10%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="提交时间"
+                                min-width="15%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="成绩"
+                                min-width="10%">
+                        </el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="操作"
+                                min-width="15%">
+                            <template slot-scope="scope">
+                                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>
+                <el-tab-pane label="未完成（3）" name="fourth">
+                    <div class="flex-between flex-align" style="display: flex;
+                          justify-content: flex-start;
+                          align-items: center;
+                          gap: 30px;">
+                        <el-dropdown>
+                            <el-button class="el-select-button">
+                                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
+                            </el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item v-for="option in options" :key="option" @click="selectOption(option)">
+                                    {{ option }}
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                        <button type="button" class="el-button el-button--primary el-button--medium is-plain">
+                            <span>打回修改</span>
+                        </button>
+                        <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                    </div>
+                    <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
+                    <el-table
+                            ref="multipleTable"
+                            :data="tableData"
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                            @selection-change="handleSelectionChange">
+                        <el-table-column
+                                type="selection"
+                                min-width="5%">
+                        </el-table-column>
+                        <el-table-column
+                                label="姓名"
+                                min-width="10%">
+                            <template slot-scope="scope">{{ scope.row.date }}</template>
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="学号"
+                                min-width="20%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="班级"
+                                min-width="15%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="提交状态"
+                                min-width="10%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="提交时间"
+                                min-width="15%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="成绩"
+                                min-width="10%">
+                        </el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="操作"
+                                min-width="15%">
+                            <template slot-scope="scope">
+                                <el-button  @click="check(scope.row)" type="text" size="medium">催交</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>
+            </el-tabs>
+        </template>
+    </div>
 </div>
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
 <script src="../../layui/layui.js" charset="utf-8"></script>
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/axios-0.18.0.js"></script>
 <script src="../static/js/vue.js"></script>
+<script src="../static/element-ui/package/lib/index.js"></script>
+<link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
+<link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+<script>
+  let tabVue = new Vue({
+    el: ".con",
+    data() {
+      return {
+        activeName: 'first',
+        tableData_1: [{},],
+        tableData_2: [{},],
+        tableData_3: [{},],
+        tableData_4: [{},],
+        multipleSelection: [],
+        selectedOption: '',  // 当前选中的选项
+        options: ['区间给分', '统一给分']  // 选项列表
+      }
+    },
+    methods: {
+      check(row){
 
+      },
+      handleClick(tab, event) {
+        console.log(tab, event);
+      },
+      toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      selectOption(option) {
+        this.selectedOption = option;  // 设置选中的选项
+      },
+    },
+<!--    mounted(){-->
+<!--            //当页面加载完成后来发送异步请求获取数据-->
+<!--            let _this = this;-->
+<!--            axios({-->
+<!--                method:"get",-->
+<!--                url:"/users/session/1",-->
+<!--            }).then(function (resp){-->
+<!--                _this.user = resp.data.data;-->
+<!--            })-->
+<!--        },-->
+  });
+</script>
 <script>
     let userName = new Vue({
         el: "#headername",
@@ -85,6 +426,5 @@
         },
     })
 </script>
-
 </body>
 </html>
