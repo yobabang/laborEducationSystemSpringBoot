@@ -25,7 +25,7 @@
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="../static/img/head.png" class="layui-nav-img">
-          {{user.user_name}}
+          {{user.adName}}
         </a>
 
       </li>
@@ -53,15 +53,14 @@
     <el-table
             :data="tableData"
             style="width: 100%"
-            :default-sort = "{prop: 'stuCode', order: 'descending'}"
             max-height="100%">
       <el-table-column
-              prop="stuCode"
+              prop="userId"
               label="学号"
-              min-width="20%">
+              min-width="15%">
       </el-table-column>
       <el-table-column
-              prop="stuName"
+              prop="userName"
               label="姓名"
               min-width="10%">
         <template slot-scope="scope">
@@ -71,37 +70,24 @@
         </template>
       </el-table-column>
       <el-table-column
-              prop="stuSex"
-              label="性别"
-              min-width="15%"
-              :filters="[{ text: '男', value: '男' }, { text: '女', value: '女' }]"
-              :filter-method="filterSex"
-              filter-placement="bottom-end">
-        <template slot-scope="scope">
-          <el-tag v-for="item in sexTable" v-show="scope.row.stuSex == item.label" :key="item.label" :type="item.cssName" >
-            {{item.label}}
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-              prop="department"
-              label="待定"
+              prop="major"
+              label="专业"
               min-width="15%">
       </el-table-column>
       <el-table-column
-              prop="test"
-              label="待定"
-              min-width="15%">
+              prop="unit"
+              label="学院"
+              min-width="30%">
       </el-table-column>
       <el-table-column
-              prop="test"
-              label="待定"
-              min-width="15%">
+              prop="politics"
+              label="政治面貌"
+              min-width="10%">
       </el-table-column>
       <el-table-column
-              prop="test"
-              label="待定"
-              min-width="15%">
+              prop="phone"
+              label="电话"
+              min-width="20%">
       </el-table-column>
     </el-table>
   </template>
@@ -119,17 +105,6 @@
  let tableVue = new Vue({
     el: ".con",
     methods: {
-      selectAll(){
-		var _this = this;
-		axios({
-		method:"post",
-		url:"",
-		data:this.tableSearch
-		}).then(function (resp){
-		_this.tableData = resp.data;
-		})
-	  },
-
 	  onSubmit(){
 	    this.selectAll();
 	  },
@@ -138,56 +113,41 @@
 	    return row.stuSex === value;
 	  },
     },
-    mounted(){
-	},
     data() {
       return {
         sexTable: [
           {label: '男', cssName: 'success'},
           {label: '女', cssName: 'primary'},
         ],
-        tableData: [{
-          stuCode: '201124220001',
-          stuName: '王小虎',
-          stuSex: '男',
-          department: '智能科技学院',
-        }, {
-          stuCode: '201124220002',
-          stuName: '张三',
-          stuSex: '男',
-          department: '智能科技学院',
-        }, {
-          stuCode: '201124220003',
-          stuName: '李四',
-          stuSex: '男',
-          department: '智能科技学院',
-        }, {
-          stuCode: '201124220006',
-          stuName: '王二',
-          stuSex: '女',
-          department: '智能科技学院',
-        }, {
-          stuCode: '201124220033',
-          stuName: '麻子',
-          stuSex: '女',
-          department: '智能科技学院',
-        }, {
-          stuCode: '201124220062',
-          stuName: '天赐',
-          stuSex: '男',
-          department: '智能科技学院',
-        }, {
-          stuCode: '201124220090',
-          stuName: '小二',
-          stuSex: '男',
-          department: '智能科技学院',
-        }],
+        tableData: [{},],
         tableSearch:{
           stuCode: '',
           stuName: ''
         },
       }
-    }
+    },
+    mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            let _this = this;
+            $.ajax({
+               url: '/users/session/2',
+               type: 'GET', // 请求类型（GET/POST等）
+               dataType: 'json', // 期望的响应数据类型
+               success: function(response) {
+                   // 请求成功时的回调函数
+                   // 处理响应数据
+                   console.log(response);
+                   let adId = response.data.adId;
+                   axios({
+                    method:"get",
+                    url:"/users/adId/" + adId,
+                    }).then(function (resp){
+                    _this.tableData = resp.data.data;
+                    console.log(_this.tableData)
+                    })
+               }
+           });
+    },
   })
 </script>
 <script>
@@ -196,19 +156,19 @@
         data(){
             return{
                 user:{
-                    user_name:'测试',
+                    adName:'测试',
                 },
             }
         },
         mounted(){
             //当页面加载完成后来发送异步请求获取数据
-            var _this = this;
+            let _this = this;
             axios({
                 method:"get",
-                url:"user/usersession",
+                url:"/users/session/2",
             }).then(function (resp){
-                _this.user = resp.data;
-                console.log(user)
+                console.log(resp.data);
+                _this.user = resp.data.data;
             })
         },
     })
