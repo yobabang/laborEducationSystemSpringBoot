@@ -82,7 +82,7 @@
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
                             ref="multipleTable"
-                            :data="tableData"
+                            :data="tableData_1"
                             tooltip-effect="dark"
                             style="width: 100%"
                             @selection-change="handleSelectionChange">
@@ -154,7 +154,7 @@
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
                             ref="multipleTable"
-                            :data="tableData"
+                            :data="tableData_2"
                             tooltip-effect="dark"
                             style="width: 100%"
                             @selection-change="handleSelectionChange">
@@ -226,7 +226,7 @@
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
                             ref="multipleTable"
-                            :data="tableData"
+                            :data="tableData_3"
                             tooltip-effect="dark"
                             style="width: 100%"
                             @selection-change="handleSelectionChange">
@@ -298,7 +298,7 @@
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
                             ref="multipleTable"
-                            :data="tableData"
+                            :data="tableData_4"
                             tooltip-effect="dark"
                             style="width: 100%"
                             @selection-change="handleSelectionChange">
@@ -393,6 +393,7 @@
         this.multipleSelection = val;
       },
       selectOption(option) {
+         alert("点击事件")
          if (option === '区间给分') {
               let range = prompt("请输入数字区间，格式为：最小值-最大值");
               let [min, max] = range.split('-').map(Number);
