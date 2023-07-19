@@ -2,7 +2,6 @@ package com.flex.service.impl;
 
 import com.flex.dao.ListPlanDao;
 import com.flex.domain.ListPlan;
-import com.flex.pojo.vo.ClassFinishVo;
 import com.flex.service.ListPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,10 +36,5 @@ public class ListPlanServiceImpl implements ListPlanService {
     @Override
     public List<ListPlan> getAll() {
         return listPlanDao.getAll();
-    }
-
-    @Override
-    public ClassFinishVo getPlanByClassType(String listClass, Integer listType) {
-        return listPlanDao.getPlanByClassType(listClass,listType);
     }
 }

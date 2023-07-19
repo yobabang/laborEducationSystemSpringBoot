@@ -80,7 +80,7 @@ public class ListPlanController {
     public Result getPlanByClassType(@PathVariable String listClass){
         List<ClassFinishVo> planByClassType = new ArrayList<>();
         for (int listType = 1; listType < 7; listType++) {
-            planByClassType.add(listPlanService.getPlanByClassType(listClass, listType));
+            planByClassType.add(listPlanDao.getPlanByClassType(listClass, listType));
         }
             return new Result(Code.GET_OK, planByClassType, "查询成功");
     }

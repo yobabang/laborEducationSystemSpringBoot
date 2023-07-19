@@ -37,9 +37,4 @@ public class LogServiceImpl implements LogService {
     public List<Log> getAll() {
         return logDao.getAll();
     }
-
-    @Override
-    public List<Log> getLogByClassType(String className, Integer logType) {
-        return logDao.getLogByClassType(className,logType);
-    }
 }

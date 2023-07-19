@@ -37,9 +37,4 @@ public class RegisterReportServiceImpl implements RegisterReportService {
     public List<RegisterReport> getAll() {
         return registerReportDao.getAll();
     }
-
-    @Override
-    public List<RegisterReport> getByClasses(String className) {
-        return registerReportDao.getByClasses(className);
-    }
 }

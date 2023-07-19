@@ -111,14 +111,4 @@ public class RegisterReportController {
 
         return new Result(code,msg);
     }
-
-    @ApiOperation(value = "查询社会实践活动报告信息", notes = "根据学生班级查询社会实践活动报告信息")
-    @ApiImplicitParam(name = "className", value = "学生班级", required = true, dataType = "String",paramType = "path")
-    @GetMapping("/classses/{className}")
-    public Result getRegisterReportByClasses(@PathVariable String  className){
-        List<RegisterReport> registerReports = registerReportService.getByClasses(className);
-        Integer code = registerReports != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = registerReports != null ? "" : "数据查询失败";
-        return new Result(code,registerReports,msg);
-    }
 }

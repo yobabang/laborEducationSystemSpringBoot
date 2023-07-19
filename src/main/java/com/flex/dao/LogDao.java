@@ -23,7 +23,4 @@ public interface LogDao extends BaseMapper<Log>{
 
     @Select("select * from log")
     public List<Log> getAll();
-
-    @Select("select * from log where log_classes = #{className} and log_type = #{logType}")
-    public List<Log> getLogByClassType(String className,Integer logType);
 }
