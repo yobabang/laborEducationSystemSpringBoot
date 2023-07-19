@@ -91,32 +91,33 @@
                                 min-width="5%">
                         </el-table-column>
                         <el-table-column
+                                prop="logName"
                                 label="姓名"
                                 min-width="10%">
-                            <template slot-scope="scope">{{ scope.row.date }}</template>
+                            <template slot-scope="scope">{{ scope.row.logName }}</template>
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="userId"
                                 label="学号"
                                 min-width="20%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logClasses"
                                 label="班级"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logState"
                                 label="提交状态"
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logScore"
                                 label="成绩"
                                 min-width="10%">
                         </el-table-column>
@@ -163,32 +164,33 @@
                                 min-width="5%">
                         </el-table-column>
                         <el-table-column
+                                prop="logName"
                                 label="姓名"
                                 min-width="10%">
                             <template slot-scope="scope">{{ scope.row.date }}</template>
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="userId"
                                 label="学号"
                                 min-width="20%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logClasses"
                                 label="班级"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logState"
                                 label="提交状态"
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logScore"
                                 label="成绩"
                                 min-width="10%">
                         </el-table-column>
@@ -235,32 +237,33 @@
                                 min-width="5%">
                         </el-table-column>
                         <el-table-column
+                                prop="logName"
                                 label="姓名"
                                 min-width="10%">
                             <template slot-scope="scope">{{ scope.row.date }}</template>
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="userId"
                                 label="学号"
                                 min-width="20%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logClasses"
                                 label="班级"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logState"
                                 label="提交状态"
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logScore"
                                 label="成绩"
                                 min-width="10%">
                         </el-table-column>
@@ -307,32 +310,33 @@
                                 min-width="5%">
                         </el-table-column>
                         <el-table-column
+                                prop="logName"
                                 label="姓名"
                                 min-width="10%">
                             <template slot-scope="scope">{{ scope.row.date }}</template>
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="userId"
                                 label="学号"
                                 min-width="20%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logClasses"
                                 label="班级"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logState"
                                 label="提交状态"
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logScore"
                                 label="成绩"
                                 min-width="10%">
                         </el-table-column>
@@ -341,7 +345,7 @@
                                 label="操作"
                                 min-width="15%">
                             <template slot-scope="scope">
-                                <el-button  @click="check(scope.row)" type="text" size="medium">催交</el-button>
+                                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
