@@ -40,11 +40,4 @@ public interface RegisterReportService {
      * @return
      */
     public List<RegisterReport> getAll();
-
-    /**
-     * 根据班级查询
-     * @param className
-     * @return
-     */
-    public List<RegisterReport> getByClasses(String className);
 }

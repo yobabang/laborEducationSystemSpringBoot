@@ -68,7 +68,7 @@ public class RegisterController {
     }
 
     @ApiOperation(value = "查询学生社会活动登记表", notes = "根据学生学号查询社会活动登记表")
-    @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "Long",paramType = "path")
+    @ApiImplicitParam(name = "userId", value = "学生学号", required = true, dataType = "String",paramType = "path")
     @GetMapping("/userId/{userId}")
     public Result getRegisterByUserId(@PathVariable Long userId){
         try {
@@ -135,21 +135,10 @@ public class RegisterController {
                 .set(ListPlan::getListState,register.getRegState());
         listPlanDao.update(null,updateWrapper);
 
+
+
         return new Result(code,msg);
     }
-    @ApiOperation(value = "查询学生社会活动登记表", notes = "根据学生班级查询社会活动登记表")
-    @ApiImplicitParam(name = "className", value = "学生班级", required = true, dataType = "String",paramType = "path")
-    @GetMapping("/classses/{className}")
-    public Result getRegisterByClasses(@PathVariable String  className){
 
-        LambdaQueryWrapper<Register> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Register::getRegClass, className);
-        List<Register> registers = registerDao.selectList(queryWrapper);
-
-        Integer code = registers != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = registers != null ? "" : "数据查询失败";
-        return new Result(code, registers, msg);
-
-    }
 
 }

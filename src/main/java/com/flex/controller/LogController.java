@@ -131,15 +131,4 @@ public class LogController {
             return new Result(5001, null, "数据查询报错");
         }
     }
-
-    @ApiOperation(value = "查询学生劳动日志", notes = "根据学生班级和日志类型查询劳动日志信息")
-    @ApiImplicitParam(name = "className,logType", value = "学生班级和日志类型", required = true, dataType = "String,Integer",paramType = "path")
-    @GetMapping("/classType/{className}/{logType}")
-    public Result getLogByClassType(@PathVariable String className,@PathVariable Integer logType){
-        List<Log> logs = logService.getLogByClassType(className, logType);
-        Integer code = logs != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = logs != null ? "数据查询成功" : "数据查询失败";
-        return new Result(code, logs, msg);
-    }
-
 }
