@@ -1,6 +1,7 @@
 package com.flex.service;
 
 import com.flex.domain.ListPlan;
+import com.flex.pojo.vo.ClassFinishVo;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -40,4 +41,12 @@ public interface ListPlanService {
      * @return
      */
     public List<ListPlan> getAll();
+
+    /**
+     * 按班级和类型进行查询
+     * @param listClass
+     * @param listType
+     * @return
+     */
+    public ClassFinishVo getPlanByClassType(String listClass, Integer listType);
 }
