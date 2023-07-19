@@ -41,4 +41,12 @@ public interface LogService {
      * @return
      */
     public List<Log> getAll();
+
+    /**
+     * 根据班级名称和日志类型查询
+     * @param className
+     * @param logType
+     * @return
+     */
+    public List<Log> getLogByClassType(String className,Integer logType);
 }

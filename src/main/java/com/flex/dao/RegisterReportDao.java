@@ -25,4 +25,6 @@ public interface RegisterReportDao extends BaseMapper<RegisterReport> {
     @Select("select * from register_report")
     public List<RegisterReport> getAll();
 
+    @Select("select * from register_report,user,classes where user.user_id = register_report.user_id and user.class_id = classes.class_id and classes.class_name = #{className}")
+    public List<RegisterReport> getByClasses(String className);
 }
