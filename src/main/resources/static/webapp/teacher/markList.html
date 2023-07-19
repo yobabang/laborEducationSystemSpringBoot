@@ -26,7 +26,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="../static/img/head.png" class="layui-nav-img">
-                        {{user.userName}}
+                        {{user.adName}}
                     </a>
 
                 </li>
@@ -58,31 +58,31 @@
     <div>
         <template>
             <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="全部（20）" name="first">
+                <el-tab-pane :label="`全部（${detail_data.totalCount}）`" name="first">
                     <div class="flex-between flex-align" style="display: flex;
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
                         <el-dropdown>
-                            <el-button class="el-select-button">
+                            <el-button class="el-select-button" >
                                 <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
                             </el-button>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item v-for="option in options" :key="option" @click="selectOption(option)">
+                                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)" >
                                     {{ option }}
                                 </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
-                        <button type="button" class="el-button el-button--primary el-button--medium is-plain">
+                        <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
                             <span>打回修改</span>
                         </button>
-                        <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
-                        <button type="button" class="el-button el-button--primary el-button--medium"><span>下载表格</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
                             ref="multipleTable"
-                            :data="tableData"
+                            :data="tableData_1"
                             tooltip-effect="dark"
                             style="width: 100%"
                             @selection-change="handleSelectionChange">
@@ -91,32 +91,33 @@
                                 min-width="5%">
                         </el-table-column>
                         <el-table-column
+                                prop="logName"
                                 label="姓名"
                                 min-width="10%">
-                            <template slot-scope="scope">{{ scope.row.date }}</template>
+                            <template slot-scope="scope">{{ scope.row.logName }}</template>
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="userId"
                                 label="学号"
                                 min-width="20%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logClasses"
                                 label="班级"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logState"
                                 label="提交状态"
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logScore"
                                 label="成绩"
                                 min-width="10%">
                         </el-table-column>
@@ -130,7 +131,7 @@
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="待批阅（10）" name="second">
+                <el-tab-pane :label="`待批阅（${detail_data.state3Count}）`" name="second">
                     <div class="flex-between flex-align" style="display: flex;
                           justify-content: flex-start;
                           align-items: center;
@@ -140,20 +141,21 @@
                                 <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
                             </el-button>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item v-for="option in options" :key="option" @click="selectOption(option)">
+                                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)">
                                     {{ option }}
                                 </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
-                        <button type="button" class="el-button el-button--primary el-button--medium is-plain">
+                        <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
                             <span>打回修改</span>
                         </button>
-                        <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
                             ref="multipleTable"
-                            :data="tableData"
+                            :data="tableData_2"
                             tooltip-effect="dark"
                             style="width: 100%"
                             @selection-change="handleSelectionChange">
@@ -162,32 +164,33 @@
                                 min-width="5%">
                         </el-table-column>
                         <el-table-column
+                                prop="logName"
                                 label="姓名"
                                 min-width="10%">
                             <template slot-scope="scope">{{ scope.row.date }}</template>
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="userId"
                                 label="学号"
                                 min-width="20%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logClasses"
                                 label="班级"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logState"
                                 label="提交状态"
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logScore"
                                 label="成绩"
                                 min-width="10%">
                         </el-table-column>
@@ -201,7 +204,7 @@
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="已通过（7）" name="third">
+                <el-tab-pane :label="`已通过（${detail_data.state1Count}）`" name="third">
                     <div class="flex-between flex-align" style="display: flex;
                           justify-content: flex-start;
                           align-items: center;
@@ -211,20 +214,21 @@
                                 <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
                             </el-button>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item v-for="option in options" :key="option" @click="selectOption(option)">
+                                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)">
                                     {{ option }}
                                 </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
-                        <button type="button" class="el-button el-button--primary el-button--medium is-plain">
+                        <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
                             <span>打回修改</span>
                         </button>
-                        <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
                             ref="multipleTable"
-                            :data="tableData"
+                            :data="tableData_3"
                             tooltip-effect="dark"
                             style="width: 100%"
                             @selection-change="handleSelectionChange">
@@ -233,32 +237,33 @@
                                 min-width="5%">
                         </el-table-column>
                         <el-table-column
+                                prop="logName"
                                 label="姓名"
                                 min-width="10%">
                             <template slot-scope="scope">{{ scope.row.date }}</template>
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="userId"
                                 label="学号"
                                 min-width="20%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logClasses"
                                 label="班级"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logState"
                                 label="提交状态"
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logScore"
                                 label="成绩"
                                 min-width="10%">
                         </el-table-column>
@@ -272,7 +277,7 @@
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="待完成（3）" name="fourth">
+                <el-tab-pane :label="`待完成（${detail_data.state0Count}）`" name="fourth">
                     <div class="flex-between flex-align" style="display: flex;
                           justify-content: flex-start;
                           align-items: center;
@@ -282,20 +287,21 @@
                                 <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
                             </el-button>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item v-for="option in options" :key="option" @click="selectOption(option)">
+                                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)">
                                     {{ option }}
                                 </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
-                        <button type="button" class="el-button el-button--primary el-button--medium is-plain">
+                        <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
                             <span>打回修改</span>
                         </button>
-                        <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
                             ref="multipleTable"
-                            :data="tableData"
+                            :data="tableData_4"
                             tooltip-effect="dark"
                             style="width: 100%"
                             @selection-change="handleSelectionChange">
@@ -304,32 +310,33 @@
                                 min-width="5%">
                         </el-table-column>
                         <el-table-column
+                                prop="logName"
                                 label="姓名"
                                 min-width="10%">
                             <template slot-scope="scope">{{ scope.row.date }}</template>
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="userId"
                                 label="学号"
                                 min-width="20%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logClasses"
                                 label="班级"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logState"
                                 label="提交状态"
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="name"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
                         <el-table-column
-                                prop="address"
+                                prop="logScore"
                                 label="成绩"
                                 min-width="10%">
                         </el-table-column>
@@ -338,7 +345,7 @@
                                 label="操作"
                                 min-width="15%">
                             <template slot-scope="scope">
-                                <el-button  @click="check(scope.row)" type="text" size="medium">催交</el-button>
+                                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -356,10 +363,57 @@
 <link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
 <link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
 <script>
+function getUrlSearch(name) {
+            // 未传参，返回空
+            if (!name) return null;
+            // 查询参数：先通过search取值，如果取不到就通过hash来取
+            let after = window.location.search;
+            after = after.substr(1) || window.location.hash.split('?')[1];
+            // 地址栏URL没有查询参数，返回空
+            if (!after) return null;
+            // 如果查询参数中没有"name"，返回空
+            if (after.indexOf(name) === -1) return null;
+
+            let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+            // 当地址栏参数存在中文时，需要解码，不然会乱码
+            let r = decodeURI(after).match(reg);
+            // 如果url中"name"没有值，返回空
+            if (!r) return null;
+
+            return r[2];
+        }
+  let className = getUrlSearch("className")
+  let listType = getUrlSearch("listType")
+  let totalCount = getUrlSearch("totalCount")
+  let state0Count = getUrlSearch("state0Count")
+  let state1Count = getUrlSearch("state1Count")
+  let state3Count = getUrlSearch("state3Count")
+  let num;
+       if (listType === "日常生活劳动日志") {
+          num = 1;
+       } else if(listType === "服务性劳动日志"){
+          num = 2;
+       }else if(listType === "生产劳动日志"){
+          num = 3;
+       }else if(listType === "社会实践活动登记表"){
+          num = 4;
+       }else if(listType === "社会实践活动日志"){
+          num = 5;
+       }else if(listType === "社会实践调查报告"){
+          num = 6;
+       }
   let tabVue = new Vue({
     el: ".con",
     data() {
       return {
+      detail_data:{
+        className: className,
+        listType: num,
+        totalCount: totalCount,
+        state0Count: state0Count,
+        state1Count: state1Count,
+        state3Count: state3Count
+      },
         activeName: 'first',
         tableData_1: [{},],
         tableData_2: [{},],
@@ -373,6 +427,15 @@
     methods: {
       check(row){
 
+      },
+      notice(){
+        alert("催交")
+      },
+      load(){
+        alert("下载表格")
+      },
+      refuse(){
+        alert("打回")
       },
       handleClick(tab, event) {
         console.log(tab, event);
@@ -390,9 +453,49 @@
         this.multipleSelection = val;
       },
       selectOption(option) {
-        this.selectedOption = option;  // 设置选中的选项
+         if (option === '区间给分') {
+              let range = prompt("请输入数字区间，格式为：最小值-最大值");
+              let [min, max] = range.split('-').map(Number);
+              let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+              console.log("生成的随机数字：" + randomNum);
+              if(range){
+                   alert("填写内容并“确定”")
+                }
+                else if(range === ""){
+                     alert("未填写但“确定”")
+                }
+                else{
+                    alert("“取消”事件")
+                }
+            } else if (option === '统一给分') {
+              let num = prompt("请输入一个分数");
+              console.log("输入的分数：" + num);
+              if(num){
+                   alert("填写内容并“确定”")
+                }
+                else if(num === ""){
+                     alert("未填写但“确定”")
+                }
+                else{
+                    alert("“取消”事件")
+                }
+            } else {
+              console.log("无效的选项");
+         }
       },
     },
+    mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            let _this = this;
+            axios({
+                method:"get",
+                url:"/logs/classType/" + _this.detail_data.className + '/' + _this.detail_data.listType,
+            }).then(function (resp){
+                console.log(resp.data)
+                _this.tableData_1 = resp.data.data;
+            })
+        },
+
   });
 </script>
 <script>
@@ -401,7 +504,7 @@
         data(){
             return{
                 user:{
-                    userName:'测试',
+                    adName:'测试',
                 },
             }
         },
@@ -410,7 +513,7 @@
             let _this = this;
             axios({
                 method:"get",
-                url:"/users/session/1",
+                url:"/users/session/2",
             }).then(function (resp){
                 _this.user = resp.data.data;
             })

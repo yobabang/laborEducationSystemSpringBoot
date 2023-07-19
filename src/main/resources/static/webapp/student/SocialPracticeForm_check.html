@@ -193,7 +193,7 @@
         <div class="layui-form-item layui-form-text">
           <label class="layui-form-label">实践单位或调查对象评价：</label>
           <div class="layui-input-block">
-            <textarea placeholder="请输入内容" readonly class="layui-textarea"></textarea>
+            <textarea placeholder="请输入内容" readonly class="layui-textarea" id="praIntro"></textarea>
           </div>
         </div>
       </div>
@@ -282,7 +282,7 @@ function getUrlSearch(name) {
                 document.getElementById("item").value = data.data["practice"].item;
                 document.getElementById("registerStatus").value = data.data["practice"].registerStatus;
                 document.getElementById("unitMajor").value = data.data["practice"].unitMajor;
-                document.getElementById("praIntro").value; =  data.data["practice"].praIntro;
+                document.getElementById("praIntro").value =  data.data["practice"].praIntro;
      }
    };
    xhr2.send()
