@@ -49,12 +49,17 @@
       <el-table-column
               prop="totalCount"
               label="应提交"
-              min-width="20%">
+              min-width="15%">
+      </el-table-column>
+      <el-table-column
+              prop="state0Count"
+              label="待完成"
+              min-width="10%">
       </el-table-column>
       <el-table-column
               prop="state1Count"
               label="已通过"
-              min-width="20%">
+              min-width="15%">
       </el-table-column>
       <el-table-column
               prop="state3Count"
@@ -70,7 +75,7 @@
       <el-table-column
               fixed="right"
               label="操作"
-              min-width="10%">
+              min-width="5%">
         <template slot-scope="scope">
           <el-button
                   size="medium"
@@ -120,7 +125,7 @@ function getUrlSearch(name) {
     el: ".con",
     methods: {
       review(row){
-          let reUrl = 'review_list.html?className='+ className + '&listType=' + row.listType + '&listType=' +  + '&listType=' +  + '&listType=' +  + '&listType=' +;
+          let reUrl = 'markList.html?className='+ className + '&listType=' + row.listType + '&totalCount=' + row.totalCount + '&state0Count=' + row.state0Count + '&state1Count=' + row.state1Count + '&state3Count=' + row.state3Count;
           window.location.href = reUrl;
       },
 
