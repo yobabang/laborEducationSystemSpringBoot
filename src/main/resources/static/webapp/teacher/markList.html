@@ -149,6 +149,7 @@
                             <span>打回修改</span>
                         </button>
                         <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
@@ -220,6 +221,7 @@
                             <span>打回修改</span>
                         </button>
                         <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
@@ -291,6 +293,7 @@
                             <span>打回修改</span>
                         </button>
                         <button type="button" class="el-button el-button--primary el-button--medium"><span>一键催交</span></button>
+                        <button type="button" class="el-button el-button--primary el-button--medium"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
@@ -390,7 +393,17 @@
         this.multipleSelection = val;
       },
       selectOption(option) {
-        this.selectedOption = option;  // 设置选中的选项
+         if (option === '区间给分') {
+              let range = prompt("请输入数字区间，格式为：最小值-最大值");
+              let [min, max] = range.split('-').map(Number);
+              let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+              console.log("生成的随机数字：" + randomNum);
+            } else if (option === '统一给分') {
+              let num = prompt("请输入一个数字");
+              console.log("输入的数字：" + num);
+            } else {
+              console.log("无效的选项");
+         }
       },
     },
 <!--    mounted(){-->
