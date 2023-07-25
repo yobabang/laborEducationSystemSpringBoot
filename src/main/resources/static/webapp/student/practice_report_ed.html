@@ -13,15 +13,16 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
     <style>
-        .asdf{
-            margin-left: auto;
-            margin-right: auto;
-            width: 10%;}
+
         .layui-form-label{
             width: 140px;
         }
         h1 {
             text-align: center;
+        }
+        .layui-layout-nav {
+            margin: 0 auto;
+            max-width: 70%;
         }
     </style>
 </head>
@@ -48,6 +49,7 @@
 <br>
 <br>
 <br>
+<div class="layui-layout layui-layout-admin layui-layout-nav">
 <h1>社会实践报告</h1>
 <form class="layui-form layui-form-pane" action="">
 
@@ -59,23 +61,21 @@
         </div>
     </div>
 
-    <div class="layui-form-item">
+    <div class="layui-inline">
         <label class="layui-form-label">日期</label>
-        <div class="layui-input-block">
-            <input type="text"  autocomplete="off"  class="layui-input" name="repTime" id="repTime">
+        <div class="layui-input-inline">
+            <input type="text" autocomplete="off" class="layui-input" name="repTime" id="repTime">
         </div>
     </div>
-
-    <div class="layui-form-item">
+    <div class="layui-inline layui-input-block custom-margin">
         <label class="layui-form-label">地点</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="site" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input" id="repPlace">
         </div>
     </div>
-
-    <div class="layui-form-item">
+    <div class="layui-inline layui-input-block">
         <label class="layui-form-label">工作对象</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="object" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input" id="repObject">
         </div>
     </div>
@@ -128,6 +128,7 @@
         </div>
     </div>
 </form>
+</div>
 
 <script src="../static/layui/layui.js" charset="utf-8"></script>
 <script src="../static/js/jquery.min.js"></script>
