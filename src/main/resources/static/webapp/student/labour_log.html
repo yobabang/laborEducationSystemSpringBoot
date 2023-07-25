@@ -41,7 +41,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">年级班级</label>
             <div class="layui-input-inline">
-                <input type="text" name="className" autocomplete="off" class="layui-input" id="logClasses" required>
+                <input type="text" name="logClasses" autocomplete="off" class="layui-input" id="logClasses" required>
             </div>
         </div>
 
@@ -157,7 +157,7 @@ function getUrlSearch(name) {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
                 data = JSON.parse(xhr1.responseText);
                 document.getElementById("userType").value = data.data.type
-                document.getElementById("logClasses").value = data.data.logClasses
+                document.getElementById("logClasses").value = data.data.className
             }
         }
         xhr1.send();
@@ -260,16 +260,16 @@ layui.use(['jquery', 'form'], function () {
         }
         let log = {};
         alert("数据创建成功")
-        var data = {};
+        var sdata = {};
         let xhr1 = new XMLHttpRequest();
         xhr1.open('GET', '/users/session/1', true);
         xhr1.onreadystatechange = function() {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
-                data = JSON.parse(xhr1.responseText);
-                console.log(data)
-                let userId  = data.data.userId;
+                sdata = JSON.parse(xhr1.responseText);
+                console.log(sdata)
+                let userId  = sdata.data.userId;
                 console.log('session中user-id为' + userId)
-                log.userType = data.data.type;;
+                log.userType = sdata.data.type;;
                 log.logClasses = document.getElementById("logClasses").value;
                 let logType = document.getElementById("logType").value;
                 let num;
@@ -297,6 +297,7 @@ layui.use(['jquery', 'form'], function () {
                 log.userId = userId;
                 console.log('log中user-id为' + userId)
                 // 保存数据到本地存储
+                alert("123")
                 localStorage.setItem('formData', JSON.stringify(log));
                 alert("log数据添加完成")
                 axios({
