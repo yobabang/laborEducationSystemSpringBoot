@@ -111,6 +111,9 @@
     var layedit = layui.layedit;
     var content = layedit.getContent(layeditIndex);
     alert("已保存内容：" + content);
+
+// 跳转到SocialPracticeJournal011.html页面
+    window.location.href = "SocialPracticeJournal011.html?content=" + encodeURIComponent(content);
   }
 
   // 提交内容
@@ -118,7 +121,11 @@
     var layedit = layui.layedit;
     var content = layedit.getContent(layeditIndex);
     alert("已提交内容：" + content);
+
+// 跳转到SocialPracticeJournal011.html页面
+    window.location.href = "SocialPracticeJournal011.html?content=" + encodeURIComponent(content);
   }
+
 </script>
 <script>
   layui.use(['laydate'], function(){
