@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>吉利学院劳动教育平台</title>
+  <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../static/css/task.css">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/layui/2.5.7/css/layui.css" media="all">
+  <style>
+    .center-align {
+      text-align: center;
+    }
+    .center-align .layui-btn {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header" id="headername">
+    <ul class="layui-nav ">
+      <li class="layui-nav-item "><a href="">首页</a></li>
+      <li class="layui-nav-item layui-this"><a href="log_edit.html">社会实践日志</a></li>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="../static/img/head.png" class="layui-nav-img">
+            {{user.userName}}
+          </a>
+
+        </li>
+        <li class="layui-nav-item"><a href="../../login.html">退出</a></li>
+      </ul>
+    </ul>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+<div class="layui-container">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header" style="text-align: center;font-weight: bold; font-size: 30px;">社会实践日志</div>
+
+        <div class="layui-card-body layui-form">
+          <input type="text" id="dateInput" placeholder="请选择日期" class="layui-input">
+          <textarea id="editor" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+        <div class="layui-card-footer center-align">
+          <button class="layui-btn layui-btn-normal layui-btn-lg" onclick="saveContent()">保存</button>
+          <button class="layui-btn layui-btn-normal layui-btn-lg" onclick="submitContent()">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/vue.js"></script>
+
+
+
+<script>
+  let userName = new Vue({
+    el: "#headername",
+    data(){
+      return{
+        user:{
+          userName:'玉米排骨汤',
+        },
+      }
+    },
+    mounted(){
+      //当页面加载完成后来发送异步请求获取数据
+      var _this = this;
+      axios({
+        method:"get",
+        url:"/users/session/1",
+      }).then(function (resp){
+        _this.user = resp.data.data;
+      })
+    },
+  })
+</script>
+<script src="https://cdn.staticfile.org/layui/2.5.4/layui.js"></script>
+<script>
+  // 初始化编辑器
+  layui.use('layedit', function(){
+    var layedit = layui.layedit;
+    layedit.build('editor'); //建立编辑器
+  });
+
+  // 保存内容
+  function saveContent() {
+    var layedit = layui.layedit;
+    var content = layedit.getContent(layeditIndex);
+    alert("已保存内容：" + content);
+  }
+
+  // 提交内容
+  function submitContent() {
+    var layedit = layui.layedit;
+    var content = layedit.getContent(layeditIndex);
+    alert("已提交内容：" + content);
+  }
+</script>
+<script>
+  layui.use(['laydate'], function(){
+    var laydate = layui.laydate;
+
+    laydate.render({
+      elem: '#dateInput'
+    });
+  });
+</script>
+
+
+
+</body>
+</html>
