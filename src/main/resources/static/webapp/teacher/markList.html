@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<div class="con" style="margin-top: 70px;margin-left:20%;margin-right:20%;">
+<div class="con" style="margin-top: 70px;margin-left:15%;margin-right:15%;">
     <div style="display: flex;flex-direction: column;">
         <div style="font-size: 20px;font-family: PingFangSC,PingFangSC-Medium;font-weight: 500;text-align: left;color: #3c4043;">
             第一次作业
@@ -426,7 +426,9 @@ function getUrlSearch(name) {
     },
     methods: {
       check(row){
-
+          let _this = this;
+          let reUrl = 'review_interface.html?userId='+ row.userId + '&listType=' + _this.detail_data.listType;
+          window.location.href = reUrl;
       },
       notice(){
         alert("催交")
@@ -491,35 +493,9 @@ function getUrlSearch(name) {
                 method:"get",
                 url:"/logs/classType/" + _this.detail_data.className + '/' + _this.detail_data.listType,
             }).then(function (resp){
+                _this.tableData_1 = resp.data.data
+
                 console.log(resp.data)
-                // 定义一个新的字段名映射对象
-<!--var fieldMapping = {-->
-<!--  id: 'userId',-->
-<!--  name: 'userName',-->
-<!--  age: 'userAge'-->
-<!--};-->
-
-<!--// 使用map方法遍历tableData数组，修改键名-->
-<!--var modifiedTableData = tableData.map(function(item) {-->
-<!--  var modifiedItem = {};-->
-<!--  for (var key in item) {-->
-<!--    if (fieldMapping[key]) {-->
-<!--      modifiedItem[fieldMapping[key]] = item[key];-->
-<!--    } else {-->
-<!--      modifiedItem[key] = item[key];-->
-<!--    }-->
-<!--  }-->
-<!--  return modifiedItem;-->
-<!--});-->
-
-<!--console.log(modifiedTableData);-->
-                _this.tableData_1 = resp.data.data;
-<!--                let num = _this.$refs._this.tableData_1.data.length;-->
-<!--                console.log(num);-->
-<!--                for(let i = 0; i < num; i++){-->
-<!--                    if(_this.tableData[i].)-->
-
-<!--                }-->
             })
         },
 

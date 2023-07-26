@@ -37,7 +37,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:">
                     <img src="../static/img/head.png" class="layui-nav-img">
-                    {{user.user_name}}
+                    {{user.adname}}
                 </a>
 
             </li>
@@ -48,7 +48,7 @@
 <br>
 <br>
 <br>
-
+<div class="con" style="margin-top: 70px;margin-left:15%;margin-right:15%;">
 <div class="box">
     <table class="layui-table">
         <colgroup>
@@ -125,7 +125,7 @@
         <button type="button" class="layui-btn" name="ass" value="D">不合格</button>
     </div>
 </div>
-
+</div>
 
 <script src="//cdn.staticfile.org/layui/2.8.6/layui.js"></script>
 <script>
@@ -158,6 +158,28 @@
             }
         });
     });
+</script>
+<script>
+    let userName = new Vue({
+        el: "#headername",
+        data(){
+            return{
+                user:{
+                    adName:'测试',
+                },
+            }
+        },
+        mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            let _this = this;
+            axios({
+                method:"get",
+                url:"/users/session/2",
+            }).then(function (resp){
+                _this.user = resp.data.data;
+            })
+        },
+    })
 </script>
 
 
