@@ -31,7 +31,7 @@
 </ul>
     </div>
 </div>
-<div class="con" style="margin-top: 60px;">
+<div class="con" style="margin-top: 60px;margin-left:10%;margin-right:10%;">
 <!--面板显示信息及通知-->
 <div class="layui-bg-gray" style="padding: 16px;">
     <div class="layui-row layui-col-space15">
@@ -118,7 +118,7 @@
         </el-table-column>
         <el-table-column
                 prop="listTime"
-                label="最后的修改时间"
+                label="发布时间"
                 sortable
                 min-width="20%">
         </el-table-column>
@@ -239,7 +239,7 @@
            for(let i = 0; i < num; i++){
                 let id = i + 1
                 html += '<tr><td><span onclick="showPopup(\'' + data2.data[i].noticeTitle + '\', \'' + data2.data[i].noticeContent + '\')" style="color: blue;">' + id + '.' + "(" + data2.data[i].noticeTitle + ")" +
-                '</span></td><br>' + '<td>' + data2.data[i].noticeContent + '</td></tr><br>';
+                '</span></td>' + '<td>' + data2.data[i].noticeContent + '</td></tr><br>';
            }
            table.innerHTML = html;
      }

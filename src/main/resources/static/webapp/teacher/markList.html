@@ -492,7 +492,34 @@ function getUrlSearch(name) {
                 url:"/logs/classType/" + _this.detail_data.className + '/' + _this.detail_data.listType,
             }).then(function (resp){
                 console.log(resp.data)
+                // 定义一个新的字段名映射对象
+<!--var fieldMapping = {-->
+<!--  id: 'userId',-->
+<!--  name: 'userName',-->
+<!--  age: 'userAge'-->
+<!--};-->
+
+<!--// 使用map方法遍历tableData数组，修改键名-->
+<!--var modifiedTableData = tableData.map(function(item) {-->
+<!--  var modifiedItem = {};-->
+<!--  for (var key in item) {-->
+<!--    if (fieldMapping[key]) {-->
+<!--      modifiedItem[fieldMapping[key]] = item[key];-->
+<!--    } else {-->
+<!--      modifiedItem[key] = item[key];-->
+<!--    }-->
+<!--  }-->
+<!--  return modifiedItem;-->
+<!--});-->
+
+<!--console.log(modifiedTableData);-->
                 _this.tableData_1 = resp.data.data;
+<!--                let num = _this.$refs._this.tableData_1.data.length;-->
+<!--                console.log(num);-->
+<!--                for(let i = 0; i < num; i++){-->
+<!--                    if(_this.tableData[i].)-->
+
+<!--                }-->
             })
         },
 

@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>吉利学院劳动教育平台</title>
+  <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
+  <style>
+        .layui-form-label{
+            width: 140px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .layui-layout-nav {
+            margin: 0 auto;
+            max-width: 70%;
+        }
+
+    </style>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header" id="headername">
+    <ul class="layui-nav ">
+      <li class="layui-nav-item"><a href="task_list.html">首页</a></li>
+      <li class="layui-nav-item layui-this"><a href="practice_report.html">社会实践调查报告</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="../static/img/head.png" class="layui-nav-img">
+          {{user.userName}}
+        </a>
+
+      </li>
+      <li class="layui-nav-item"><a href="../../login.html">退出</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="con" style="margin-top: 70px;margin-left:15%;margin-right:15%;">
+  <h1>社会实践报告</h1>
+  <form class="layui-form layui-form-pane" >
+
+    <div class="layui-form-item layui-form-text">
+
+      <label class="layui-form-label">社会实践活动背景</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" class="layui-textarea" id="repBackground"></textarea>
+      </div>
+    </div>
+
+    <div class="layui-inline">
+      <label class="layui-form-label">日期</label>
+      <div class="layui-input-inline">
+        <input type="text" autocomplete="off" class="layui-input" name="repTime" id="repTime">
+      </div>
+    </div>
+    <div class="layui-inline layui-input-block custom-margin">
+      <label class="layui-form-label">地点</label>
+      <div class="layui-input-inline">
+        <input type="text" name="site" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input" id="repPlace">
+      </div>
+    </div>
+    <div class="layui-inline layui-input-block">
+      <label class="layui-form-label">工作对象</label>
+      <div class="layui-input-inline">
+        <input type="text" name="object" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input" id="repObject">
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">社会实践的主要内容</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" class="layui-textarea" id="repContent"></textarea>
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">社会实践过程</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" class="layui-textarea" id="repProcess"></textarea>
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">发现的问题</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" class="layui-textarea" id="repIssue"></textarea>
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">收获与建议</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" class="layui-textarea" id="repGain"></textarea>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">提交时间</label>
+      <div class="layui-input-inline">
+        <input type="text" class="layui-input" name="logTime" id="reportMark">
+      </div>
+    </div>
+    <div class="layui-bg-gray" style="padding: 16px;">
+      <div class="layui-row layui-col-space15">
+        <div class="layui-col-md9">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">评阅意见：</label>
+                <div class="layui-input-block">
+                  <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md3">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">成绩：</label>
+                <div class="layui-input-block">
+                  <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-form-item" style="text-align: center">
+      <div class="layui-row">
+        <div class="layui-col-md4">
+          <button style="margin-left: 300px" class="layui-btn" lay-submit lay-filter="demo2" id="demo2">提交</button>
+        </div>
+        <div class="layui-col-md4">
+          <button class="layui-btn" lay-submit lay-filter="demo3" id="demo3">保存</button>
+        </div>
+        <div class="layui-col-md4">
+          <button type="reset" style="margin-left: -300px" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<script src="../static/layui/layui.js" charset="utf-8"></script>
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/vue.js"></script>
+<script src="../static/element-ui/package/lib/index.js"></script>
+<link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
+<link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+<!-- 提交按钮-->
+<script>
+// 确认按钮数据提交
+layui.use(['jquery', 'form'], function () {
+    var form = layui.form;
+    var layer = layui.layer;
+    // 提交事件
+    layui.$('#demo2').on('click', function () {
+        alert("确认按钮")
+        let report = {};
+        alert("数据创建成功")
+        var data = {};
+        let xhr1 = new XMLHttpRequest();
+        xhr1.open('GET', '/users/session/1', true);
+        xhr1.onreadystatechange = function() {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                data = JSON.parse(xhr1.responseText);
+                console.log(data)
+                let userId  = data.data.userId;
+                report.repBackground = document.getElementById("repBackground").value;
+                report.repPlace = document.getElementById("repPlace").value;
+                report.repTime = document.getElementById("repTime").value;
+                report.repObject = document.getElementById("repObject").value;
+                report.repContent = document.getElementById("repContent").value;
+                report.repProcess = document.getElementById("repProcess").value;
+                report.repIssue = document.getElementById("repIssue").value;
+                report.repGain = document.getElementById("repGain").value;
+                report.reportMark = document.getElementById("reportMark").value;
+                report.repState = 3;
+                report.userId = userId;
+                console.log(report);
+                alert("report数据添加完成")
+                axios({
+                    method: 'post',
+                    url: '/registerReports/insert',
+                    data: JSON.stringify(report),
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                }).then(function (response) {
+                    console.log(response.data);
+                    alert('成功连接到接口insert');
+                    // 解析后端返回的数据
+                    try {
+                    var jsonData = JSON.parse(response.data);
+                    console.log(jsonData);
+                    } catch (error) {
+                    console.error('解析后端返回的数据失败:', error);
+                    alert('解析后端返回的数据失败');
+                    }
+                }).catch(function (error) {
+                    console.error(error);
+                    alert('链接失败' + error)
+                });
+            }
+        }
+        xhr1.send();
+    });
+});
+</script>
+<!-- 保存按钮-->
+<script>
+// 保存按钮的数据提交
+    layui.use(['jquery', 'form'], function () {
+    var form = layui.form;
+    var layer = layui.layer;
+    // 提交事件
+
+    layui.$('#demo3').on('click', function () {
+        alert("保存按钮")
+        // 从本地存储中加载数据
+        var savedData = localStorage.getItem('formData');
+        if (savedData && savedData !== '{}') { // 添加判断条件：savedData不为空且不等于空对象{}
+            var data = JSON.parse(savedData);
+            fillFormFields(data);
+        }
+        let report = {};
+        alert("数据创建成功")
+        var sdata = {};
+        let xhr1 = new XMLHttpRequest();
+        xhr1.open('GET', '/users/session/1', true);
+        xhr1.onreadystatechange = function() {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+                sdata = JSON.parse(xhr1.responseText);
+                console.log(sdata)
+                let userId  = sdata.data.userId;
+                report.repBackground = document.getElementById("repBackground").value;
+                report.repPlace = document.getElementById("repPlace").value;
+                report.repTime = document.getElementById("repTime").value;
+                report.repObject = document.getElementById("repObject").value;
+                report.repContent = document.getElementById("repContent").value;
+                report.repProcess = document.getElementById("repProcess").value;
+                report.repIssue = document.getElementById("repIssue").value;
+                report.repGain = document.getElementById("repGain").value;
+                report.reportMark = document.getElementById("reportMark").value;
+                report.repState = 4;
+                report.userId = userId;
+                console.log('log中user-id为' + userId)
+                // 保存数据到本地存储
+                localStorage.setItem('formData', JSON.stringify(report));
+                alert("log数据添加完成")
+                axios({
+                    method: 'post',
+                    url: '/registerReports/insert',
+                    data: JSON.stringify(report),
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                }).then(function (response) {
+                    console.log(response.data);
+                    alert('成功连接到接口insert');
+                    // 解析后端返回的数据
+                    try {
+                    var jsonData = JSON.parse(response.data);
+                    console.log(jsonData);
+                    } catch (error) {
+                    console.error('解析后端返回的数据失败:', error);
+                    alert('解析后端返回的数据失败');
+                    }
+                }).catch(function (error) {
+                    console.error(error);
+                    alert('链接失败' + error)
+                });
+            }
+        }
+        xhr1.send();
+    });
+    // 填充表单字段
+    function fillFormFields(data) {
+        document.getElementById("repBackground").value = data.repBackground
+        document.getElementById("repPlace").value = data.repPlace;
+        document.getElementById("repTime").value = data.repTime;
+        document.getElementById("repObject").value = data.repObject;
+        document.getElementById("repContent").value = data.repContent;
+        document.getElementById("repProcess").value = data.repProcess;
+        document.getElementById("repIssue").value = data.repIssue;
+        document.getElementById("repGain").value = data.repGain;
+        document.getElementById("reportMark").value = data.reportMark;
+
+        // 触发表单重新渲染
+        form.render();
+        }
+});
+</script>
+<script>
+//日期组件
+    layui.use(function(){
+        var laydate = layui.laydate;
+        var util = layui.util;
+        /*
+         * 快捷选项
+         */
+        // 日期
+        laydate.render({
+            elem: '#reportMark',
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14"
+                }
+            ]
+        });
+        // 年份
+        laydate.render({
+            elem: "#ID-laydate-shortcut-year",
+            type: "year",
+            shortcuts: [
+                {
+                    text: "去年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "明年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return now;
+                    }()
+                }
+            ]
+        });
+        // 年月
+        laydate.render({
+            elem: "#ID-laydate-shortcut-month",
+            type: "month",
+            shortcuts: [
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "下个月",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "去年12月",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(11);
+                        now.setFullYear(now.getFullYear() - 1);
+                        return now;
+                    }()
+                }
+            ]
+        });
+        // 时间
+        laydate.render({
+            elem: "#ID-laydate-shortcut-time",
+            type: "time",
+            shortcuts: function(){ // 生成 30 分钟间隔的时间列表
+                var value = [];
+                var now = new Date();
+                now.setHours(0, 0, 0, 0);
+                for (var i = 0; i < 48; i++) {
+                    var nowTemp = now.setMinutes(now.getMinutes() + (i ? 30 : 0));
+                    var nowTimeStr = util.toDateString(nowTemp, "HH:mm:ss");
+                    value.push({
+                        text: nowTimeStr,
+                        value: nowTimeStr
+                    });
+                }
+                return value;
+            }()
+        });
+        // 日期时间
+        laydate.render({
+            elem: "#ID-laydate-shortcut-datetime",
+            type: "datetime",
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14 00:00:00"
+                }
+            ]
+        });
+        // 日期时间全面板
+        laydate.render({
+            elem: "#ID-laydate-shortcut-datetime-fullPanel",
+            type: "datetime",
+            fullPanel: true,
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14 11:32:32"
+                }
+            ]
+        });
+        // 日期范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-date",
+            range: true,
+            shortcuts: [
+                {
+                    text: "上个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        date1.setMonth(date1.getMonth() - 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                },
+                {
+                    text: "这个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        // date1.setMonth(date1.getMonth() - 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setMonth(date2.getMonth() + 1);
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                },
+                {
+                    text: "下个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        date1.setMonth(date1.getMonth() + 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setMonth(date2.getMonth() + 2);
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                }
+            ]
+        });
+        // 年份范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-year",
+            type: "year",
+            range: true,
+            shortcuts: [
+                {
+                    text: "过去一年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 1);
+                        return [now, new Date()];
+                    }()
+                },
+                {
+                    text: "未来一年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return [new Date(), now];
+                    }()
+                },
+                {
+                    text: "近三年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 3);
+                        return [now, new Date()];
+                    }()
+                }
+            ]
+        });
+        // 年月范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-month",
+            type: "month",
+            range: true,
+            shortcuts: [
+                {
+                    text: "去年",
+                    value: function(){
+                        var date1 = new Date();
+                        date1.setFullYear(date1.getFullYear() - 1, 0, 1);
+                        date1.setHours(0, 0, 0, 0);
+                        var date2 = new Date();
+                        date2.setMonth(0, 1);
+                        date2.setHours(0, 0, 0, 0);
+                        return [date1, date2.getTime() - 1];
+                    }()
+                },
+                {
+                    text: "明年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return [now, now];
+                    }()
+                },
+                {
+                    text: "近三年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 3);
+                        return [now, new Date()];
+                    }()
+                }
+            ]
+        });
+        // 时间范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-time",
+            type: "time",
+            range: true,
+            shortcuts: [
+                {
+                    text: '09:30 <p style="text-align: center;">到</p> 11:30',
+                    value: (function () {
+                        var date1 = new Date();
+                        date1.setHours(9, 0, 0, 0);
+                        var date2 = new Date();
+                        date2.setHours(11, 30, 0, 0);
+                        return [date1, date2];
+                    })()
+                },
+                {
+                    text: '13:00 <p style="text-align: center;">到</p> 15:00',
+                    value: (function () {
+                        var date1 = new Date();
+                        date1.setHours(13, 0, 0, 0);
+                        var date2 = new Date();
+                        date2.setHours(15, 0, 0, 0);
+                        return [date1, date2];
+                    })()
+                }
+            ]
+        });
+        // 日期时间范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-datetime",
+            type: "datetime",
+            range: true,
+            shortcuts: [
+                {
+                    text: "上个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        date1.setMonth(date1.getMonth() - 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                },
+                {
+                    text: "这个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        // date1.setMonth(date1.getMonth() - 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setMonth(date2.getMonth() + 1);
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                },
+                {
+                    text: "下个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        date1.setMonth(date1.getMonth() + 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setMonth(date2.getMonth() + 2);
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                }
+            ]
+        });
+    });
+</script>
+<script>
+//日期组件
+    layui.use(function(){
+        var laydate = layui.laydate;
+        var util = layui.util;
+        /*
+         * 快捷选项
+         */
+        // 日期
+        laydate.render({
+            elem: '#repTime',
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14"
+                }
+            ]
+        });
+        // 年份
+        laydate.render({
+            elem: "#ID-laydate-shortcut-year",
+            type: "year",
+            shortcuts: [
+                {
+                    text: "去年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "明年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return now;
+                    }()
+                }
+            ]
+        });
+        // 年月
+        laydate.render({
+            elem: "#ID-laydate-shortcut-month",
+            type: "month",
+            shortcuts: [
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "下个月",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "去年12月",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(11);
+                        now.setFullYear(now.getFullYear() - 1);
+                        return now;
+                    }()
+                }
+            ]
+        });
+        // 时间
+        laydate.render({
+            elem: "#ID-laydate-shortcut-time",
+            type: "time",
+            shortcuts: function(){ // 生成 30 分钟间隔的时间列表
+                var value = [];
+                var now = new Date();
+                now.setHours(0, 0, 0, 0);
+                for (var i = 0; i < 48; i++) {
+                    var nowTemp = now.setMinutes(now.getMinutes() + (i ? 30 : 0));
+                    var nowTimeStr = util.toDateString(nowTemp, "HH:mm:ss");
+                    value.push({
+                        text: nowTimeStr,
+                        value: nowTimeStr
+                    });
+                }
+                return value;
+            }()
+        });
+        // 日期时间
+        laydate.render({
+            elem: "#ID-laydate-shortcut-datetime",
+            type: "datetime",
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14 00:00:00"
+                }
+            ]
+        });
+        // 日期时间全面板
+        laydate.render({
+            elem: "#ID-laydate-shortcut-datetime-fullPanel",
+            type: "datetime",
+            fullPanel: true,
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14 11:32:32"
+                }
+            ]
+        });
+        // 日期范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-date",
+            range: true,
+            shortcuts: [
+                {
+                    text: "上个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        date1.setMonth(date1.getMonth() - 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                },
+                {
+                    text: "这个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        // date1.setMonth(date1.getMonth() - 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setMonth(date2.getMonth() + 1);
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                },
+                {
+                    text: "下个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        date1.setMonth(date1.getMonth() + 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setMonth(date2.getMonth() + 2);
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                }
+            ]
+        });
+        // 年份范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-year",
+            type: "year",
+            range: true,
+            shortcuts: [
+                {
+                    text: "过去一年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 1);
+                        return [now, new Date()];
+                    }()
+                },
+                {
+                    text: "未来一年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return [new Date(), now];
+                    }()
+                },
+                {
+                    text: "近三年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 3);
+                        return [now, new Date()];
+                    }()
+                }
+            ]
+        });
+        // 年月范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-month",
+            type: "month",
+            range: true,
+            shortcuts: [
+                {
+                    text: "去年",
+                    value: function(){
+                        var date1 = new Date();
+                        date1.setFullYear(date1.getFullYear() - 1, 0, 1);
+                        date1.setHours(0, 0, 0, 0);
+                        var date2 = new Date();
+                        date2.setMonth(0, 1);
+                        date2.setHours(0, 0, 0, 0);
+                        return [date1, date2.getTime() - 1];
+                    }()
+                },
+                {
+                    text: "明年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return [now, now];
+                    }()
+                },
+                {
+                    text: "近三年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 3);
+                        return [now, new Date()];
+                    }()
+                }
+            ]
+        });
+        // 时间范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-time",
+            type: "time",
+            range: true,
+            shortcuts: [
+                {
+                    text: '09:30 <p style="text-align: center;">到</p> 11:30',
+                    value: (function () {
+                        var date1 = new Date();
+                        date1.setHours(9, 0, 0, 0);
+                        var date2 = new Date();
+                        date2.setHours(11, 30, 0, 0);
+                        return [date1, date2];
+                    })()
+                },
+                {
+                    text: '13:00 <p style="text-align: center;">到</p> 15:00',
+                    value: (function () {
+                        var date1 = new Date();
+                        date1.setHours(13, 0, 0, 0);
+                        var date2 = new Date();
+                        date2.setHours(15, 0, 0, 0);
+                        return [date1, date2];
+                    })()
+                }
+            ]
+        });
+        // 日期时间范围
+        laydate.render({
+            elem: "#ID-laydate-shortcut-range-datetime",
+            type: "datetime",
+            range: true,
+            shortcuts: [
+                {
+                    text: "上个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        date1.setMonth(date1.getMonth() - 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                },
+                {
+                    text: "这个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        // date1.setMonth(date1.getMonth() - 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setMonth(date2.getMonth() + 1);
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                },
+                {
+                    text: "下个月",
+                    value: function(){
+                        var value = [];
+                        var date1 = new Date();
+                        date1.setMonth(date1.getMonth() + 1);
+                        date1.setDate(1);
+                        date1.setHours(0, 0, 0, 0);
+                        value.push(date1);
+                        var date2 = new Date();
+                        date2.setMonth(date2.getMonth() + 2);
+                        date2.setDate(1);
+                        date2.setHours(0, 0, 0, 0);
+                        date2 = date2.getTime() - 1;
+                        value.push(new Date(date2));
+                        return value;
+                    }()
+                }
+            ]
+        });
+    });
+</script>
+<script>
+    let userName = new Vue({
+        el: "#headername",
+        data(){
+            return{
+                user:{
+                    userName:'测试',
+                },
+            }
+        },
+        mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            let _this = this;
+            axios({
+                method:"get",
+                url:"/users/session/1",
+            }).then(function (resp){
+                _this.user = resp.data.data;
+            })
+        },
+    })
+</script>
+
+</body>
+</html>
