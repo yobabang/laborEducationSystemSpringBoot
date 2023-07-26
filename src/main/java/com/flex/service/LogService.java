@@ -49,4 +49,6 @@ public interface LogService {
      * @return
      */
     public List<Log> getLogByClassType(String className,Integer logType);
+
+
 }

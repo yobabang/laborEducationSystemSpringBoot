@@ -142,4 +142,21 @@ public class LogController {
         return new Result(code, logs, msg);
     }
 
+    @ApiOperation(value = "批量审批学生日志", notes = "根据日志id批量审批学生日志")
+    @PostMapping("/score")
+    public Result addLogScores(@RequestBody List<Long> logIds){
+        Integer logScore = 85;
+        LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
+        for (Long logId: logIds
+             ) {
+            updateWrapper.eq(Log::getLogId,logId)
+                    .set(Log::getLogScore,logScore)
+                    .set(Log::getLogState,1);
+            logDao.update(null,updateWrapper);
+        }
+        Integer code = 1;
+        String msg = "test";
+        return new Result(code, msg);
+    }
+
 }
