@@ -373,10 +373,10 @@ function getUrlSearch(name) {
         state3Count: state3Count
       },
         activeName: 'first',
-        tableData_1: [{},],
-        tableData_2: [{},],
-        tableData_3: [{},],
-        tableData_4: [{},],
+        tableData_1: [],
+        tableData_2: [],
+        tableData_3: [],
+        tableData_4: [],
         multipleSelection: [],
         selectedOption: '',  // 当前选中的选项
         options: ['区间给分', '统一给分']  // 选项列表
@@ -395,7 +395,24 @@ function getUrlSearch(name) {
         alert("下载表格")
       },
       refuse(){
-        alert("打回")
+                let selectedItems = this.multipleSelection;
+                  console.log(selectedItems)
+                  for (let item of selectedItems) {
+                     item.logState = 2; // 修改选中的行数据
+                  }
+                  console.log(selectedItems)
+                  axios({
+                    method:"put",
+                    url:"/logs/score",
+                    data: selectedItems,
+                    }).then(response => {
+                        // 处理成功响应
+                        console.log(response.data);
+                      })
+                      .catch(error => {
+                        // 处理错误
+                        console.error(error);
+                      });
       },
       handleClick(tab, event) {
         console.log(tab, event);
@@ -411,19 +428,34 @@ function getUrlSearch(name) {
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
+        console.log('选中项发生变化:', this.multipleSelection);
       },
       selectOption(option) {
          if (option === '区间给分') {
               let range = prompt("请输入数字区间，格式为：最小值-最大值");
-              let [min, max] = range.split('-').map(Number);
-              const selectedItems = this.$refs.multipleTable.selection; // 获取选中的行数据
-              for (const item of selectedItems) {
-                 let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-                 item.logScore = randomNum; // 修改选中的行数据
-              }
-
               if(range){
-                   alert("填写内容并“确定”")
+                  alert("填写内容并“确定”")
+                  let [min, max] = range.split('-').map(Number);
+                  let selectedItems = this.multipleSelection;
+                  console.log(selectedItems)
+                  for (let item of selectedItems) {
+                     let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                     console.log(randomNum)
+                     item.logScore = randomNum; // 修改选中的行数据
+                  }
+                  console.log(selectedItems)
+                  axios({
+                    method:"put",
+                    url:"/logs/score",
+                    data: selectedItems,
+                    }).then(response => {
+                        // 处理成功响应
+                        console.log(response.data);
+                      })
+                      .catch(error => {
+                        // 处理错误
+                        console.error(error);
+                      });
                 }
                 else if(range === ""){
                      alert("未填写但“确定”")
@@ -433,9 +465,24 @@ function getUrlSearch(name) {
                 }
             } else if (option === '统一给分') {
               let num = prompt("请输入一个分数");
-              console.log("输入的分数：" + num);
               if(num){
-                   alert("填写内容并“确定”")
+                  alert("填写内容并“确定”")
+                  let selectedItems = this.multipleSelection; // 获取选中的行数据
+                  for (let item of selectedItems) {
+                     item.logScore = num; // 修改选中的行数据
+                  }
+                  axios({
+                    method:"put",
+                    url:"/logs/score",
+                    data: selectedItems,
+                    }).then(response => {
+                        // 处理成功响应
+                        console.log(response.data);
+                      })
+                      .catch(error => {
+                        // 处理错误
+                        console.error(error);
+                      });
                 }
                 else if(num === ""){
                      alert("未填写但“确定”")
