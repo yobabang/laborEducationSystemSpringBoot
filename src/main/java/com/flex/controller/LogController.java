@@ -159,4 +159,18 @@ public class LogController {
         return new Result(code, msg);
     }
 
+    @ApiOperation(value = "批量打回学生日志", notes = "根据日志id批量打回学生日志")
+    @PutMapping("/state")
+    public Result updateLogState(@RequestBody List<Long> logIds){
+        LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
+        for (Long logId: logIds
+        ) {
+            updateWrapper.eq(Log::getLogId,logId)
+                    .set(Log::getLogState,2);
+            logDao.update(null,updateWrapper);
+        }
+        Integer code = 1;s
+        String msg = "test";
+        return new Result(code, msg);
+    }
 }

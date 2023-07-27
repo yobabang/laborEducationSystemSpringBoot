@@ -139,4 +139,19 @@ public class RegisterReportController {
         String msg = "test";
         return new Result(code, msg);
     }
+
+    @ApiOperation(value = "批量打回学生社会实践活动报告", notes = "根据报告id批量打回学生社会实践活动报告")
+    @PutMapping("/state")
+    public Result updateReportState(@RequestBody List<Long> reportIds){
+        LambdaUpdateWrapper<RegisterReport> updateWrapper = new LambdaUpdateWrapper<>();
+        for (Long reportid: reportIds
+        ) {
+            updateWrapper.eq(RegisterReport::getRepId,reportid)
+                    .set(RegisterReport::getRepState,2);
+            registerReportDao.update(null,updateWrapper);
+        }
+        Integer code = 1;
+        String msg = "test";
+        return new Result(code, msg);
+    }
 }
