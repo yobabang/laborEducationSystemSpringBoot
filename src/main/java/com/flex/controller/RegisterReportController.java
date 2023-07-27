@@ -128,9 +128,9 @@ public class RegisterReportController {
     @ApiOperation(value = "批量操作学生社会实践活动报告", notes = "批量操作学生社会实践活动报告")
     @PutMapping("/score")
     public Result updateReportScores(@RequestBody List<RegisterReport> registerReports){
-        LambdaUpdateWrapper<RegisterReport> updateWrapper = new LambdaUpdateWrapper<>();
         for (RegisterReport rep: registerReports
              ) {
+            LambdaUpdateWrapper<RegisterReport> updateWrapper = new LambdaUpdateWrapper<>();
             updateWrapper.eq(RegisterReport::getRepId,rep.getRepId());
             registerReportDao.update(rep,updateWrapper);
         }

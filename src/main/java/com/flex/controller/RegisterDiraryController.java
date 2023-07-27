@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/regdir")
-@Api(tags = "社会实践活动报告管理")
+@Api(tags = "社会实践活动日志管理")
 public class RegisterDiraryController {
     @Autowired
     private RegisterDiraryDao registerDiraryDao;
