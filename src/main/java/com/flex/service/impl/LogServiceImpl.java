@@ -18,10 +18,6 @@ public class LogServiceImpl implements LogService {
         return logDao.save(log) > 0;
     }
 
-    @Override
-    public boolean update(Log log) {
-        return logDao.updata(log) > 0;
-    }
 
     @Override
     public boolean delete(Integer id) {

@@ -19,11 +19,6 @@ public class RegisterReportServiceImpl implements RegisterReportService {
     }
 
     @Override
-    public boolean update(RegisterReport registerReport) {
-        return registerReportDao.updata(registerReport) > 0;
-    }
-
-    @Override
     public boolean delete(Integer id) {
         return registerReportDao.delete(id) > 0;
     }

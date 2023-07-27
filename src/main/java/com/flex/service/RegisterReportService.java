@@ -15,13 +15,6 @@ public interface RegisterReportService {
     public boolean save(RegisterReport  registerReport);
 
     /**
-     * 修改
-     * @param registerReport
-     * @return
-     */
-    public boolean update(RegisterReport registerReport);
-
-    /**
      * 按id删除
      * @param id
      * @return

@@ -15,12 +15,6 @@ public interface LogService {
      */
     public boolean save(Log log);
 
-    /**
-     * 修改
-     * @param log
-     * @return
-     */
-    public boolean update(Log log);
 
     /**
      * 按id删除
