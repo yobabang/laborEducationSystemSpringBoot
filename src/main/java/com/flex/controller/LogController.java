@@ -6,6 +6,7 @@ import com.flex.dao.ListPlanDao;
 import com.flex.dao.LogDao;
 import com.flex.domain.ListPlan;
 import com.flex.domain.Log;
+import com.flex.pojo.dto.LogScoreDto;
 import com.flex.service.LogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -158,4 +159,24 @@ public class LogController {
         return new Result(code, msg);
     }
 
+    @ApiOperation(value = "上传学生劳动日志成绩", notes = "根据学生Id和日志类型修改劳动日志信息")
+    @PutMapping("/approval")
+    public Result updateLogBylogId(@RequestBody LogScoreDto logScoreDto){
+        LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Log::getUserId,logScoreDto.getUserId())
+                .eq(Log::getLogType,logScoreDto.getLogType())
+                .set(Log::getLogScore,logScoreDto.getLogScore())
+                .set(Log::getLogState,logScoreDto.getLogState());
+        int update = logDao.update(null, updateWrapper);
+        Integer code;
+        String msg;
+        if (update == 1 ){
+            code = Code.SAVE_OK;
+            msg = "添加成功";
+        }else{
+            code = Code.SAVE_ERR;
+            msg = "添加失败";
+        }
+        return new Result(code,msg);
+    }
 }

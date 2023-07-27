@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class LogDto {
-    private int logType;
+    private Long logType;
     private long userId;
     private int userType;
     private String logName;
