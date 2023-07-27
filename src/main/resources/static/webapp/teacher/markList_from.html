@@ -91,10 +91,10 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="regName"
+                    prop="logName"
                     label="姓名"
                     min-width="10%">
-              <template slot-scope="scope">{{ scope.row.regName }}</template>
+              <template slot-scope="scope">{{ scope.row.logName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
@@ -102,17 +102,17 @@
                     min-width="20%">
             </el-table-column>
             <el-table-column
-                    prop="regClass"
+                    prop="logClasses"
                     label="班级"
                     min-width="15%">
             </el-table-column>
             <el-table-column
-                    prop="regState"
+                    prop="logState"
                     label="提交状态"
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="regMark"
+                    prop="logMark"
                     label="提交时间"
                     min-width="15%">
             </el-table-column>
@@ -167,7 +167,7 @@
                     prop="logName"
                     label="姓名"
                     min-width="10%">
-              <template slot-scope="scope">{{ scope.row.date }}</template>
+              <template slot-scope="scope">{{ scope.row.logName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
@@ -240,7 +240,7 @@
                     prop="logName"
                     label="姓名"
                     min-width="10%">
-              <template slot-scope="scope">{{ scope.row.date }}</template>
+              <template slot-scope="scope">{{ scope.row.logName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
@@ -313,7 +313,7 @@
                     prop="logName"
                     label="姓名"
                     min-width="10%">
-              <template slot-scope="scope">{{ scope.row.date }}</template>
+              <template slot-scope="scope">{{ scope.row.logName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
@@ -492,8 +492,13 @@ function getUrlSearch(name) {
                 url:"/logs/classType/" + _this.detail_data.className + '/' + _this.detail_data.listType,
             }).then(function (resp){
                 _this.tableData_1 = resp.data.data
-                console.log(resp.data)
-
+                _this.tableData_2 = _this.tableData_1.filter(item => item.logState === 3);
+                _this.tableData_3 = _this.tableData_1.filter(item => item.logState === 1);
+                _this.tableData_4 = _this.tableData_1.filter(item => item.logState === 0);
+                console.log(_this.tableData_1)
+                console.log(_this.tableData_2)
+                console.log(_this.tableData_3)
+                console.log(_this.tableData_4)
             })
         },
 

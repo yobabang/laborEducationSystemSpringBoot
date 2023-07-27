@@ -76,11 +76,12 @@
               label="操作"
               min-width="5%">
         <template slot-scope="scope">
-          <el-button
-                  size="medium"
-                  type="primary"
-                  plain
-                  @click="review(scope.row)">批阅</el-button>
+          <el-button v-if="scope.row.listType === '日常生活劳动日志'" name="button1" @click="review(scope.row)" type="text" size="medium">批阅</el-button>
+          <el-button v-if="scope.row.listType === '服务性劳动日志'" name="button2" @click="review(scope.row)" type="text" size="medium">批阅</el-button>
+          <el-button v-if="scope.row.listType === '生产劳动日志'" name="button3" @click="review(scope.row)" type="text" size="medium">批阅</el-button>
+          <el-button v-if="scope.row.listType === '社会实践活动登记表'" name="button4" @click="changeFrom(scope.row)" type="text" size="medium">批阅</el-button>
+          <el-button v-if="scope.row.listType === '社会实践活动日志'" name="button5" @click="changeJournal(scope.row)" type="text" size="medium">批阅</el-button>
+          <el-button v-if="scope.row.listType === '社会实践调查报告'" name="button6" @click="changeReport(scope.row)" type="text" size="medium">批阅</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -127,7 +128,18 @@ function getUrlSearch(name) {
           let reUrl = 'markList.html?className='+ className + '&listType=' + row.listType + '&totalCount=' + row.totalCount + '&state0Count=' + row.state0Count + '&state1Count=' + row.state1Count + '&state3Count=' + row.state3Count;
           window.location.href = reUrl;
       },
-
+      changeFrom(row){
+          let reUrl = 'markList_form.html?className='+ className + '&listType=' + row.listType + '&totalCount=' + row.totalCount + '&state0Count=' + row.state0Count + '&state1Count=' + row.state1Count + '&state3Count=' + row.state3Count;
+          window.location.href = reUrl;
+      },
+      changeJournal(row){
+          let reUrl = 'markList_Journal.html?className='+ className + '&listType=' + row.listType + '&totalCount=' + row.totalCount + '&state0Count=' + row.state0Count + '&state1Count=' + row.state1Count + '&state3Count=' + row.state3Count;
+          window.location.href = reUrl;
+      },
+      changeReport(row){
+          let reUrl = 'markList_report.html?className='+ className + '&listType=' + row.listType + '&totalCount=' + row.totalCount + '&state0Count=' + row.state0Count + '&state1Count=' + row.state1Count + '&state3Count=' + row.state3Count;
+          window.location.href = reUrl;
+      },
     },
     data() {
       return {
