@@ -146,6 +146,7 @@ public class LogController {
     @ApiOperation(value = "批量操作学生日志", notes = "批量操作学生日志")
     @PutMapping("/score")
     public Result updateLogScores(@RequestBody List<Log> logs){
+        System.out.println("============================================="+logs);
         try {
             LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
             for (Log log : logs
