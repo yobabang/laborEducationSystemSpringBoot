@@ -143,8 +143,10 @@ public class LogController {
     }
 
     @ApiOperation(value = "批量审批学生日志", notes = "根据日志id批量审批学生日志")
-    @PostMapping("/score")
-    public Result addLogScores(@RequestBody List<Long> logIds){
+    @PostMapping("/score/{number}")
+    public Result addLogScores(@RequestBody List<Long> logIds,@PathVariable String number){
+        int min = Integer.parseInt(number.substring(0,2));
+        int max = Integer.parseInt(number.substring(2));
         Integer logScore = 85;
         LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
         for (Long logId: logIds
@@ -159,18 +161,16 @@ public class LogController {
         return new Result(code, msg);
     }
 
-    @ApiOperation(value = "批量打回学生日志", notes = "根据日志id批量打回学生日志")
-    @PutMapping("/state")
-    public Result updateLogState(@RequestBody List<Long> logIds){
-        LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
-        for (Long logId: logIds
-        ) {
-            updateWrapper.eq(Log::getLogId,logId)
-                    .set(Log::getLogState,2);
-            logDao.update(null,updateWrapper);
+    @ApiOperation(value = "批量操作学生日志", notes = "根据日志id批量操作学生日志")
+    @PutMapping("/score")
+    public Result updateLogScores(@RequestBody List<Log> logs){
+        for (Log log:logs
+             ) {
+            logDao.updata(log);
         }
-        Integer code = 1;s
-        String msg = "test";
+        Integer code = Code.UPDATE_OK;
+        String msg = "更新成功";
         return new Result(code, msg);
     }
+
 }
