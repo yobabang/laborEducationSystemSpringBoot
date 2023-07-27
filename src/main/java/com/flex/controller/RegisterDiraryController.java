@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/regs")
-@Api(tags = "社会实践活动登记管理")
+@RequestMapping("/regdir")
+@Api(tags = "社会实践活动报告管理")
 public class RegisterDiraryController {
     @Autowired
     private RegisterDiraryDao registerDiraryDao;
