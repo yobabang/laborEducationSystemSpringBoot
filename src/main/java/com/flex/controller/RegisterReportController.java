@@ -140,18 +140,16 @@ public class RegisterReportController {
         return new Result(code, msg);
     }
 
-    @ApiOperation(value = "批量打回学生社会实践活动报告", notes = "根据报告id批量打回学生社会实践活动报告")
-    @PutMapping("/state")
-    public Result updateReportState(@RequestBody List<Long> reportIds){
-        LambdaUpdateWrapper<RegisterReport> updateWrapper = new LambdaUpdateWrapper<>();
-        for (Long reportid: reportIds
-        ) {
-            updateWrapper.eq(RegisterReport::getRepId,reportid)
-                    .set(RegisterReport::getRepState,2);
-            registerReportDao.update(null,updateWrapper);
+    @ApiOperation(value = "批量操作学生社会实践活动报告", notes = "根据报告id批量操作学生社会实践活动报告")
+    @PostMapping("/score")
+    public Result updateReportScores(@RequestBody List<RegisterReport> registerReports){
+        for (RegisterReport rep: registerReports
+             ) {
+            registerReportDao.updata(rep);
         }
-        Integer code = 1;
-        String msg = "test";
+        Integer code = Code.UPDATE_OK;
+        String msg = "更新成功";
         return new Result(code, msg);
     }
+
 }
