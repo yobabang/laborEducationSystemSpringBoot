@@ -247,18 +247,13 @@ layui.use(['jquery', 'form'], function () {
     layui.$('#demo2').on('click', function () {
         alert("确认按钮")
         let data = {"register":{}, "practice": {}};
-        alert("数据创建成功")
         var sData = {};
         let xhr2 = new XMLHttpRequest();
         xhr2.open('GET', '/users/session/1', true);
-        alert("xhr成功创建")
         xhr2.onreadystatechange = function() {
             if (xhr2.readyState === 4 && xhr2.status === 200) {
-                alert("进入异步")
                 console.log(JSON.parse(xhr2.responseText))
-                alert("得到session数据")
                 sData = JSON.parse(xhr2.responseText);
-                alert("得到data")
                 console.log(sData)
                 // 社会实践登记表数据
                 data["register"].userType = sData.data.type

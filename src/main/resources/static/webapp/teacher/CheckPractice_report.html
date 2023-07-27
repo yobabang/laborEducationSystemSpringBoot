@@ -182,15 +182,11 @@ function getUrlSearch(name) {
 
         return r[2];
     }
+    let noticeReceiver = getUrlSearch("userId")
+    let logType = getUrlSearch("listType")
 // 使用XMLHttpRequest对象发送Ajax请求
    var data = {};
-   let xhr1 = new XMLHttpRequest();
-   xhr1.open('GET', '/users/session/1', true);
-   xhr1.onreadystatechange = function() {
-     if (xhr1.readyState === 4 && xhr1.status === 200) {
-       data = JSON.parse(xhr1.responseText);
-       let noticeReceiver  = data.data.userId;
-       console.log('user-id为' + noticeReceiver)
+
        let xhr2 = new XMLHttpRequest();
        xhr2.open('GET', '/registerReports/userId/' + noticeReceiver, true);
        xhr2.onreadystatechange = function() {
@@ -233,9 +229,6 @@ function getUrlSearch(name) {
      }
    };
    xhr2.send()
-     }
-   };
-   xhr1.send();
 </script>
 <!-- 提交按钮-->
 <script>
