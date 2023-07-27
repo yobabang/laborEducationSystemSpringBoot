@@ -169,7 +169,7 @@ public class LogController {
                     .set(Log::getLogState,2);
             logDao.update(null,updateWrapper);
         }
-        Integer code = 1;s
+        Integer code = 1;
         String msg = "test";
         return new Result(code, msg);
     }
