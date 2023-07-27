@@ -13,9 +13,6 @@ public interface RegisterReportDao extends BaseMapper<RegisterReport> {
             "VALUES (#{reportId}, #{report}, #{reportTime}, #{reportState}, #{reportScore}, #{reportMark})")
     public int save(RegisterReport user);
 
-    @Update("UPDATE register_report SET report = #{report}, report_time = #{reportTime}, report_state = #{reportState}, report_score = #{reportScore}, report_mark = #{reportMark} WHERE report_id = #{reportId}")
-    public int updata(RegisterReport user);
-
     @Delete("DELETE FROM register_report WHERE report_id = #{id}")
     public int delete(Integer id);
 

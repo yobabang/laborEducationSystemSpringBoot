@@ -12,9 +12,6 @@ public interface LogDao extends BaseMapper<Log>{
             "VALUES (#{logId}, #{logType}, #{UType}, #{logName}, #{logUnit}, #{logClasses}, #{logContent}, #{location}, #{logProcess}, #{effect}, #{result}, #{logTime}, #{logScore}, #{logState}, #{logMark})")
     public int save(Log log);
 
-    @Update("UPDATE log SET log_type = #{logType}, U_type = #{UType}, log_name = #{logName}, log_unit = #{logUnit}, log_classes = #{logClasses}, log_content = #{logContent}, location = #{location}, log_process = #{logProcess}, effect = #{effect}, result = #{result}, log_time = #{logTime}, log_score = #{logScore}, log_state = #{logState}, log_mark = #{logMark} WHERE log_id = #{logId}")
-    public int updata(Log log);
-
     @Delete("DELETE FROM log WHERE user_id = #{id}")
     public int delete(Integer id);
 

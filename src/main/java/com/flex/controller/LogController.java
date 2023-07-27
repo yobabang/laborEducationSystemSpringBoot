@@ -143,12 +143,14 @@ public class LogController {
     }
 
 
-    @ApiOperation(value = "批量操作学生日志", notes = "根据日志id批量操作学生日志")
+    @ApiOperation(value = "批量操作学生日志", notes = "批量操作学生日志")
     @PutMapping("/score")
     public Result updateLogScores(@RequestBody List<Log> logs){
+        LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
         for (Log log:logs
              ) {
-            logDao.updata(log);
+            updateWrapper.eq(Log::getLogId,log.getLogId());
+            logDao.update(log,updateWrapper);
         }
         Integer code = Code.UPDATE_OK;
         String msg = "更新成功";

@@ -125,12 +125,14 @@ public class RegisterReportController {
 
 
 
-    @ApiOperation(value = "批量操作学生社会实践活动报告", notes = "根据报告id批量操作学生社会实践活动报告")
+    @ApiOperation(value = "批量操作学生社会实践活动报告", notes = "批量操作学生社会实践活动报告")
     @PutMapping("/score")
     public Result updateReportScores(@RequestBody List<RegisterReport> registerReports){
+        LambdaUpdateWrapper<RegisterReport> updateWrapper = new LambdaUpdateWrapper<>();
         for (RegisterReport rep: registerReports
              ) {
-            registerReportDao.updata(rep);
+            updateWrapper.eq(RegisterReport::getRepId,rep.getRepId());
+            registerReportDao.update(rep,updateWrapper);
         }
         Integer code = Code.UPDATE_OK;
         String msg = "更新成功";
