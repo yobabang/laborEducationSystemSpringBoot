@@ -63,20 +63,6 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-            <el-dropdown>
-              <el-button class="el-select-button" >
-                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)" >
-                  {{ option }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
-              <span>打回修改</span>
-            </button>
-            <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
             <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
           </div>
           <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
@@ -91,10 +77,10 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="regName"
                     label="姓名"
                     min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+              <template slot-scope="scope">{{ scope.row.regName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
@@ -102,17 +88,17 @@
                     min-width="20%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="regClass"
                     label="班级"
                     min-width="15%">
             </el-table-column>
             <el-table-column
-                    prop="logState"
+                    prop="regState"
                     label="提交状态"
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logMark"
+                    prop="logTime"
                     label="提交时间"
                     min-width="15%">
             </el-table-column>
@@ -149,7 +135,6 @@
             <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
               <span>打回修改</span>
             </button>
-            <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
             <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
           </div>
           <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
@@ -185,7 +170,7 @@
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logMark"
+                    prop="logTime"
                     label="提交时间"
                     min-width="15%">
             </el-table-column>
@@ -209,20 +194,6 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-            <el-dropdown>
-              <el-button class="el-select-button">
-                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)">
-                  {{ option }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
-              <span>打回修改</span>
-            </button>
-            <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
             <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
           </div>
           <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
@@ -258,7 +229,7 @@
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logMark"
+                    prop="logTime"
                     label="提交时间"
                     min-width="15%">
             </el-table-column>
@@ -282,19 +253,6 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-            <el-dropdown>
-              <el-button class="el-select-button">
-                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)">
-                  {{ option }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
-              <span>打回修改</span>
-            </button>
             <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
             <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
           </div>
@@ -331,7 +289,7 @@
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logMark"
+                    prop="logTime"
                     label="提交时间"
                     min-width="15%">
             </el-table-column>
