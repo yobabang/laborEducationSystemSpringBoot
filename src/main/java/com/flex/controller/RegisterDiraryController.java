@@ -3,6 +3,7 @@ package com.flex.controller;
 import com.flex.dao.RegisterDiraryDao;
 import com.flex.domain.RegisterDirary;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,8 @@ public class RegisterDiraryController {
     @Autowired
     private RegisterDiraryDao registerDiraryDao;
 
+
+    @ApiOperation(value = "添加社会活动日志", notes = "添加社会活动日志")
     @PostMapping("/add")
     public Result addregisterDirary(@RequestBody RegisterDirary registerDirary){
         Integer code;
