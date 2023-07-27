@@ -161,7 +161,7 @@ public class LogController {
 
     @ApiOperation(value = "上传学生劳动日志成绩", notes = "根据学生Id和日志类型修改劳动日志信息")
     @PutMapping("/approval")
-    public Result updateLogBylogId(@RequestBody LogScoreDto logScoreDto){
+    public Result updateLogByUserId(@RequestBody LogScoreDto logScoreDto){
         LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(Log::getUserId,logScoreDto.getUserId())
                 .eq(Log::getLogType,logScoreDto.getLogType())

@@ -8,6 +8,7 @@ import com.flex.domain.ListPlan;
 import com.flex.domain.Log;
 import com.flex.domain.Register;
 import com.flex.domain.RegisterReport;
+import com.flex.pojo.dto.RegisterReportScoreDto;
 import com.flex.service.RegisterReportService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -139,4 +140,23 @@ public class RegisterReportController {
         return new Result(code, msg);
     }
 
+    @ApiOperation(value = "上传学生社会实践活动报告成绩", notes = "根据学生Id上传社会实践活动报告成绩")
+    @PutMapping("/approval")
+    public Result updateRepByUserId(@RequestBody RegisterReportScoreDto registerReportScoreDto){
+        LambdaUpdateWrapper<RegisterReport> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(RegisterReport::getUserId,registerReportScoreDto.getUserId())
+                .eq(RegisterReport::getRepState,registerReportScoreDto.getRepState())
+                .set(RegisterReport::getRepScore,registerReportScoreDto.getRepScore());
+        int update = registerReportDao.update(null, updateWrapper);
+        Integer code;
+        String msg;
+        if (update == 1 ){
+            code = Code.SAVE_OK;
+            msg = "添加成功";
+        }else{
+            code = Code.SAVE_ERR;
+            msg = "添加失败";
+        }
+        return new Result(code,msg);
+    }
 }
