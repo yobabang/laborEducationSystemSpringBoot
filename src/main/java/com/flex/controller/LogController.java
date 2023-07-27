@@ -146,11 +146,15 @@ public class LogController {
     @ApiOperation(value = "批量操作学生日志", notes = "批量操作学生日志")
     @PutMapping("/score")
     public Result updateLogScores(@RequestBody List<Log> logs){
-        LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
-        for (Log log:logs
-             ) {
-            updateWrapper.eq(Log::getLogId,log.getLogId());
-            logDao.update(log,updateWrapper);
+        try {
+            LambdaUpdateWrapper<Log> updateWrapper = new LambdaUpdateWrapper<>();
+            for (Log log : logs
+            ) {
+                updateWrapper.eq(Log::getLogId, log.getLogId());
+                logDao.update(log, updateWrapper);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         Integer code = Code.UPDATE_OK;
         String msg = "更新成功";
