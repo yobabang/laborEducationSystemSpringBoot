@@ -123,22 +123,7 @@ public class RegisterReportController {
         return new Result(code,registerReports,msg);
     }
 
-    @ApiOperation(value = "批量审批学生社会实践活动报告", notes = "根据报告id批量审批学生社会实践活动报告")
-    @PostMapping("/score")
-    public Result addReportScores(@RequestBody List<Long> reportIds){
-        Integer reportScore = 85;
-        LambdaUpdateWrapper<RegisterReport> updateWrapper = new LambdaUpdateWrapper<>();
-        for (Long reportid: reportIds
-        ) {
-            updateWrapper.eq(RegisterReport::getRepId,reportid)
-                    .set(RegisterReport::getRepScore,reportScore)
-                    .set(RegisterReport::getRepState,1);
-            registerReportDao.update(null,updateWrapper);
-        }
-        Integer code = 1;
-        String msg = "test";
-        return new Result(code, msg);
-    }
+
 
     @ApiOperation(value = "批量操作学生社会实践活动报告", notes = "根据报告id批量操作学生社会实践活动报告")
     @PutMapping("/score")
