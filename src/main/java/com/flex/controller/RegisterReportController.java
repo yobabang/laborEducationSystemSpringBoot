@@ -141,7 +141,7 @@ public class RegisterReportController {
     }
 
     @ApiOperation(value = "批量操作学生社会实践活动报告", notes = "根据报告id批量操作学生社会实践活动报告")
-    @PostMapping("/score")
+    @PutMapping("/score")
     public Result updateReportScores(@RequestBody List<RegisterReport> registerReports){
         for (RegisterReport rep: registerReports
              ) {
