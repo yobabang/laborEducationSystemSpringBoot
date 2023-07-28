@@ -89,7 +89,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 120px">社会实践形式</label>
                     <div class="layui-input-block" style="margin-left: 120px;">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="form">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="form" placeholder="请输入数字">
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">指导老师</label>
                     <div class="layui-input-block">
-                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="adId">
+                        <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="adId" placeholder="请输入数字">
                     </div>
                 </div>
             </div>
@@ -200,13 +200,19 @@
         </div>
         <div class="layui-form-item" style="text-align: center">
             <div class="layui-row">
-                <div class="layui-col-md4">
+                <div class="layui-col-md3">
+                    <label class="layui-form-label">提交时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" name="regMark" id="ID-laydate-shortcut-date">
+                    </div>
+                </div>
+                <div class="layui-col-md3">
                     <button style="margin-left: 300px" class="layui-btn" lay-submit lay-filter="demo2" id="demo2">提交</button>
                 </div>
-                <div class="layui-col-md4">
+                <div class="layui-col-md3">
                     <button class="layui-btn" lay-submit lay-filter="demo3" id="demo3">保存</button>
                 </div>
-                <div class="layui-col-md4">
+                <div class="layui-col-md3">
                         <button type="reset" style="margin-left: -300px" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -265,6 +271,7 @@ layui.use(['jquery', 'form'], function () {
                 data["register"].endTime = document.getElementById("endTime").value;
                 data["register"].form = Number(document.getElementById("form").value);
                 data["register"].adId = Number(document.getElementById("adId").value);
+                data["register"].regMark = document.getElementById("regMark").value;
                 data["register"].regState = 3;
                 // 社会实践单位表数据
                 data["practice"].project = document.getElementById("project").value;
@@ -343,6 +350,7 @@ layui.use(['jquery', 'form'], function () {
                 data["register"].endTime = document.getElementById("endTime").value;
                 data["register"].form = Number(document.getElementById("form").value);
                 data["register"].adId = Number(document.getElementById("adId").value);
+                data["register"].regMark = document.getElementById("regMark").value;
                 data["register"].regState = 4;
                 // 社会实践单位表数据
                 data["practice"].project = document.getElementById("project").value;
@@ -389,6 +397,243 @@ layui.use(['jquery', 'form'], function () {
     });
 });
 
+</script>
+<!--日期提交组件-->
+<script>
+//日期组件
+    layui.use(function(){
+        var laydate = layui.laydate;
+        var util = layui.util;
+        /*
+         * 快捷选项
+         */
+        // 日期
+        laydate.render({
+            elem: "#ID-laydate-shortcut-date",
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14"
+                }
+            ]
+        });
+        // 年份
+        laydate.render({
+            elem: "#ID-laydate-shortcut-year",
+            type: "year",
+            shortcuts: [
+                {
+                    text: "去年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "明年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return now;
+                    }()
+                }
+            ]
+        });
+    });
+</script>
+<!--日期提交组件-->
+<script>
+//日期组件
+    layui.use(function(){
+        var laydate = layui.laydate;
+        var util = layui.util;
+        /*
+         * 快捷选项
+         */
+        // 日期
+        laydate.render({
+            elem: "#startTime",
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14"
+                }
+            ]
+        });
+        // 年份
+        laydate.render({
+            elem: "#ID-laydate-shortcut-year",
+            type: "year",
+            shortcuts: [
+                {
+                    text: "去年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "明年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return now;
+                    }()
+                }
+            ]
+        });
+    });
+</script>
+<!--日期提交组件-->
+<script>
+//日期组件
+    layui.use(function(){
+        var laydate = layui.laydate;
+        var util = layui.util;
+        /*
+         * 快捷选项
+         */
+        // 日期
+        laydate.render({
+            elem: "#endTime",
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14"
+                }
+            ]
+        });
+        // 年份
+        laydate.render({
+            elem: "#ID-laydate-shortcut-year",
+            type: "year",
+            shortcuts: [
+                {
+                    text: "去年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "明年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return now;
+                    }()
+                }
+            ]
+        });
+    });
 </script>
 <script>
     let userName = new Vue({

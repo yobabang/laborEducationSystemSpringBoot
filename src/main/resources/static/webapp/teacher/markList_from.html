@@ -79,18 +79,18 @@
             <el-table-column
                     prop="regName"
                     label="姓名"
-                    min-width="10%">
+                    min-width="12%">
               <template slot-scope="scope">{{ scope.row.regName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
                     label="学号"
-                    min-width="20%">
+                    min-width="22%">
             </el-table-column>
             <el-table-column
                     prop="regClass"
                     label="班级"
-                    min-width="15%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
                     prop="regState"
@@ -98,21 +98,16 @@
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logTime"
+                    prop="regMark"
                     label="提交时间"
-                    min-width="15%">
-            </el-table-column>
-            <el-table-column
-                    prop="logScore"
-                    label="成绩"
-                    min-width="10%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    min-width="15%">
+                    min-width="17%">
               <template slot-scope="scope">
-                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button v-if="scope.row.regState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -122,16 +117,6 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-            <el-dropdown>
-              <el-button class="el-select-button">
-                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)">
-                  {{ option }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
             <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
               <span>打回修改</span>
             </button>
@@ -149,42 +134,37 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="regName"
                     label="姓名"
-                    min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+                    min-width="12%">
+              <template slot-scope="scope">{{ scope.row.regName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
                     label="学号"
-                    min-width="20%">
+                    min-width="22%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="regClass"
                     label="班级"
-                    min-width="15%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
-                    prop="logState"
+                    prop="regState"
                     label="提交状态"
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logTime"
+                    prop="regMark"
                     label="提交时间"
-                    min-width="15%">
-            </el-table-column>
-            <el-table-column
-                    prop="logScore"
-                    label="成绩"
-                    min-width="10%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    min-width="15%">
+                    min-width="17%">
               <template slot-scope="scope">
-                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button  @click="check(scope.row)" type="text" size="medium">打回</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -208,42 +188,37 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="regName"
                     label="姓名"
-                    min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+                    min-width="12%">
+              <template slot-scope="scope">{{ scope.row.regName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
                     label="学号"
-                    min-width="20%">
+                    min-width="22%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="regClass"
                     label="班级"
-                    min-width="15%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
-                    prop="logState"
+                    prop="regState"
                     label="提交状态"
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logTime"
+                    prop="regMark"
                     label="提交时间"
-                    min-width="15%">
-            </el-table-column>
-            <el-table-column
-                    prop="logScore"
-                    label="成绩"
-                    min-width="10%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    min-width="15%">
+                    min-width="17%">
               <template slot-scope="scope">
-                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button v-if="scope.row.regState !== 3" @click="check(scope.row)" type="text" size="medium">打回</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -268,42 +243,37 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="regName"
                     label="姓名"
-                    min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+                    min-width="12%">
+              <template slot-scope="scope">{{ scope.row.regName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
                     label="学号"
-                    min-width="20%">
+                    min-width="22%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="regClass"
                     label="班级"
-                    min-width="15%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
-                    prop="logState"
+                    prop="regState"
                     label="提交状态"
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logTime"
+                    prop="regMark"
                     label="提交时间"
-                    min-width="15%">
-            </el-table-column>
-            <el-table-column
-                    prop="logScore"
-                    label="成绩"
-                    min-width="10%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    min-width="15%">
+                    min-width="17%">
               <template slot-scope="scope">
-                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button v-if="scope.row.logState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -373,10 +343,10 @@ function getUrlSearch(name) {
         state3Count: state3Count
       },
         activeName: 'first',
-        tableData_1: [{},],
-        tableData_2: [{},],
-        tableData_3: [{},],
-        tableData_4: [{},],
+        tableData_1: [],
+        tableData_2: [],
+        tableData_3: [],
+        tableData_4: [],
         multipleSelection: [],
         selectedOption: '',  // 当前选中的选项
         options: ['区间给分', '统一给分']  // 选项列表
@@ -384,7 +354,9 @@ function getUrlSearch(name) {
     },
     methods: {
       check(row){
-
+          let _this = this;
+          let reUrl = 'CheckSocialForm.html?userId='+ row.userId + '&listType=' + _this.detail_data.listType;
+          window.location.href = reUrl;
       },
       notice(){
         alert("催交")
@@ -409,37 +381,6 @@ function getUrlSearch(name) {
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
-      },
-      selectOption(option) {
-         if (option === '区间给分') {
-              let range = prompt("请输入数字区间，格式为：最小值-最大值");
-              let [min, max] = range.split('-').map(Number);
-              let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-              console.log("生成的随机数字：" + randomNum);
-              if(range){
-                   alert("填写内容并“确定”")
-                }
-                else if(range === ""){
-                     alert("未填写但“确定”")
-                }
-                else{
-                    alert("“取消”事件")
-                }
-            } else if (option === '统一给分') {
-              let num = prompt("请输入一个分数");
-              console.log("输入的分数：" + num);
-              if(num){
-                   alert("填写内容并“确定”")
-                }
-                else if(num === ""){
-                     alert("未填写但“确定”")
-                }
-                else{
-                    alert("“取消”事件")
-                }
-            } else {
-              console.log("无效的选项");
-         }
       },
     },
     mounted(){

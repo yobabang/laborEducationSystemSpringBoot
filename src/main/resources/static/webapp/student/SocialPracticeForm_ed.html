@@ -284,6 +284,7 @@ function getUrlSearch(name) {
                 document.getElementById("endTime").value = data.data["register"].endTime;
                 document.getElementById("form").value = data.data["register"].form;
                 document.getElementById("adId").value = data.data["register"].adId;
+                document.getElementById("regMark").value; = data.data["register"].regMark;
                 // 社会实践单位表数据
                 document.getElementById("project").value = data.data["practice"].project;
                 document.getElementById("praUnit").value = data.data["practice"].praUnit;
@@ -336,6 +337,7 @@ layui.use(['jquery', 'form'], function () {
                 data["register"].endTime = document.getElementById("endTime").value;
                 data["register"].form = Number(document.getElementById("form").value);
                 data["register"].adId = Number(document.getElementById("adId").value);
+                data["register"].regMark = document.getElementById("regMark").value;
                 data["register"].regState = 3;
                 // 社会实践单位表数据
                 data["practice"].project = document.getElementById("project").value;
@@ -415,6 +417,7 @@ layui.use(['jquery', 'form'], function () {
                 data["register"].endTime = document.getElementById("endTime").value;
                 data["register"].form = Number(document.getElementById("form").value);
                 data["register"].adId = Number(document.getElementById("adId").value);
+                data["register"].regMark = document.getElementById("regMark").value;
                 data["register"].regState = 3;
                 // 社会实践单位表数据
                 data["practice"].project = document.getElementById("project").value;
