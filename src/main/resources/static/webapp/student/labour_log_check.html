@@ -110,6 +110,10 @@
         <div class="layui-input-inline">
           <input type="text" name="????" autocomplete="off" class="layui-input" readonly placeholder="打印后签字">
         </div>
+        <label class="layui-form-label">提交时间</label>
+        <div class="layui-input-inline">
+          <input type="text" class="layui-input" name="logMark" id="logMark">
+        </div>
       </div>
     </div>
 
@@ -189,6 +193,19 @@ function getUrlSearch(name) {
            }
            data2.data[0].logTime = formattedTime
            document.getElementById("ID-laydate-shortcut-date").value = data2.data[0].logTime
+           var date = new Date(data2.data[0].logMark); // 使用毫秒时间创建Date对象
+           var year = date.getFullYear(); // 年份
+           var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
+           var day = date.getDate(); // 日期
+           // 格式化输出时间
+           var formattedTime = year + "-" + padZero(month) + "-" + padZero(day)
+           console.log(formattedTime); // 输出格式化后的时间字符串
+           // 在分钟、小时和秒钟不满两位数时，在其前面补零
+           function padZero(number) {
+           return number < 10 ? "0" + number : number;
+           }
+           data2.data[0].logMark = formattedTime
+           document.getElementById("logMark").value = data2.data[0].logMark
      }
    };
    xhr2.send()

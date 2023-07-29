@@ -112,7 +112,10 @@
             <div class="layui-input-inline">
                 <input type="text" name="????" autocomplete="off" class="layui-input" disabled placeholder="打印后签字">
             </div>
-
+            <label class="layui-form-label">提交时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="logMark" id="logMark">
+            </div>
         </div>
     </div>
 
@@ -215,6 +218,7 @@ layui.use(['jquery', 'form'], function () {
                 log.effect = document.getElementById("effect").value;
                 log.result = document.getElementById("result").value;
                 log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
+                log.logMark = document.getElementById("logMark").value;
                 log.logState = 3;
                 log.userId = userId;
                 console.log(log)
@@ -300,6 +304,7 @@ layui.use(['jquery', 'form'], function () {
                 log.effect = document.getElementById("effect").value;
                 log.result = document.getElementById("result").value;
                 log.logTime = document.getElementById("ID-laydate-shortcut-date").value;
+                log.logMark = document.getElementById("logMark").value;
                 log.logState = 4;
                 log.userId = userId;
                 console.log('log中user-id为' + userId)
@@ -358,7 +363,7 @@ layui.use(['jquery', 'form'], function () {
         document.getElementById("effect").value = data.effect;
         document.getElementById("result").value = data.result;
         document.getElementById("ID-laydate-shortcut-date").value = data.logTime;
-
+        document.getElementById("logMark").value = data.logMark;
         // 触发表单重新渲染
         form.render();
         }
@@ -376,6 +381,84 @@ layui.use(['jquery', 'form'], function () {
         // 日期
         laydate.render({
             elem: "#ID-laydate-shortcut-date",
+            shortcuts: [
+                {
+                    text: "昨天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() - 1);
+                        return now;
+                    }()
+                },
+                { text: "今天", value: Date.now() },
+                {
+                    text: "明天",
+                    value: function(){
+                        var now = new Date();
+                        now.setDate(now.getDate() + 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "上个月",
+                    value: function(){
+                        var now = new Date();
+                        // now.setDate(now.getDate() - 1);
+                        now.setMonth(now.getMonth() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "上个月的前一天",
+                    value: function(){
+                        var now = new Date();
+                        now.setMonth(now.getMonth() - 1);
+                        now.setDate(now.getDate() - 1);
+                        return [now];
+                    }()
+                },
+                {
+                    text: "某一天",
+                    value: "2016-10-14"
+                }
+            ]
+        });
+        // 年份
+        laydate.render({
+            elem: "#ID-laydate-shortcut-year",
+            type: "year",
+            shortcuts: [
+                {
+                    text: "去年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() - 1);
+                        return now;
+                    }()
+                },
+                {
+                    text: "明年",
+                    value: function(){
+                        var now = new Date();
+                        now.setFullYear(now.getFullYear() + 1);
+                        return now;
+                    }()
+                }
+            ]
+        });
+    });
+</script>
+<script>
+//日期组件
+    layui.use(function(){
+        var laydate = layui.laydate;
+        var util = layui.util;
+        /*
+         * 快捷选项
+         */
+        // 日期
+        laydate.render({
+            elem: "#logMark",
             shortcuts: [
                 {
                     text: "昨天",

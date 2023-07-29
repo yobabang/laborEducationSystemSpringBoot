@@ -67,7 +67,7 @@
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
-                            ref="multipleTable"
+                            ref="multipleTable1"
                             :data="tableData_1"
                             tooltip-effect="dark"
                             style="width: 100%"
@@ -98,7 +98,7 @@
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="logTime"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
@@ -135,7 +135,6 @@
                         <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
                             <span>打回修改</span>
                         </button>
-                        <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
@@ -170,7 +169,7 @@
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="logTime"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
@@ -194,7 +193,6 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-                        <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
@@ -229,7 +227,7 @@
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="logTime"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
@@ -254,7 +252,6 @@
                           align-items: center;
                           gap: 30px;">
                         <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
-                        <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
                     <el-table
@@ -289,7 +286,7 @@
                                 min-width="10%">
                         </el-table-column>
                         <el-table-column
-                                prop="logTime"
+                                prop="logMark"
                                 label="提交时间"
                                 min-width="15%">
                         </el-table-column>
@@ -392,7 +389,34 @@ function getUrlSearch(name) {
         alert("催交")
       },
       load(){
-        alert("下载表格")
+          // 获取el-table的实例
+          const tableInstance = this.$refs.multipleTable1;
+
+          // 获取el-table中显示的数据
+          const visibleData = tableInstance.store.states.data;
+
+          // 创建表格内容
+          let tableContent = "<table>";
+
+          // 添加表头
+          const headers = ['logName', 'userId', 'logClasses', 'logState', 'logMark', 'logScore'];
+          tableContent += "<tr>" + headers.map(header => `<th>${header}</th>`).join("") + "</tr>";
+
+          // 添加表格数据
+          for (const row of visibleData) {
+            tableContent += "<tr>" + headers.map(header => `<td>${row[header]}</td>`).join("") + "</tr>";
+          }
+
+          tableContent += "</table>";
+
+          // 创建Blob对象
+          const blob = new Blob([tableContent], { type: "application/vnd.ms-excel" });
+
+          // 创建下载链接
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = this.detail_data.className + getUrlSearch("listType") + "详情表.xls";
+          link.click();
       },
       refuse(){
                 let selectedItems = this.multipleSelection;
@@ -504,6 +528,17 @@ function getUrlSearch(name) {
             }).then(function (resp){
                 let num = resp.data.data.length
                     for(let i = 0; i < num; i++){
+                        var date = new Date(resp.data.data[i].logMark); // 使用毫秒时间创建Date对象
+                        var year = date.getFullYear(); // 年份
+                        var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
+                        var day = date.getDate(); // 日期
+                        // 格式化输出时间
+                        var formattedTime = year + "-" + padZero(month) + "-" + padZero(day)
+                        console.log(formattedTime); // 输出格式化后的时间字符串
+                        // 在分钟、小时和秒钟不满两位数时，在其前面补零
+                        function padZero(number) {
+                            return number < 10 ? "0" + number : number;
+                        }
                         var date = new Date(resp.data.data[i].logTime); // 使用毫秒时间创建Date对象
                         var year = date.getFullYear(); // 年份
                         var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
@@ -515,6 +550,7 @@ function getUrlSearch(name) {
                         function padZero(number) {
                             return number < 10 ? "0" + number : number;
                         }
+                        resp.data.data[i].logMark = formattedTime
                         resp.data.data[i].logTime = formattedTime
                         _this.tableData_1.push(resp.data.data[i]);
                     }
