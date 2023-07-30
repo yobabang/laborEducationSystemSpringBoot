@@ -1,7 +1,9 @@
 package com.flex.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.flex.dao.UserDao;
 import com.flex.domain.User;
+import com.flex.pojo.po.UserPo;
 import com.flex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,12 @@ public class UserServiceIpml implements UserService {
     @Override
     public User login(String userAccount, String userPassword) {
         return userDao.select(userAccount,userPassword);
+    }
+
+    @Override
+    public UserPo selectByUserID(Long id) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUserId,id);
+        return User.toUserPO(userDao.selectOne(queryWrapper));
     }
 }

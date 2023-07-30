@@ -3,6 +3,7 @@ package com.flex.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.flex.domain.User;
 import org.apache.ibatis.annotations.*;
+import java.util.stream.Stream;
 
 import java.util.List;
 
@@ -26,7 +27,6 @@ public interface UserDao extends BaseMapper<User> {
 
     @Select("select * from user where user_account = #{userAccount} and user_password = #{userPassword}")
     public User select(String userAccount,String userPassword);
-
 
 }
 

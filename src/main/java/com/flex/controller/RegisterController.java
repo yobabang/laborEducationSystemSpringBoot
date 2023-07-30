@@ -137,6 +137,8 @@ public class RegisterController {
 
         return new Result(code,msg);
     }
+
+
     @ApiOperation(value = "查询学生社会活动登记表", notes = "根据学生班级查询社会活动登记表")
     @ApiImplicitParam(name = "className", value = "学生班级", required = true, dataType = "String",paramType = "path")
     @GetMapping("/classses/{className}")

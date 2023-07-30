@@ -10,6 +10,11 @@ import java.util.List;
 @Mapper
 public interface PracticeDao extends BaseMapper<Practice> {
 
+    /**
+     * 根据班级查询
+     * @param className
+     * @return
+     */
     @Select("select * from practice,user,classes where user.user_id = practice.user_id and user.class_id = classes.class_id and classes.class_name = #{className}")
     public List<Practice> getByClass(String className);
 }

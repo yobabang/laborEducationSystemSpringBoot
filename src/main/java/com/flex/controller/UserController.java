@@ -85,20 +85,8 @@ public class UserController {
             Classes classes = classesDao.selectOne(qw);
 
 
-            UserPo userPo = new UserPo();
+            UserPo userPo = User.toUserPO(user1);
             userPo.setClassName(classes.getClassName());
-            userPo.setUserId(user1.getUserId());
-            userPo.setUserName(user1.getUserName());
-            userPo.setUserAlter(user1.getUserAlter());
-            userPo.setUnit(user1.getUnit());
-            userPo.setGrade(user1.getGrade());
-            userPo.setMajor(user1.getMajor());
-            userPo.setPolitics(user1.getPolitics());
-            userPo.setPhone(user1.getPhone());
-            userPo.setEmail(user1.getEmail());
-            userPo.setType(user1.getType());
-            userPo.setAdId(user1.getAdId());
-            System.out.println("usersession:"+ userPo);
             session.setAttribute("user", userPo);
 
         }else{
@@ -145,8 +133,7 @@ public class UserController {
         List<User> users = userDao.selectList(queryWrapper);
         List<UserPo> userPos = new ArrayList<>();
         for(User user : users) {
-            UserPo userPo = new UserPo();
-            BeanUtils.copyProperties(user, userPo);
+            UserPo userPo = User.toUserPO(user);
             userPos.add(userPo);
         }
         Integer code = userPos != null ? Code.GET_OK : Code.GET_ERR;

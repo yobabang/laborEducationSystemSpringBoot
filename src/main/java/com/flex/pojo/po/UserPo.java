@@ -1,8 +1,10 @@
 package com.flex.pojo.po;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class UserPo {
     private Long userId;
     private String userName;

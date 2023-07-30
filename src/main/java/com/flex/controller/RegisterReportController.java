@@ -8,14 +8,18 @@ import com.flex.domain.ListPlan;
 import com.flex.domain.Log;
 import com.flex.domain.Register;
 import com.flex.domain.RegisterReport;
+import com.flex.pojo.dto.ReReportUserDto;
 import com.flex.pojo.dto.RegisterReportScoreDto;
+import com.flex.pojo.po.UserPo;
 import com.flex.service.RegisterReportService;
+import com.flex.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +33,9 @@ public class RegisterReportController {
     private RegisterReportService registerReportService;
     @Autowired
     private RegisterReportDao registerReportDao;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ListPlanDao listPlanDao;
@@ -117,11 +124,26 @@ public class RegisterReportController {
     @ApiOperation(value = "查询社会实践活动报告信息", notes = "根据学生班级查询社会实践活动报告信息")
     @ApiImplicitParam(name = "className", value = "学生班级", required = true, dataType = "String",paramType = "path")
     @GetMapping("/classses/{className}")
-    public Result getRegisterReportByClasses(@PathVariable String  className){
+    public Result getRegisterReportByClasses(@PathVariable String className){
         List<RegisterReport> registerReports = registerReportService.getByClasses(className);
-        Integer code = registerReports != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = registerReports != null ? "" : "数据查询失败";
-        return new Result(code,registerReports,msg);
+        List<ReReportUserDto> reReportUserDtos = new ArrayList<>();
+
+        for (RegisterReport re: registerReports
+             ) {
+            UserPo userPo = userService.selectByUserID(re.getUserId());
+            userPo.setClassName(className);
+
+            ReReportUserDto reReportUserDto = new ReReportUserDto();
+            reReportUserDto.setRegisterReport(re);
+            reReportUserDto.setUserPo(userPo);
+
+            reReportUserDtos.add(reReportUserDto);
+        }
+
+
+        Integer code = reReportUserDtos != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = reReportUserDtos != null ? "" : "数据查询失败";
+        return new Result(code,reReportUserDtos,msg);
     }
 
 

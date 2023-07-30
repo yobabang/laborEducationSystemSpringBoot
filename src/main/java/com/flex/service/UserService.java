@@ -1,6 +1,7 @@
 package com.flex.service;
 
 import com.flex.domain.User;
+import com.flex.pojo.po.UserPo;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -49,4 +50,11 @@ public interface UserService {
      * @return
      */
     public User login(String userAccount,String userPassword);
+
+    /**
+     * 根据用户id查询
+     * @param id
+     * @return
+     */
+    public UserPo selectByUserID(Long id);
 }
