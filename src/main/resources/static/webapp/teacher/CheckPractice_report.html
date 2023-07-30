@@ -118,7 +118,7 @@
       <div class="layui-form-item">
         <label class="layui-form-label" style="height: 100px;">成<br><br><br>绩</label>
         <div class="layui-input-block">
-          <input type="text" name="location" autocomplete="off" class="layui-input" id="logScore" required style="height: 100px;font-size: 50px;">
+          <input type="text" name="location" autocomplete="off" class="layui-input" id="repScore" required style="height: 100px;font-size: 50px;">
         </div>
       </div>
     </div>
@@ -223,17 +223,9 @@ layui.use(['jquery', 'form'], function () {
     var layer = layui.layer;
     // 提交事件
     layui.$('#demo2').on('click', function () {
-        alert("确认按钮")
-        let report = {};
-        alert("数据创建成功")
-        var data = {};
-        let xhr1 = new XMLHttpRequest();
-        xhr1.open('GET', '/users/session/1', true);
-        xhr1.onreadystatechange = function() {
-            if (xhr1.readyState === 4 && xhr1.status === 200) {
-                data = JSON.parse(xhr1.responseText);
-                console.log(data)
-                let userId  = data.data.userId;
+                alert("确认按钮")
+                let report = {};
+                let userId  = getUrlSearch("userId");
                 report.repScore = document.getElementById("repScore").value;
                 report.repState = 1;
                 report.userId = userId;
@@ -261,9 +253,6 @@ layui.use(['jquery', 'form'], function () {
                     console.error(error);
                     alert('链接失败' + error)
                 });
-            }
-        }
-        xhr1.send();
     });
 });
 </script>
