@@ -19,7 +19,7 @@
       text-align: center;
     }
     .center-align .layui-btn {
-      margin: 0 5px;
+      margin: 5px;
     }
   </style>
 </head>
@@ -51,19 +51,19 @@
             <textarea id="editor" name="content" placeholder="请输入内容" class="layui-textarea" style="display: none;"></textarea>
           </div>
           <div class="layui-card-footer center-align">
-            <button class="layui-btn layui-btn-normal layui-btn-lg" id="addButton" onclick="saveContent()">保存</button>
-            <button class="layui-btn layui-btn-normal layui-btn-lg" id="addmodal" onclick="submitContent()">提交</button>
+            <button class="layui-btn layui-btn-normal layui-btn-lg" id="save" onclick="saveContent()">保存</button>
+            <button class="layui-btn layui-btn-normal layui-btn-lg" id="submit" onclick="submitContent()">提交</button>
           </div>
         </div>
       </div>
 </div>
 
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../layui/layui.js" charset="utf-8"></script>
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/axios-0.18.0.js"></script>
 <script src="../static/js/vue.js"></script>
-
+<script src="https://cdn.staticfile.org/layui/2.5.4/layui.js"></script>
 
 
 <script>
@@ -88,54 +88,90 @@
     },
   })
 </script>
-<script src="https://cdn.staticfile.org/layui/2.5.4/layui.js"></script>
-
 <script>
 
   // 初始化编辑器
-  layui.use('layedit', function(){
+  layui.use(['layedit', 'laydate'], function(){
     var layedit = layui.layedit;
+    var laydate = layui.laydate;
+
     layedit.build('editor'); //建立编辑器
+
+    laydate.render({
+      elem: '#dateInput'
+    });
   });
 
+  var data = {};
+  let userId = '';
+  let xhr1 = new XMLHttpRequest();
+  xhr1.open('GET', '/users/session/1', true);
+  xhr1.onreadystatechange = function() {
+    if (xhr1.readyState === 4 && xhr1.status === 200) {
+      console.log(JSON.parse(xhr1.responseText));
+      data = JSON.parse(xhr1.responseText)
+      console.log(data)
+      userId = data.data.userId
+    }
+  }
+  xhr1.send()
+
   function saveContent() {
-    var date = document.getElementById("dateInput").value;
-    var content = document.getElementById("editor").value;
+    var date1 = document.getElementById("dateInput").value;
+    var layeditIndex = layedit.build('editor');
+    var content = layedit.getContent(layeditIndex);
+    alert(content)
 
     // 使用ajax发送请求
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_url", true);
+    xhr.open("POST", "/regdir/add", true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
         console.log("保存成功");
+        alert("保存成功")
         // 处理保存成功后的逻辑
-      } else {
-        console.log("保存失败");
-        // 处理保存失败的逻辑
+
+        // 打印获取到的content
+        console.log("获取到的date1:", date1);
+        console.log("获取到的content:", content);
+
+        // 跳转到SocialPracticeJournal011页面
+        // 需修url为包含数据的URL
+        window.location.href = "task_list.html";
+        alert("跳转页面成功")
+
+
       }
     };
-    xhr.send(JSON.stringify({ date: date, content: content }));
+    xhr.send(JSON.stringify({ rdTime: date1, rdContent: content, userId: userId }));
   }
+
 
   function submitContent() {
     var date = document.getElementById("dateInput").value;
-    var content = document.getElementById("editor").value;
+    var layeditIndex = layedit.build('editor');
+    var content = layedit.getContent(layeditIndex);
 
     // 使用ajax发送请求
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "submit_url", true);
+    xhr.open("POST", "/regdir/add", true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
         console.log("提交成功");
+        alert("提交成功")
         // 处理提交成功后的逻辑
-      } else {
-        console.log("提交失败");
-        // 处理提交失败的逻辑
+
+        // 跳转到SocialPracticeJournal011页面
+
+        // 需修url为包含数据的URL
+        window.location.href = "task_list.html";
+        alert("跳转页面成功")
+
       }
     };
-    xhr.send(JSON.stringify({ date: date, content: content }));
+    xhr.send(JSON.stringify({ rdTime: date1, rdContent: content,userId:userId }));
   }
 </script>
 
