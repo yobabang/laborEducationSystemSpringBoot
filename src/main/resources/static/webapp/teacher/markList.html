@@ -20,7 +20,7 @@
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" id="headername">
         <ul class="layui-nav ">
-            <li class="layui-nav-item "><a href="">首页</a></li>
+            <li class="layui-nav-item "><a href="index.html">首页</a></li>
             <li class="layui-nav-item layui-this"><a href="">批阅列表</a></li>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
@@ -112,7 +112,7 @@
                                 label="操作"
                                 min-width="15%">
                             <template slot-scope="scope">
-                                <el-button v-if="scope.row.logState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                                <el-button v-if="scope.row.logState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -241,7 +241,7 @@
                                 label="操作"
                                 min-width="15%">
                             <template slot-scope="scope">
-                                <el-button v-if="scope.row.logState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                                <el-button v-if="scope.row.logState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -300,7 +300,7 @@
                                 label="操作"
                                 min-width="15%">
                             <template slot-scope="scope">
-                                <el-button v-if="scope.row.logState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                                <el-button v-if="scope.row.logState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
