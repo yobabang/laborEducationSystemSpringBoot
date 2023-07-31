@@ -41,15 +41,15 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">本科类型</label>
                     <div class="layui-input-block">
-                        <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="type">
+                        <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="userType">
                     </div>
                 </div>
             </div>
             <div class="layui-col-md3">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">专业</label>
+                    <label class="layui-form-label">班级</label>
                     <div class="layui-input-block">
-                        <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="major">
+                        <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="regClass">
                     </div>
                 </div>
             </div>
@@ -262,7 +262,7 @@ layui.use(['jquery', 'form'], function () {
                 sData = JSON.parse(xhr2.responseText);
                 console.log(sData)
                 // 社会实践登记表数据
-                data["register"].userType = sData.data.type
+                data["register"].userType = sData.data.userType
                 data["register"].regClass = sData.data.className
                 data["register"].politics = sData.data.politics
                 data["register"].regName = sData.data.userName
@@ -341,7 +341,7 @@ layui.use(['jquery', 'form'], function () {
                 alert("得到data")
                 console.log(sData)
                 // 社会实践登记表数据
-                data["register"].userType = sData.data.type
+                data["register"].userType = sData.data.userType
                 data["register"].regClass = sData.data.className
                 data["register"].politics = sData.data.politics
                 data["register"].regName = sData.data.userName
