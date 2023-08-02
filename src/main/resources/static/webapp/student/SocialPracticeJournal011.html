@@ -60,7 +60,7 @@
 </div>
 
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-<script src="../../layui/layui.js" charset="utf-8"></script>
+<script src="../static/layui/layui.js" charset="utf-8"></script>
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/axios-0.18.0.js"></script>
 <script src="../static/js/vue.js"></script>
@@ -130,7 +130,7 @@
 
             // 请求日志数据并渲染
             var xhr2 = new XMLHttpRequest();
-            xhr2.open('GET', '/regdir/userId' + userId, true); // 修正问题3：URL修正
+            xhr2.open('GET', '/regdir/userId/' + userId, true); // 修正问题3：URL修正
             xhr2.onreadystatechange = function() {
                 if (xhr2.readyState === 4 && xhr2.status === 200) {
                     alert("获取日志成功")
