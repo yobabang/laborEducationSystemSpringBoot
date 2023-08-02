@@ -111,9 +111,11 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+
 <script>
-    var data = {};
+    var data = {}; // 修正问题1：移除重复的变量声明
     var userId = ''; // 先声明变量用于保存用户id
+
     // 获取用户id的AJAX请求
     var xhr1 = new XMLHttpRequest();
     xhr1.open('GET', '/users/session/1', true);
@@ -122,12 +124,13 @@
             alert("获取用户id成功")
             // 打印数据
             console.log(JSON.parse(xhr1.responseText))
-            var data = JSON.parse(xhr1.responseText);
+            data = JSON.parse(xhr1.responseText); // 修正问题1：保存到全局data变量
+
             userId = data.data.userId; // 将用户id保存到变量中
 
             // 请求日志数据并渲染
             var xhr2 = new XMLHttpRequest();
-            xhr2.open('GET', '/regdir/userId/' + userId, true);
+            xhr2.open('GET', '/regdir/' + userId, true); // 修正问题3：URL修正
             xhr2.onreadystatechange = function() {
                 if (xhr2.readyState === 4 && xhr2.status === 200) {
                     alert("获取日志成功")
@@ -143,7 +146,6 @@
     xhr1.send();
 
     function renderLogData(logData) {
-        alert("1213")
         var container = document.getElementById("logContainer"); // 获取日志容器元素
 
         // 遍历日志数据，添加对应的 HTML 结构
@@ -196,14 +198,14 @@
 
     function editContent(button) {
         // 执行编辑日志内容的操作
-        var textarea = button.parentNode.parentNode.parentNode.querySelector(".layui-input-block textarea");
-        var logDate = button.parentNode.parentNode.parentNode.querySelector(".layui-input-inline input").value;
+        var textarea = button.parentNode.parentNode.querySelector(".layui-input-block textarea"); // 修正问题5
+        var logDate = button.parentNode.parentNode.querySelector(".layui-input-inline input").value; // 修正问题5
         var logContent = textarea.value;
 
         // 构建包含数据的URL
         var url = "log_edit.html?date=" + encodeURIComponent(logDate) + "&content=" + encodeURIComponent(logContent);
 
-        // ”此处需要修改“
+        // "此处需要修改" 没有具体解释需要修改什么，暂不做处理
 
         // 跳转到log_edit.html页面
         window.location.href = url;
@@ -212,7 +214,7 @@
 
 <script>
     function goToEditorPage() {
-        // 跳转到demo页面
+        // 跳转到log_edit页面
         window.location.href = "log_edit.html";
     }
     // 全选复选框事件
@@ -238,13 +240,20 @@
             var index = selectedPanelIndices[i];
             var panel = panelCheckboxes[index].parentNode.parentNode;
             panel.parentNode.removeChild(panel);
-            // 在这里执行删除数据库中数据的操作
+            var logId = panel.querySelector(".layui-colla-title").innerText;
 
-            // ”此处需要修改“
+            // 发送DELETE请求到服务器的接口，删除数据库中的数据
+            axios.delete(`/regdir/rdId/${logId}`)
+                .then(function(response) {
+                    console.log(response.data);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
         }
     }
 
-/*    // 编辑按钮点击事件
+/*    // 编辑按钮点击事件 
     function editContent(button) {
         var textarea = button.parentNode.parentNode.parentNode.querySelector(".layui-input-block textarea");
         var logDate = button.parentNode.parentNode.parentNode.querySelector(".layui-input-inline input").value;

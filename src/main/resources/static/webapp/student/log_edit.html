@@ -48,7 +48,7 @@
           <div class="layui-card-header" style="text-align: center;font-weight: bold; font-size: 30px;">社会实践日志</div>
           <div class="layui-card-body layui-form">
             <input type="text" id="dateInput" placeholder="请选择日期" class="layui-input">
-            <textarea id="editor" name="content" placeholder="请输入内容" class="layui-textarea" style="display: none;"></textarea>
+            <textarea id="contentInput" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
           </div>
           <div class="layui-card-footer center-align">
             <button class="layui-btn layui-btn-normal layui-btn-lg" id="save" onclick="saveContent()">保存</button>
@@ -91,11 +91,8 @@
 <script>
 
   // 初始化编辑器
-  layui.use(['layedit', 'laydate'], function(){
-    var layedit = layui.layedit;
+  layui.use(['laydate'], function(){
     var laydate = layui.laydate;
-
-    layedit.build('editor'); //建立编辑器
 
     laydate.render({
       elem: '#dateInput'
@@ -118,9 +115,8 @@
 
   function saveContent() {
     var date1 = document.getElementById("dateInput").value;
-    var layeditIndex = layedit.build('editor');
-    var content = layedit.getContent(layeditIndex);
-    alert(content)
+    var content = document.getElementById("contentInput").value;
+
 
     // 使用ajax发送请求
     var xhr = new XMLHttpRequest();
@@ -149,7 +145,7 @@
 
 
   function submitContent() {
-    var date = document.getElementById("dateInput").value;
+    var date1 = document.getElementById("dateInput").value;
     var layeditIndex = layedit.build('editor');
     var content = layedit.getContent(layeditIndex);
 
