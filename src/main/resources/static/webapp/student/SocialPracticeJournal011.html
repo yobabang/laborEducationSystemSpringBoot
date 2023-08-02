@@ -52,6 +52,72 @@
         <div class="layui-row">
             <div class="layui-col-lg12">
                 <div class="layui-collapse" id="logContainer">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">
+                            <input type="checkbox" class="panel-checkbox" style="margin-right: 10px;">
+                            ${logData.data[0].rdId}
+                        </h2>
+                        <div class="layui-colla-content">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-body">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">日期选择：</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" class="layui-input" value="${logData.data[0].rdTime}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item layui-form-text">
+                                                <label class="layui-form-label">日志内容：</label>
+                                                <div class="layui-input-block">
+                                                    <textarea class="layui-textarea" readonly>${logData.data[0].rdContent}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-block">
+                                                    <button class="layui-btn layui-btn-sm" onclick="editContent(this)">编辑</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">
+                            <input type="checkbox" class="panel-checkbox" style="margin-right: 10px;">
+                            ${logData.data[0].rdId}
+                        </h2>
+                        <div class="layui-colla-content">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-body">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">日期选择：</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" class="layui-input" value="${logData.data[0].rdTime}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item layui-form-text">
+                                                <label class="layui-form-label">日志内容：</label>
+                                                <div class="layui-input-block">
+                                                    <textarea class="layui-textarea" readonly>${logData.data[0].rdContent}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-block">
+                                                    <button class="layui-btn layui-btn-sm" onclick="editContent(this)">编辑</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -138,6 +204,7 @@
                     console.log(JSON.parse(xhr2.responseText))
                     var logData = JSON.parse(xhr2.responseText); // 假设返回的数据是一个数组，每个对象表示一个日志
                     renderLogData(logData); // 将数据传递给一个函数进行渲染
+                    console.log(logData)
                 }
             };
             xhr2.send();
