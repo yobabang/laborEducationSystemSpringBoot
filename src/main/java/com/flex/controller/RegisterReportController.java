@@ -154,7 +154,7 @@ public class RegisterReportController {
         for (RegisterReport rep: registerReports
              ) {
             LambdaUpdateWrapper<RegisterReport> updateWrapper = new LambdaUpdateWrapper<>();
-            updateWrapper.eq(RegisterReport::getRepId,rep.getRepId());
+            updateWrapper.eq(RegisterReport::getUserId,rep.getUserId());
             registerReportDao.update(rep,updateWrapper);
         }
         Integer code = Code.UPDATE_OK;
