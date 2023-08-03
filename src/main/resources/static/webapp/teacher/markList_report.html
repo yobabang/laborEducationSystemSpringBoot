@@ -452,6 +452,7 @@ function getUrlSearch(name) {
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
+        console.log('选中项发生变化:', this.multipleSelection);
       },
       selectOption(option) {
          if (option === '区间给分') {
