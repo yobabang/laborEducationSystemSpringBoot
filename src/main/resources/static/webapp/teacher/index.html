@@ -61,6 +61,11 @@
                             type="success"
                             plain
                             @click="checkWork(scope.row)">查看作业详情</el-button>
+                    <el-button
+                            size="medium"
+                            type="danger"
+                            plain
+                            @click="checkWorkALL(scope.row)">查看所有作业详情</el-button>
                 </template>
             </el-table-column>
 
@@ -89,6 +94,9 @@
         checkWork(row){
             let reUrl = 'stuWork.html?className='+ row.className;
             window.location.href = reUrl;
+        },
+        checkWorkALL(row){
+
         },
     },
     data() {

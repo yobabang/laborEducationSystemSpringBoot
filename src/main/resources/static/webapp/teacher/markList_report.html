@@ -465,6 +465,7 @@ function getUrlSearch(name) {
                      let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
                      console.log(randomNum)
                      item.repScore = randomNum; // 修改选中的行数据
+                     item.repState = 1; // 修改选中的行数据
                   }
                   console.log(selectedItems)
                   axios({
@@ -493,6 +494,7 @@ function getUrlSearch(name) {
                   let selectedItems = this.multipleSelection; // 获取选中的行数据
                   for (let item of selectedItems) {
                      item.repScore = num; // 修改选中的行数据
+                     item.repState = 1; // 修改选中的行数据
                   }
                   axios({
                     method:"put",
