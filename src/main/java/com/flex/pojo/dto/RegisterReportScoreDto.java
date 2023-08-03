@@ -6,5 +6,5 @@ import lombok.Data;
 public class RegisterReportScoreDto {
     private Long userId;
     private Integer repState;
-    private String repScore;
+    private Integer repScore;
 }

@@ -23,6 +23,6 @@ public class RegisterReport {
     private String repIssue;
     private String repGain;
     private Integer repState;
-    private String repScore;
+    private Integer repScore;
     private Date reportMark;
 }
