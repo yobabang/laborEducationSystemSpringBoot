@@ -167,7 +167,7 @@ public class RegisterReportController {
     public Result updateRepByUserId(@RequestBody RegisterReportScoreDto registerReportScoreDto){
         LambdaUpdateWrapper<RegisterReport> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(RegisterReport::getUserId,registerReportScoreDto.getUserId())
-                .eq(RegisterReport::getRepState,registerReportScoreDto.getRepState())
+                .set(RegisterReport::getRepState,registerReportScoreDto.getRepState())
                 .set(RegisterReport::getRepScore,registerReportScoreDto.getRepScore());
         int update = registerReportDao.update(null, updateWrapper);
         Integer code;

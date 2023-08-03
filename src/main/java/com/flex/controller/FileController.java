@@ -51,9 +51,8 @@ public class FileController {
     @GetMapping("/{fileName}")
     public ResponseEntity<Resource> download(@PathVariable("fileName") String fileName) throws MalformedURLException {
         Path file = this.path.resolve(fileName);
-        System.out.println("============================================================================="+file);
+
         Resource resource = new UrlResource(file.toUri());
-        System.out.println("============================================================================="+resource);
         if (!resource.exists() || !resource.isFile()) {
             throw new NullPointerException("文件不存在");
         }
