@@ -20,7 +20,7 @@
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header" id="headername">
     <ul class="layui-nav ">
-      <li class="layui-nav-item "><a href="">首页</a></li>
+      <li class="layui-nav-item "><a href="index.html">首页</a></li>
       <li class="layui-nav-item layui-this"><a href="">批阅列表</a></li>
       <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
@@ -67,7 +67,7 @@
           </div>
           <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
           <el-table
-                  ref="multipleTable"
+                  ref="multipleTable1"
                   :data="tableData_1"
                   tooltip-effect="dark"
                   style="width: 100%"
@@ -77,10 +77,10 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="userName"
                     label="姓名"
                     min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+              <template slot-scope="scope">{{ scope.row.userName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
@@ -88,7 +88,7 @@
                     min-width="20%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="className"
                     label="班级"
                     min-width="15%">
             </el-table-column>
@@ -112,7 +112,7 @@
                     label="操作"
                     min-width="15%">
               <template slot-scope="scope">
-                <el-button v-if="scope.row.repState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button v-if="scope.row.repState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -133,7 +133,7 @@
               </el-dropdown-menu>
             </el-dropdown>
             <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
-              <span>打回修改</span>
+              <span>批量打回</span>
             </button>
           </div>
           <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
@@ -148,10 +148,10 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="userName"
                     label="姓名"
                     min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+              <template slot-scope="scope">{{ scope.row.userName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
@@ -159,7 +159,7 @@
                     min-width="20%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="className"
                     label="班级"
                     min-width="15%">
             </el-table-column>
@@ -206,10 +206,10 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="userName"
                     label="姓名"
                     min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+              <template slot-scope="scope">{{ scope.row.userName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
@@ -217,7 +217,7 @@
                     min-width="20%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="className"
                     label="班级"
                     min-width="15%">
             </el-table-column>
@@ -241,7 +241,7 @@
                     label="操作"
                     min-width="15%">
               <template slot-scope="scope">
-                <el-button v-if="scope.row.repState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button v-if="scope.row.repState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -265,10 +265,10 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="userName"
                     label="姓名"
                     min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+              <template slot-scope="scope">{{ scope.row.userName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
@@ -276,7 +276,7 @@
                     min-width="20%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="className"
                     label="班级"
                     min-width="15%">
             </el-table-column>
@@ -300,7 +300,7 @@
                     label="操作"
                     min-width="15%">
               <template slot-scope="scope">
-                <el-button v-if="scope.row.repState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button v-if="scope.row.repState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -370,10 +370,10 @@ function getUrlSearch(name) {
         state3Count: state3Count
       },
         activeName: 'first',
-        tableData_1: [{},],
-        tableData_2: [{},],
-        tableData_3: [{},],
-        tableData_4: [{},],
+        tableData_1: [],
+        tableData_2: [],
+        tableData_3: [],
+        tableData_4: [],
         multipleSelection: [],
         selectedOption: '',  // 当前选中的选项
         options: ['区间给分', '统一给分']  // 选项列表
@@ -381,16 +381,62 @@ function getUrlSearch(name) {
     },
     methods: {
       check(row){
-
+          let _this = this;
+          let reUrl = 'CheckPractice_report.html?userId='+ row.userId + '&listType=' + _this.detail_data.listType;
+          window.location.href = reUrl;
       },
       notice(){
         alert("催交")
       },
       load(){
-        alert("下载表格")
+        // 获取el-table的实例
+          const tableInstance = this.$refs.multipleTable1;
+
+          // 获取el-table中显示的数据
+          const visibleData = tableInstance.store.states.data;
+
+          // 创建表格内容
+          let tableContent = "<table>";
+
+          // 添加表头
+          const headers = ['userName', 'userId', 'className', 'repState', 'reportMark', 'repScore'];
+          tableContent += "<tr>" + headers.map(header => `<th>${header}</th>`).join("") + "</tr>";
+
+          // 添加表格数据
+          for (const row of visibleData) {
+            tableContent += "<tr>" + headers.map(header => `<td>${row[header]}</td>`).join("") + "</tr>";
+          }
+
+          tableContent += "</table>";
+
+          // 创建Blob对象
+          const blob = new Blob([tableContent], { type: "application/vnd.ms-excel" });
+
+          // 创建下载链接
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = this.detail_data.className + getUrlSearch("listType") + "详情表.xls";
+          link.click();
       },
       refuse(){
-        alert("打回")
+        let selectedItems = this.multipleSelection;
+                  console.log(selectedItems)
+                  for (let item of selectedItems) {
+                     item.repState = 2; // 修改选中的行数据
+                  }
+                  console.log(selectedItems)
+                  axios({
+                    method:"put",
+                    url:"/registerReports/score",
+                    data: selectedItems,
+                    }).then(response => {
+                        // 处理成功响应
+                        console.log(response.data);
+                      })
+                      .catch(error => {
+                        // 处理错误
+                        console.error(error);
+                      });
       },
       handleClick(tab, event) {
         console.log(tab, event);
@@ -410,11 +456,30 @@ function getUrlSearch(name) {
       selectOption(option) {
          if (option === '区间给分') {
               let range = prompt("请输入数字区间，格式为：最小值-最大值");
-              let [min, max] = range.split('-').map(Number);
-              let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-              console.log("生成的随机数字：" + randomNum);
               if(range){
-                   alert("填写内容并“确定”")
+                  alert("填写内容并“确定”")
+                  let [min, max] = range.split('-').map(Number);
+                  let selectedItems = this.multipleSelection;
+                  console.log(selectedItems)
+                  for (let item of selectedItems) {
+                     let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                     console.log(randomNum)
+                     item.repScore = randomNum; // 修改选中的行数据
+                     item.repState = 1; // 修改选中的行数据
+                  }
+                  console.log(selectedItems)
+                  axios({
+                    method:"put",
+                    url:"/registerReports/score",
+                    data: selectedItems,
+                    }).then(response => {
+                        // 处理成功响应
+                        console.log(response.data);
+                      })
+                      .catch(error => {
+                        // 处理错误
+                        console.error(error);
+                      });
                 }
                 else if(range === ""){
                      alert("未填写但“确定”")
@@ -424,9 +489,25 @@ function getUrlSearch(name) {
                 }
             } else if (option === '统一给分') {
               let num = prompt("请输入一个分数");
-              console.log("输入的分数：" + num);
               if(num){
-                   alert("填写内容并“确定”")
+                  alert("填写内容并“确定”")
+                  let selectedItems = this.multipleSelection; // 获取选中的行数据
+                  for (let item of selectedItems) {
+                     item.repScore = num; // 修改选中的行数据
+                     item.repState = 1; // 修改选中的行数据
+                  }
+                  axios({
+                    method:"put",
+                    url:"/registerReports/score",
+                    data: selectedItems,
+                    }).then(response => {
+                        // 处理成功响应
+                        console.log(response.data);
+                      })
+                      .catch(error => {
+                        // 处理错误
+                        console.error(error);
+                      });
                 }
                 else if(num === ""){
                      alert("未填写但“确定”")
@@ -448,7 +529,7 @@ function getUrlSearch(name) {
             }).then(function (resp){
                 let num = resp.data.data.length
                     for(let i = 0; i < num; i++){
-                        var date = new Date(resp.data.data[i].reportMark); // 使用毫秒时间创建Date对象
+                        var date = new Date(resp.data.data[i].registerReport.reportMark); // 使用毫秒时间创建Date对象
                         var year = date.getFullYear(); // 年份
                         var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
                         var day = date.getDate(); // 日期
@@ -459,9 +540,16 @@ function getUrlSearch(name) {
                         function padZero(number) {
                             return number < 10 ? "0" + number : number;
                         }
-                        resp.data.data[i].reportMark = formattedTime
-                        _this.tableData_1.push(resp.data.data[i]);
-                    }
+                        resp.data.data[i].registerReport.reportMark = formattedTime
+                        _this.tableData_1.push({
+                                userName: resp.data.data[i].userPo.userName,
+                                userId: resp.data.data[i].userPo.userId,
+                                className: resp.data.data[i].userPo.className,
+                                repState: resp.data.data[i].registerReport.repState,
+                                reportMark: resp.data.data[i].registerReport.reportMark,
+                                repScore: resp.data.data[i].registerReport.repScore
+                              });
+                              }
                 _this.tableData_2 = _this.tableData_1.filter(item => item.repState === 3);
                 _this.tableData_3 = _this.tableData_1.filter(item => item.repState === 1);
                 _this.tableData_4 = _this.tableData_1.filter(item => item.repState === 0);

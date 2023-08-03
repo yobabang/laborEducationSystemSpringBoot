@@ -28,7 +28,7 @@
   <div class="layui-header" id="headername">
     <ul class="layui-nav ">
       <li class="layui-nav-item "><a href="">首页</a></li>
-      <li class="layui-nav-item layui-this"><a href="log_edit01.html">社会实践日志</a></li>
+      <li class="layui-nav-item layui-this"><a href="log_edit.html">社会实践日志</a></li>
       <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
           <a href="javascript:;">
@@ -48,7 +48,7 @@
           <div class="layui-card-header" style="text-align: center;font-weight: bold; font-size: 30px;">社会实践日志</div>
           <div class="layui-card-body layui-form">
             <input type="text" id="dateInput" placeholder="请选择日期" class="layui-input">
-            <textarea id="contentInput" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea id="editor" name="content" placeholder="请输入内容" class="layui-textarea" style="display: none;"></textarea>
           </div>
           <div class="layui-card-footer center-align">
             <button class="layui-btn layui-btn-normal layui-btn-lg" id="save" onclick="saveContent()">保存</button>
@@ -59,7 +59,7 @@
 </div>
 
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-<script src="../static/layui/layui.js" charset="utf-8"></script>
+<script src="../layui/layui.js" charset="utf-8"></script>
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/axios-0.18.0.js"></script>
 <script src="../static/js/vue.js"></script>
@@ -91,8 +91,17 @@
 <script>
 
   // 初始化编辑器
-  layui.use(['laydate'], function(){
+  layui.use(['layedit', 'laydate'], function(){
+    var layedit = layui.layedit;
+    var index = layedit.build('editor');
     var laydate = layui.laydate;
+
+    layedit.build('editor'); //建立编辑器
+
+    // 获取编辑器内容
+    var content = layedit.getContent(index);
+    console.log(content);
+    alert("获取内容成功")
 
     laydate.render({
       elem: '#dateInput'
@@ -115,7 +124,6 @@
 
   function saveContent() {
     var date1 = document.getElementById("dateInput").value;
-    var content = document.getElementById("contentInput").value;
 
 
     // 使用ajax发送请求

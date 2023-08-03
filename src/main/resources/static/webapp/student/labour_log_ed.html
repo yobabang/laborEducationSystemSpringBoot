@@ -282,6 +282,7 @@ layui.use(['jquery', 'form'], function () {
                 let userId  = data.data.userId;
                 console.log('session中user-id为' + userId)
                 log.userType = data.data.type;
+                log.logName = data.data.userName
                 log.logClasses = document.getElementById("logClasses").value;
                 let logType = document.getElementById("logType").value;
                 let num;
@@ -320,18 +321,8 @@ layui.use(['jquery', 'form'], function () {
                 }).then(function (response) {
                     console.log(response.data);
                     alert('成功连接到接口insert');
-                    // 解析后端返回的数据
-                    try {
-                    var jsonData = JSON.parse(response.data);
-                    console.log(jsonData);
-                    } catch (error) {
-                    console.error('解析后端返回的数据失败:', error);
-                    alert('解析后端返回的数据失败');
-                    }
-                }).catch(function (error) {
-                    console.error(error);
-                    alert('链接失败' + error)
-                });
+                    window.location.href = "task_list.html";
+                })
             }
         }
         xhr1.send();

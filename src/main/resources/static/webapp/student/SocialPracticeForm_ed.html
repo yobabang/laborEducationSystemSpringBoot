@@ -41,15 +41,15 @@
         <div class="layui-form-item">
           <label class="layui-form-label">本科类型</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="type">
+            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="userType">
           </div>
         </div>
       </div>
       <div class="layui-col-md3">
         <div class="layui-form-item">
-          <label class="layui-form-label">专业</label>
+          <label class="layui-form-label">班级</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="major">
+            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="regClass">
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">社会实践形式</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="form">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="form" placeholder="请输入数字">
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">指导老师</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="adId">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="adId" placeholder="请输入数字">
           </div>
         </div>
       </div>
@@ -193,21 +193,27 @@
         <div class="layui-form-item layui-form-text">
           <label class="layui-form-label">实践单位或调查对象评价：</label>
           <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入内容" class="layui-textarea" id="praIntro"></textarea>
           </div>
         </div>
       </div>
     </div>
     <div class="layui-form-item" style="text-align: center">
       <div class="layui-row">
-        <div class="layui-col-md4">
+        <div class="layui-col-md3">
+          <label class="layui-form-label">提交时间</label>
+          <div class="layui-input-block">
+            <input type="text" class="layui-input" name="regMark" id="ID-laydate-shortcut-date">
+          </div>
+        </div>
+        <div class="layui-col-md3">
           <button style="margin-left: 300px" class="layui-btn" lay-submit lay-filter="demo2" id="demo2">提交</button>
         </div>
-        <div class="layui-col-md4">
+        <div class="layui-col-md3">
           <button class="layui-btn" lay-submit lay-filter="demo3" id="demo3">保存</button>
         </div>
-        <div class="layui-col-md4">
-          <button type="reset" style="margin-left: -300px" class="layui-btn layui-btn-primary" id="praIntro">重置</button>
+        <div class="layui-col-md3">
+          <button type="reset" style="margin-left: -300px" class="layui-btn layui-btn-primary" >重置</button>
         </div>
       </div>
     </div>
@@ -245,65 +251,61 @@ function getUrlSearch(name) {
         return r[2];
     }
 // 使用XMLHttpRequest对象发送Ajax请求
-   var data2 = {};
-   let xhr1 = new XMLHttpRequest();
-   xhr1.open('GET', '/users/session/1', true);
-   xhr1.onreadystatechange = function() {
-     if (xhr1.readyState === 4 && xhr1.status === 200) {
-       data2 = JSON.parse(xhr1.responseText);
-       let noticeReceiver  = data2.data.userId;
-       console.log('user-id为' + noticeReceiver)
+   var data3 = {};
+   let xhr = new XMLHttpRequest();
+   xhr.open('GET', '/users/session/1', true);
+   xhr.onreadystatechange = function() {
+     if (xhr.readyState === 4 && xhr.status === 200) {
+       data3 = JSON.parse(xhr.responseText);
+       let noticeReceiver  = data3.data.userId;
+// 使用XMLHttpRequest对象发送Ajax请求
+// 登记表获取
        let xhr2 = new XMLHttpRequest();
-       let logType = getUrlSearch("listType")
-       let num;
-       if (logType === "日常生活劳动日志") {
-          num = 1;
-       } else if(logType === "服务性劳动日志"){
-          num = 2;
-       }else if(logType === "生产劳动日志"){
-          num = 3;
-       }else if(logType === "社会实践活动登记表"){
-          num = 4;
-       }else if(logType === "社会实践活动日志"){
-          num = 5;
-       }else if(logType === "社会实践调查报告"){
-          num = 6;
-       }
        xhr2.open('GET', '/regs/userId/' + noticeReceiver, true);
        xhr2.onreadystatechange = function() {
        if (xhr2.readyState === 4 && xhr2.status === 200) {
            let data = JSON.parse(xhr2.responseText);
-           console.log(data2)
+           console.log(data);
+           let data2 = {};
+           // 单位表获取
+           let xhr1 = new XMLHttpRequest();
+           xhr1.open('GET', '/practice/userId/' + noticeReceiver, true);
+           xhr1.onreadystatechange = function() {
+           if (xhr1.readyState === 4 && xhr1.status === 200) {
+                data2 = JSON.parse(xhr1.responseText);
+                console.log(data2)
            // 社会实践登记表数据
-                document.getElementById("type").value = data.data["register"].type;
-                document.getElementById("className").value = data.data["register"].className;
-                document.getElementById("politics").value = data.data["register"].politics;
-                document.getElementById("userName").value = data.data["register"].userName;
-                document.getElementById("userId").value = data.data["register"].userId;
-                document.getElementById("startTime").value = data.data["register"].startTime;
-                document.getElementById("endTime").value = data.data["register"].endTime;
-                document.getElementById("form").value = data.data["register"].form;
-                document.getElementById("adId").value = data.data["register"].adId;
-                document.getElementById("regMark").value; = data.data["register"].regMark;
+                document.getElementById("userType").value = data.data.userType;
+                document.getElementById("regClass").value = data.data.className;
+                document.getElementById("politics").value = data.data.politics;
+                document.getElementById("regName").value = data.data.userName;
+                document.getElementById("userId").value = data.data.userId;
+                document.getElementById("startTime").value = data.data.startTime;
+                document.getElementById("endTime").value = data.data.endTime;
+                document.getElementById("form").value = data.data.form;
+                document.getElementById("adId").value = data.data.adId;
+                document.getElementById("regMark").value; = data.data.regMark
                 // 社会实践单位表数据
-                document.getElementById("project").value = data.data["practice"].project;
-                document.getElementById("praUnit").value = data.data["practice"].praUnit;
-                document.getElementById("registerLocation").value = data.data["practice"].registerLocation;
-                document.getElementById("unitAttribute").value = data.data["practice"].unitAttribute;
-                document.getElementById("head").value = data.data["practice"].head;
-                document.getElementById("headPhone").value = data.data["practice"].headPhone;
-                document.getElementById("headEmail").value = data.data["practice"].headEmail;
-                document.getElementById("item").value = data.data["practice"].item;
-                document.getElementById("registerStatus").value = data.data["practice"].registerStatus;
-                document.getElementById("unitMajor").value = data.data["practice"].unitMajor;
-                document.getElementById("objIntro").value = data.data["practice"].objIntro;
-               document.getElementById("praIntro").value =  data.data["practice"].praIntro;
+                document.getElementById("project").value = data2.data.project;
+                document.getElementById("praUnit").value = data2.data.praUnit;
+                document.getElementById("registerLocation").value = data2.data.registerLocation;
+                document.getElementById("unitAttribute").value = data2.data.unitAttribute;
+                document.getElementById("head").value = data2.data.head;
+                document.getElementById("headPhone").value = data2.data.headPhone;
+                document.getElementById("headEmail").value = data2.data.headEmail;
+                document.getElementById("item").value = data2.data.item;
+                document.getElementById("registerStatus").value = data2.data.registerStatus;
+                document.getElementById("unitMajor").value = data2.data.unitMajor;
+                document.getElementById("praIntro").value =  data2.data.praIntro;
+           }
+       }
+       xhr1.send()
      }
    };
    xhr2.send()
      }
    };
-   xhr1.send();
+   xhr.send();
 </script>
 <script>
 // 确认按钮数据提交
@@ -328,7 +330,7 @@ layui.use(['jquery', 'form'], function () {
                 alert("得到data")
                 console.log(sData)
                 // 社会实践登记表数据
-                data["register"].userType = sData.data.type
+                data["register"].userType = sData.data.userType
                 data["register"].regClass = sData.data.className
                 data["register"].politics = sData.data.politics
                 data["register"].regName = sData.data.userName
@@ -391,7 +393,7 @@ layui.use(['jquery', 'form'], function () {
     var form = layui.form;
     var layer = layui.layer;
     // 提交事件
-    layui.$('#demo2').on('click', function () {
+    layui.$('#demo3').on('click', function () {
         alert("保存按钮")
         let data = {"register":{}, "practice": {}};
         alert("数据创建成功")
@@ -408,7 +410,7 @@ layui.use(['jquery', 'form'], function () {
                 alert("得到data")
                 console.log(sData)
                 // 社会实践登记表数据
-                data["register"].userType = sData.data.type
+                data["register"].userType = sData.data.userType
                 data["register"].regClass = sData.data.className
                 data["register"].politics = sData.data.politics
                 data["register"].regName = sData.data.userName

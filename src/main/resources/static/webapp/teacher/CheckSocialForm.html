@@ -25,7 +25,7 @@
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="../static/img/head.png" class="layui-nav-img">
-          {{user.user_name}}
+          {{user.adname}}
         </a>
 
       </li>
@@ -40,15 +40,15 @@
         <div class="layui-form-item">
           <label class="layui-form-label">本科类型</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="userType">
           </div>
         </div>
       </div>
       <div class="layui-col-md3">
         <div class="layui-form-item">
-          <label class="layui-form-label">专业</label>
+          <label class="layui-form-label">班级</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="regClass">
           </div>
         </div>
       </div>
@@ -56,23 +56,31 @@
         <div class="layui-form-item">
           <label class="layui-form-label">政治面貌</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="politics">
           </div>
         </div>
       </div>
       <div class="layui-col-md3">
         <div class="layui-form-item">
-          <label class="layui-form-label">性别</label>
+          <label class="layui-form-label">姓名</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="reg_name" autocomplete="off" readonly class="layui-input" id="regName">
           </div>
         </div>
       </div>
-      <div class="layui-col-md12">
+      <div class="layui-col-md6">
         <div class="layui-form-item">
-          <label class="layui-form-label" style="width: 120px">社会实践时间</label>
-          <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+          <label class="layui-form-label" style="width: 180px">社会实践开始时间</label>
+          <div class="layui-input-block" style="margin-left: 180px;">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="startTime">
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-md6">
+        <div class="layui-form-item">
+          <label class="layui-form-label" style="width: 180px">社会实践结束时间</label>
+          <div class="layui-input-block" style="margin-left: 180px;">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="endTime">
           </div>
         </div>
       </div>
@@ -80,7 +88,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">社会实践形式</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="form" placeholder="请输入数字">
           </div>
         </div>
       </div>
@@ -88,7 +96,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">指导老师</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="adId" placeholder="请输入数字">
           </div>
         </div>
       </div>
@@ -96,7 +104,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">社会实践项目</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="project">
           </div>
         </div>
       </div>
@@ -104,7 +112,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">社会实践单位（或对象）</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="praUnit">
           </div>
         </div>
       </div>
@@ -112,7 +120,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">社会实践地址</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="registerLocation">
           </div>
         </div>
       </div>
@@ -120,7 +128,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">社会实践单位属性</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="unitAttribute">
           </div>
         </div>
       </div>
@@ -128,7 +136,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">单位负责人</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="head">
           </div>
         </div>
       </div>
@@ -136,7 +144,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">对象调查联系方式</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="headPhone">
           </div>
         </div>
       </div>
@@ -144,7 +152,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">电子邮箱</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="headEmail">
           </div>
         </div>
       </div>
@@ -152,7 +160,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">主要产品（或事项）</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="item">
           </div>
         </div>
       </div>
@@ -160,7 +168,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">产值或现状</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="registerStatus">
           </div>
         </div>
       </div>
@@ -168,7 +176,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">人员需求（或专业方向）</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="unitMajor">
           </div>
         </div>
       </div>
@@ -176,7 +184,7 @@
         <div class="layui-form-item layui-form-text">
           <label class="layui-form-label">实践单位或调查对象简介：</label>
           <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入内容" class="layui-textarea" id="objIntro"></textarea>
           </div>
         </div>
       </div>
@@ -184,37 +192,25 @@
         <div class="layui-form-item layui-form-text">
           <label class="layui-form-label">实践单位或调查对象评价：</label>
           <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            <textarea placeholder="请输入内容" class="layui-textarea" id="praIntro"></textarea>
           </div>
         </div>
       </div>
     </div>
-    <div class="layui-bg-gray" style="padding: 16px;">
-      <div class="layui-row layui-col-space15">
-        <div class="layui-col-md12">
-          <div class="layui-card">
-            <div class="layui-card-body">
-              <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">评阅意见：</label>
-                <div class="layui-input-block">
-                  <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="layui-form-item" style="text-align: center">
       <div class="layui-row">
-        <div class="layui-col-md4">
-          <button style="margin-left: 300px" class="layui-btn" lay-submit lay-filter="demo2">提交</button>
+        <div class="layui-col-md3">
+          <label class="layui-form-label">提交时间</label>
+          <div class="layui-input-block">
+            <input type="text" class="layui-input" name="regMark" id="ID-laydate-shortcut-date" id="regMark">
+          </div>
         </div>
         <div class="layui-col-md4">
-          <button class="layui-btn layui-btn-warm" lay-submit lay-filter="demo2">打回</button>
+          <button style="margin-left: 300px" class="layui-btn" lay-submit lay-filter="demo2">通过</button>
         </div>
         <div class="layui-col-md4">
-          <button type="reset" style="margin-left: -300px" class="layui-btn layui-btn-primary">重置</button>
+          <button class="layui-btn layui-btn-warm" lay-submit lay-filter="demo3">打回</button>
         </div>
       </div>
     </div>
@@ -229,26 +225,236 @@
 <script src="../static/element-ui/package/lib/index.js"></script>
 <link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
 <link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+<script>
+  //数据回显
+function getUrlSearch(name) {
+        // 未传参，返回空
+        if (!name) return null;
+        // 查询参数：先通过search取值，如果取不到就通过hash来取
+        let after = window.location.search;
+        after = after.substr(1) || window.location.hash.split('?')[1];
+        // 地址栏URL没有查询参数，返回空
+        if (!after) return null;
+        // 如果查询参数中没有"name"，返回空
+        if (after.indexOf(name) === -1) return null;
 
+        let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+        // 当地址栏参数存在中文时，需要解码，不然会乱码
+        let r = decodeURI(after).match(reg);
+        // 如果url中"name"没有值，返回空
+        if (!r) return null;
+
+        return r[2];
+    }
+let noticeReceiver = getUrlSearch("userId")
+// 使用XMLHttpRequest对象发送Ajax请求
+// 登记表获取
+       let xhr2 = new XMLHttpRequest();
+       xhr2.open('GET', '/regs/userId/' + noticeReceiver, true);
+       xhr2.onreadystatechange = function() {
+       if (xhr2.readyState === 4 && xhr2.status === 200) {
+           let data = JSON.parse(xhr2.responseText);
+           console.log(data);
+           let data2 = {};
+           // 单位表获取
+           let xhr1 = new XMLHttpRequest();
+           xhr1.open('GET', '/practice/userId/' + noticeReceiver, true);
+           xhr1.onreadystatechange = function() {
+           if (xhr1.readyState === 4 && xhr1.status === 200) {
+                data2 = JSON.parse(xhr1.responseText);
+                console.log(data2)
+           // 社会实践登记表数据
+                document.getElementById("userType").value = data.data[0].userType;
+                document.getElementById("regName").value = data.data[0].regName;
+                document.getElementById("politics").value = data.data[0].politics;
+                document.getElementById("regName").value = data.data[0].regName;
+                var date = new Date(data.data[0].startTime); // 使用毫秒时间创建Date对象
+                var year = date.getFullYear(); // 年份
+                var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
+                var day = date.getDate(); // 日期
+                // 格式化输出时间
+                var formattedTime = year + "-" + padZero(month) + "-" + padZero(day)
+                console.log(formattedTime); // 输出格式化后的时间字符串
+                // 在分钟、小时和秒钟不满两位数时，在其前面补零
+                function padZero(number) {
+                    return number < 10 ? "0" + number : number;
+                }
+                document.getElementById("startTime").value = formattedTime;
+                var date = new Date(data.data[0].endTime); // 使用毫秒时间创建Date对象
+                var year = date.getFullYear(); // 年份
+                var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
+                var day = date.getDate(); // 日期
+                // 格式化输出时间
+                var formattedTime = year + "-" + padZero(month) + "-" + padZero(day)
+                console.log(formattedTime); // 输出格式化后的时间字符串
+                // 在分钟、小时和秒钟不满两位数时，在其前面补零
+                function padZero(number) {
+                    return number < 10 ? "0" + number : number;
+                }
+                document.getElementById("endTime").value = formattedTime;
+                document.getElementById("form").value = data.data[0].form;
+                document.getElementById("adId").value = data.data[0].adId;
+                var date = new Date(data.data[0].regMark); // 使用毫秒时间创建Date对象
+                var year = date.getFullYear(); // 年份
+                var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
+                var day = date.getDate(); // 日期
+                // 格式化输出时间
+                var formattedTime = year + "-" + padZero(month) + "-" + padZero(day)
+                console.log(formattedTime); // 输出格式化后的时间字符串
+                // 在分钟、小时和秒钟不满两位数时，在其前面补零
+                function padZero(number) {
+                    return number < 10 ? "0" + number : number;
+                }
+                document.getElementById("regMark").value = formattedTime
+                // 社会实践单位表数据
+                document.getElementById("project").value = data2.data[0].project;
+                document.getElementById("praUnit").value = data2.data[0].praUnit;
+                document.getElementById("registerLocation").value = data2.data[0].registerLocation;
+                document.getElementById("unitAttribute").value = data2.data[0].unitAttribute;
+                document.getElementById("head").value = data2.data[0].head;
+                document.getElementById("headPhone").value = data2.data[0].headPhone;
+                document.getElementById("headEmail").value = data2.data[0].headEmail;
+                document.getElementById("item").value = data2.data[0].item;
+                document.getElementById("registerStatus").value = data2.data[0].registerStatus;
+                document.getElementById("unitMajor").value = data2.data[0].unitMajor;
+                document.getElementById("praIntro").value =  data2.data[0].praIntro;
+           }
+       }
+       xhr1.send()
+     }
+   };
+   xhr2.send()
+</script>
+<script>
+  // 通过按钮数据提交
+layui.use(['jquery', 'form'], function () {
+    var form = layui.form;
+    var layer = layui.layer;
+    // 提交事件
+    layui.$('#demo2').on('click', function () {
+        alert("确认按钮")
+        let data = {"register":{}, "practice": {}};
+                // 社会实践登记表数据
+                data["register"].userType = document.getElementById("userType").value;
+                data["register"].regClass = document.getElementById("regClass").value;
+                data["register"].politics = document.getElementById("politics").value;
+                data["register"].regName = document.getElementById("regName").value;
+                data["register"].startTime = document.getElementById("startTime").value;
+                data["register"].endTime = document.getElementById("endTime").value;
+                data["register"].form = Number(document.getElementById("form").value);
+                data["register"].adId = Number(document.getElementById("adId").value);
+                data["register"].regMark = document.getElementById("regMark").value;
+                data["register"].userId = getUrlSearch("userId")
+                data["register"].regState = 1;
+                // 社会实践单位表数据
+                data["practice"].project = document.getElementById("project").value;
+                data["practice"].praUnit = document.getElementById("praUnit").value;
+                data["practice"].registerLocation = document.getElementById("registerLocation").value;
+                data["practice"].unitAttribute = document.getElementById("unitAttribute").value;
+                data["practice"].head = document.getElementById("head").value;
+                data["practice"].headPhone = document.getElementById("headPhone").value;
+                data["practice"].headEmail = document.getElementById("headEmail").value;
+                data["practice"].item = document.getElementById("item").value;
+                data["practice"].registerStatus = document.getElementById("registerStatus").value;
+                data["practice"].unitMajor = document.getElementById("unitMajor").value;
+                data["practice"].objIntro = document.getElementById("objIntro").value;
+                data["practice"].praIntro = document.getElementById("praIntro").value;
+                data["register"].userId = getUrlSearch("userId")
+                console.log(data);
+                alert("数据添加完成")
+                axios({
+                    method: 'post',
+                    url: '/regs/insert',
+                    data: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }).then(function(response) {
+                    history.go(-1);
+                    location.reload();
+                })
+    });
+});
+</script>
+<script>
+  // 打回按钮数据提交
+layui.use(['jquery', 'form'], function () {
+    var form = layui.form;
+    var layer = layui.layer;
+    // 提交事件
+    layui.$('#demo3').on('click', function () {
+        alert("确认按钮")
+        let data = {"register":{}, "practice": {}};
+                // 社会实践登记表数据
+                data["register"].userType = document.getElementById("userType").value;
+                data["register"].regClass = document.getElementById("regClass").value;
+                data["register"].politics = document.getElementById("politics").value;
+                data["register"].regName = document.getElementById("regName").value;
+                data["register"].startTime = document.getElementById("startTime").value;
+                data["register"].endTime = document.getElementById("endTime").value;
+                data["register"].form = Number(document.getElementById("form").value);
+                data["register"].adId = Number(document.getElementById("adId").value);
+                data["register"].regMark = document.getElementById("regMark").value;
+                data["register"].regState = 2;
+                // 社会实践单位表数据
+                data["practice"].project = document.getElementById("project").value;
+                data["practice"].praUnit = document.getElementById("praUnit").value;
+                data["practice"].registerLocation = document.getElementById("registerLocation").value;
+                data["practice"].unitAttribute = document.getElementById("unitAttribute").value;
+                data["practice"].head = document.getElementById("head").value;
+                data["practice"].headPhone = document.getElementById("headPhone").value;
+                data["practice"].headEmail = document.getElementById("headEmail").value;
+                data["practice"].item = document.getElementById("item").value;
+                data["practice"].registerStatus = document.getElementById("registerStatus").value;
+                data["practice"].unitMajor = document.getElementById("unitMajor").value;
+                data["practice"].objIntro = document.getElementById("objIntro").value;
+                data["practice"].praIntro = document.getElementById("praIntro").value;
+                console.log(data);
+                alert("数据添加完成")
+                axios({
+                    method: 'post',
+                    url: '/regs/insert',
+                    data: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }).then(function(response) {
+                    console.log(response.data);
+                    alert('成功连接到接口insert');
+                    // 解析后端返回的数据
+                    try {
+                        var jsonData = JSON.parse(response.data);
+                        console.log(jsonData);
+                    } catch (error) {
+                        console.error('解析后端返回的数据失败:', error);
+                        alert('解析后端返回的数据失败');
+                        return; // 添加此行代码，防止继续执行下面的catch函数
+                    }
+                }).catch(function(error) {
+                    console.error(error);
+                    alert('链接失败' + error);
+                });
+    });
+});
+</script>
 <script>
     let userName = new Vue({
         el: "#headername",
         data(){
             return{
                 user:{
-                    user_name:'测试',
+                    adName:'测试',
                 },
             }
         },
         mounted(){
             //当页面加载完成后来发送异步请求获取数据
-            var _this = this;
+            let _this = this;
             axios({
                 method:"get",
-                url:"user/usersession",
+                url:"/users/session/2",
             }).then(function (resp){
-                _this.user = resp.data;
-                console.log(user)
+                _this.user = resp.data.data;
             })
         },
     })

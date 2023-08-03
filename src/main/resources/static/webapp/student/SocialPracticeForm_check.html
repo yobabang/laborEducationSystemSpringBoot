@@ -25,7 +25,7 @@
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="../static/img/head.png" class="layui-nav-img">
-          {{user.userName}}
+          {{user.regName}}
         </a>
 
       </li>
@@ -41,15 +41,15 @@
         <div class="layui-form-item">
           <label class="layui-form-label">本科类型</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="type">
+            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="userType">
           </div>
         </div>
       </div>
       <div class="layui-col-md3">
         <div class="layui-form-item">
-          <label class="layui-form-label">专业</label>
+          <label class="layui-form-label">班级</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="major">
+            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="regClass">
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 180px">社会实践开始时间</label>
           <div class="layui-input-block" style="margin-left: 180px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="startTime">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="startTime">
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 180px">社会实践结束时间</label>
           <div class="layui-input-block" style="margin-left: 180px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="endTime">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="endTime">
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">社会实践形式</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="form">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="form" placeholder="请输入数字">
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">指导老师</label>
           <div class="layui-input-block">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="adId">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="adId" placeholder="请输入数字">
           </div>
         </div>
       </div>
@@ -105,7 +105,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">社会实践项目</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="project">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="project">
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">社会实践单位（或对象）</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="praUnit">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="praUnit">
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">社会实践地址</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="registerLocation">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="registerLocation">
           </div>
         </div>
       </div>
@@ -129,7 +129,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">社会实践单位属性</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="unitAttribute">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="unitAttribute">
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">单位负责人</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="head">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="head">
           </div>
         </div>
       </div>
@@ -145,7 +145,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">对象调查联系方式</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="headPhone">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="headPhone">
           </div>
         </div>
       </div>
@@ -153,7 +153,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">电子邮箱</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="headEmail">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="headEmail">
           </div>
         </div>
       </div>
@@ -161,7 +161,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">主要产品（或事项）</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="item">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="item">
           </div>
         </div>
       </div>
@@ -169,7 +169,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 120px">产值或现状</label>
           <div class="layui-input-block" style="margin-left: 120px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="registerStatus">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="registerStatus">
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label" style="width: 200px">人员需求（或专业方向）</label>
           <div class="layui-input-block" style="margin-left: 200px;">
-            <input type="text" name="undergraduateType" autocomplete="off" readonly class="layui-input" id="unitMajor">
+            <input type="text" name="undergraduateType" autocomplete="off" class="layui-input" id="unitMajor">
           </div>
         </div>
       </div>
@@ -185,7 +185,7 @@
         <div class="layui-form-item layui-form-text">
           <label class="layui-form-label">实践单位或调查对象简介：</label>
           <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" readonly id="objIntro"></textarea>
+            <textarea placeholder="请输入内容" class="layui-textarea" id="objIntro"></textarea>
           </div>
         </div>
       </div>
@@ -193,8 +193,14 @@
         <div class="layui-form-item layui-form-text">
           <label class="layui-form-label">实践单位或调查对象评价：</label>
           <div class="layui-input-block">
-            <textarea placeholder="请输入内容" readonly class="layui-textarea" id="praIntro"></textarea>
+            <textarea placeholder="请输入内容" class="layui-textarea" id="praIntro"></textarea>
           </div>
+        </div>
+      </div>
+      <div class="layui-col-md3">
+        <label class="layui-form-label">提交时间</label>
+        <div class="layui-input-block">
+          <input type="text" class="layui-input" name="regMark" id="ID-laydate-shortcut-date">
         </div>
       </div>
     </div>
@@ -232,72 +238,70 @@ function getUrlSearch(name) {
         return r[2];
     }
 // 使用XMLHttpRequest对象发送Ajax请求
-   var data2 = {};
-   let xhr1 = new XMLHttpRequest();
-   xhr1.open('GET', '/users/session/1', true);
-   xhr1.onreadystatechange = function() {
-     if (xhr1.readyState === 4 && xhr1.status === 200) {
-       data2 = JSON.parse(xhr1.responseText);
-       let noticeReceiver  = data2.data.userId;
-       console.log('user-id为' + noticeReceiver)
+   var data3 = {};
+   let xhr = new XMLHttpRequest();
+   xhr.open('GET', '/users/session/1', true);
+   xhr.onreadystatechange = function() {
+     if (xhr.readyState === 4 && xhr.status === 200) {
+       data3 = JSON.parse(xhr.responseText);
+       let noticeReceiver  = data3.data.userId;
+// 使用XMLHttpRequest对象发送Ajax请求
+// 登记表获取
        let xhr2 = new XMLHttpRequest();
-       let logType = getUrlSearch("listType")
-       let num;
-       if (logType === "日常生活劳动日志") {
-          num = 1;
-       } else if(logType === "服务性劳动日志"){
-          num = 2;
-       }else if(logType === "生产劳动日志"){
-          num = 3;
-       }else if(logType === "社会实践活动登记表"){
-          num = 4;
-       }else if(logType === "社会实践活动日志"){
-          num = 5;
-       }else if(logType === "社会实践调查报告"){
-          num = 6;
-       }
        xhr2.open('GET', '/regs/userId/' + noticeReceiver, true);
        xhr2.onreadystatechange = function() {
        if (xhr2.readyState === 4 && xhr2.status === 200) {
            let data = JSON.parse(xhr2.responseText);
-           console.log(data2)
+           console.log(data);
+           let data2 = {};
+           // 单位表获取
+           let xhr1 = new XMLHttpRequest();
+           xhr1.open('GET', '/practice/userId/' + noticeReceiver, true);
+           xhr1.onreadystatechange = function() {
+           if (xhr1.readyState === 4 && xhr1.status === 200) {
+                data2 = JSON.parse(xhr1.responseText);
+                console.log(data2)
            // 社会实践登记表数据
-                document.getElementById("type").value = data.data["register"].type;
-                document.getElementById("className").value = data.data["register"].className;
-                document.getElementById("politics").value = data.data["register"].politics;
-                document.getElementById("userName").value = data.data["register"].userName;
-                document.getElementById("userId").value = data.data["register"].userId;
-                document.getElementById("startTime").value = data.data["register"].startTime;
-                document.getElementById("endTime").value = data.data["register"].endTime;
-                document.getElementById("form").value = data.data["register"].form;
-                document.getElementById("adId").value = data.data["register"].adId;
-                document.getElementById("regMark").value; = data.data["register"].regMark
+                document.getElementById("userType").value = data.data.userType;
+                document.getElementById("regClass").value = data.data.regClass;
+                document.getElementById("politics").value = data.data.politics;
+                document.getElementById("regName").value = data.data.regName;
+                document.getElementById("userId").value = data.data.userId;
+                document.getElementById("startTime").value = data.data.startTime;
+                document.getElementById("endTime").value = data.data.endTime;
+                document.getElementById("form").value = data.data.form;
+                document.getElementById("adId").value = data.data.adId;
+                document.getElementById("regMark").value; = data.data.regMark
                 // 社会实践单位表数据
-                document.getElementById("project").value = data.data["practice"].project;
-                document.getElementById("praUnit").value = data.data["practice"].praUnit;
-                document.getElementById("registerLocation").value = data.data["practice"].registerLocation;
-                document.getElementById("unitAttribute").value = data.data["practice"].unitAttribute;
-                document.getElementById("head").value = data.data["practice"].head;
-                document.getElementById("headPhone").value = data.data["practice"].headPhone;
-                document.getElementById("headEmail").value = data.data["practice"].headEmail;
-                document.getElementById("item").value = data.data["practice"].item;
-                document.getElementById("registerStatus").value = data.data["practice"].registerStatus;
-                document.getElementById("unitMajor").value = data.data["practice"].unitMajor;
-                document.getElementById("praIntro").value =  data.data["practice"].praIntro;
+                document.getElementById("project").value = data2.data.project;
+                document.getElementById("praUnit").value = data2.data.praUnit;
+                document.getElementById("registerLocation").value = data2.data.registerLocation;
+                document.getElementById("unitAttribute").value = data2.data.unitAttribute;
+                document.getElementById("head").value = data2.data.head;
+                document.getElementById("headPhone").value = data2.data.headPhone;
+                document.getElementById("headEmail").value = data2.data.headEmail;
+                document.getElementById("item").value = data2.data.item;
+                document.getElementById("registerStatus").value = data2.data.registerStatus;
+                document.getElementById("unitMajor").value = data2.data.unitMajor;
+                document.getElementById("praIntro").value =  data2.data.praIntro;
+           }
+       }
+       xhr1.send()
      }
    };
    xhr2.send()
      }
    };
-   xhr1.send();
+   xhr.send();
+
 </script>
 <script>
-    let userName = new Vue({
+    let regName = new Vue({
         el: "#headername",
         data(){
             return{
                 user:{
-                    userName:'测试',
+                    regName:'测试',
                 },
             }
         },

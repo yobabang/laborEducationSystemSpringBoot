@@ -20,7 +20,7 @@
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header" id="headername">
         <ul class="layui-nav ">
-            <li class="layui-nav-item "><a href="">首页</a></li>
+            <li class="layui-nav-item "><a href="index.html">首页</a></li>
             <li class="layui-nav-item layui-this"><a href="">批阅列表</a></li>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
@@ -112,7 +112,7 @@
                                 label="操作"
                                 min-width="15%">
                             <template slot-scope="scope">
-                                <el-button v-if="scope.row.logState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                                <el-button v-if="scope.row.logState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -133,7 +133,7 @@
                             </el-dropdown-menu>
                         </el-dropdown>
                         <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
-                            <span>打回修改</span>
+                            <span>批量打回</span>
                         </button>
                     </div>
                     <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
@@ -241,7 +241,7 @@
                                 label="操作"
                                 min-width="15%">
                             <template slot-scope="scope">
-                                <el-button v-if="scope.row.logState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                                <el-button v-if="scope.row.logState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -300,7 +300,7 @@
                                 label="操作"
                                 min-width="15%">
                             <template slot-scope="scope">
-                                <el-button v-if="scope.row.logState !== 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                                <el-button v-if="scope.row.logState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -466,6 +466,7 @@ function getUrlSearch(name) {
                      let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
                      console.log(randomNum)
                      item.logScore = randomNum; // 修改选中的行数据
+                     item.logState = 1; // 修改选中的行数据
                   }
                   console.log(selectedItems)
                   axios({
@@ -494,6 +495,7 @@ function getUrlSearch(name) {
                   let selectedItems = this.multipleSelection; // 获取选中的行数据
                   for (let item of selectedItems) {
                      item.logScore = num; // 修改选中的行数据
+                     item.logState = 1; // 修改选中的行数据
                   }
                   axios({
                     method:"put",
