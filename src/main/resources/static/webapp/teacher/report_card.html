@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>吉利学院劳动教育平台</title>
+  <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../static/css/task.css">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header" id="headername">
+    <ul class="layui-nav ">
+      <li class="layui-nav-item "><a href="index.html">首页</a></li>
+      <li class="layui-nav-item layui-this"><a href="report_card.html">成绩单</a></li>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="../static/img/head.png" class="layui-nav-img">
+            {{user.userName}}
+          </a>
+
+        </li>
+        <li class="layui-nav-item"><a href="../../login.html">退出</a></li>
+      </ul>
+    </ul>
+  </div>
+
+</div>
+
+<div class="con" style="margin-top: 70px;margin-left: 15%;margin-right: 15%" >
+  <template>
+    <el-table
+            :data="tableData"
+            style="width: 100%"
+            max-height="100%">
+      <el-table-column
+              prop="serial"
+              label="序号"
+              min-width="7.5%">
+      </el-table-column>
+      <el-table-column
+              prop="userId"
+              label="学号"
+              min-width="10%">
+      </el-table-column>
+      <el-table-column
+              prop="userName"
+              label="姓名"
+              min-width="7.5%">
+      </el-table-column>
+      <el-table-column
+              prop="sex"
+              label="性别"
+              min-width="7.5%">
+      </el-table-column>
+      <el-table-column
+              prop="grade"
+              label="年级"
+              min-width="7.5%">
+      </el-table-column>
+
+      <el-table-column
+              prop="major"
+              label="专业"
+              min-width="10%">
+      </el-table-column>
+      <el-table-column
+              prop="class_id"
+              label="班级"
+              min-width="10%">
+      </el-table-column>
+
+      <el-table-column
+              prop="daily_life_log"
+              label="日常生活劳动"
+              min-width="10%">
+      </el-table-column>
+      <el-table-column
+              prop="service_log"
+              label="服务性劳动"
+              min-width="10%">
+      </el-table-column>
+      <el-table-column
+              prop="production_log"
+              label="生产型劳动"
+              min-width="10%">
+      </el-table-column>
+      <el-table-column
+              prop="total_points"
+              label="总成绩"
+              min-width="10%">
+      </el-table-column>
+    </el-table>
+  </template>
+</div>
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="../static/layui/layui.js" charset="utf-8"></script>
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/vue.js"></script>
+<script src="../static/element-ui/package/lib/index.js"></script>
+<link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
+<link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+
+<script>
+  let tableVue = new Vue({
+    el: ".con",
+    methods: {
+      onSubmit(){
+        this.selectAll();
+      },
+
+      filterSex(value, row) {
+        return row.stuSex === value;
+      },
+    },
+    data() {
+      return {
+        sexTable: [
+          {label: '男', cssName: 'success'},
+          {label: '女', cssName: 'primary'},
+        ],
+        tableData: [{},],
+        tableSearch:{
+          stuCode: '',
+          stuName: ''
+        },
+      }
+    },
+    mounted(){
+      //当页面加载完成后来发送异步请求获取数据
+      let _this = this;
+      $.ajax({
+        url: '/users/session/2',
+        type: 'GET', // 请求类型（GET/POST等）
+        dataType: 'json', // 期望的响应数据类型
+        success: function(response) {
+          // 请求成功时的回调函数
+          // 处理响应数据
+          console.log(response);
+          let adId = response.data.adId;
+          axios({
+            method:"get",
+            url:"/users/adId/" + adId,
+          }).then(function (resp){
+            _this.tableData = resp.data.data;
+            console.log(_this.tableData)
+          })
+        }
+      });
+    },
+  })
+</script>
+
+
+<script>
+  let userName = new Vue({
+    el: "#headername",
+    data(){
+      return{
+        user:{
+          userName:'玉米排骨汤',
+        },
+      }
+    },
+    mounted(){
+      //当页面加载完成后来发送异步请求获取数据
+      var _this = this;
+      axios({
+        method:"get",
+        url:"/users/session/1",
+      }).then(function (resp){
+        _this.user = resp.data.data;
+      })
+    },
+  })
+</script>
+
+</body>
+</html>
