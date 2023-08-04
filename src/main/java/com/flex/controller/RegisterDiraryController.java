@@ -118,6 +118,12 @@ public class RegisterDiraryController {
         updateWrapper.eq(RegisterDirary::getUserId,userId)
                 .set(RegisterDirary::getRdState,rdState);
         registerDiraryDao.update(null,updateWrapper);
+
+        LambdaUpdateWrapper<ListPlan> updateWrapper2 = new LambdaUpdateWrapper<>();
+        updateWrapper2.eq(ListPlan::getUserId,userId)
+                .eq(ListPlan::getListType,5)
+                .set(ListPlan::getListState,rdState);
+        listPlanDao.update(null,updateWrapper2);
     }
 
 }
