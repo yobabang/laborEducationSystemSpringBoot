@@ -110,4 +110,14 @@ public class RegisterDiraryController {
         }
         return new Result(code,msg);
     }
+
+    @ApiOperation(value = "修改社会实践活动日志状态", notes = "根据用户id修改社会实践活动日志状态")
+    @PatchMapping("/{userId}/{rdState}")
+    public void updateStateByUserId(@PathVariable Long userId,@PathVariable int rdState){
+        LambdaUpdateWrapper<RegisterDirary> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(RegisterDirary::getUserId,userId)
+                .set(RegisterDirary::getRdState,rdState);
+        registerDiraryDao.update(null,updateWrapper);
+    }
+
 }
