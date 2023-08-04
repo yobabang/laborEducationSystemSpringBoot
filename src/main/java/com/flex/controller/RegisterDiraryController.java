@@ -103,10 +103,10 @@ public class RegisterDiraryController {
         int insert = registerDiraryDao.updateById(registerDirary);
         if (insert == 1 ){
             code = Code.SAVE_OK;
-            msg = "添加成功";
+            msg = "更新成功";
         }else{
             code = Code.SAVE_ERR;
-            msg = "添加失败";
+            msg = "更新失败";
         }
         return new Result(code,msg);
     }
