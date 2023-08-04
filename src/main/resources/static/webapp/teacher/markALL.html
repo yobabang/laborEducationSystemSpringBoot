@@ -19,12 +19,12 @@
   <div class="layui-header" id="headername">
     <ul class="layui-nav ">
       <li class="layui-nav-item "><a href="index.html">首页</a></li>
-      <li class="layui-nav-item layui-this"><a href="report_card.html">成绩单</a></li>
+      <li class="layui-nav-item layui-this"><a href="markALL.html">成绩单</a></li>
       <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
           <a href="javascript:;">
             <img src="../static/img/head.png" class="layui-nav-img">
-            {{user.userName}}
+            {{user.adName}}
           </a>
 
         </li>
@@ -37,6 +37,7 @@
 
 <div class="con" style="margin-top: 70px;margin-left: 15%;margin-right: 15%" >
   <template>
+    <h2>{{ className }} 总成绩单</h2>
     <el-table
             :data="tableData"
             style="width: 100%"
@@ -112,6 +113,26 @@
 <link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
 
 <script>
+function getUrlSearch(name) {
+            // 未传参，返回空
+            if (!name) return null;
+            // 查询参数：先通过search取值，如果取不到就通过hash来取
+            let after = window.location.search;
+            after = after.substr(1) || window.location.hash.split('?')[1];
+            // 地址栏URL没有查询参数，返回空
+            if (!after) return null;
+            // 如果查询参数中没有"name"，返回空
+            if (after.indexOf(name) === -1) return null;
+
+            let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+            // 当地址栏参数存在中文时，需要解码，不然会乱码
+            let r = decodeURI(after).match(reg);
+            // 如果url中"name"没有值，返回空
+            if (!r) return null;
+
+            return r[2];
+        }
+  let className = getUrlSearch("className")
   let tableVue = new Vue({
     el: ".con",
     methods: {
@@ -125,15 +146,8 @@
     },
     data() {
       return {
-        sexTable: [
-          {label: '男', cssName: 'success'},
-          {label: '女', cssName: 'primary'},
-        ],
+        className: className,
         tableData: [{},],
-        tableSearch:{
-          stuCode: '',
-          stuName: ''
-        },
       }
     },
     mounted(){
@@ -168,7 +182,7 @@
     data(){
       return{
         user:{
-          userName:'玉米排骨汤',
+          adName:'玉米排骨汤',
         },
       }
     },
@@ -177,7 +191,7 @@
       var _this = this;
       axios({
         method:"get",
-        url:"/users/session/1",
+        url:"/users/session/2",
       }).then(function (resp){
         _this.user = resp.data.data;
       })
