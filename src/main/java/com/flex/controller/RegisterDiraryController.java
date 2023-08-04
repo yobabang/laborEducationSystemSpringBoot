@@ -83,4 +83,19 @@ public class RegisterDiraryController {
         }
     }
 
+    @ApiOperation(value = "更新社会实践活动日志", notes = "根据社实践活动日志ID更新社会实践活动日志")
+    @PatchMapping
+    public Result updateByRdId(@RequestBody RegisterDirary registerDirary){
+        Integer code;
+        String msg;
+        int insert = registerDiraryDao.updateById(registerDirary);
+        if (insert == 1 ){
+            code = Code.SAVE_OK;
+            msg = "添加成功";
+        }else{
+            code = Code.SAVE_ERR;
+            msg = "添加失败";
+        }
+        return new Result(code,msg);
+    }
 }
