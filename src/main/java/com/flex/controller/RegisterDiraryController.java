@@ -1,7 +1,10 @@
 package com.flex.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.flex.dao.ListPlanDao;
 import com.flex.dao.RegisterDiraryDao;
+import com.flex.domain.ListPlan;
 import com.flex.domain.RegisterDirary;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,6 +22,9 @@ import java.util.Map;
 public class RegisterDiraryController {
     @Autowired
     private RegisterDiraryDao registerDiraryDao;
+
+    @Autowired
+    private ListPlanDao listPlanDao;
 
 
     @ApiOperation(value = "添加社会活动日志", notes = "添加社会活动日志")
@@ -45,6 +51,12 @@ public class RegisterDiraryController {
             code = Code.SAVE_ERR;
             msg = "添加失败";
         }
+        //同步首页任务状态
+        LambdaUpdateWrapper<ListPlan> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(ListPlan::getUserId,registerDirary.getUserId())
+                .eq(ListPlan::getListType,5)
+                .set(ListPlan::getListState,registerDirary.getRdState());
+        listPlanDao.update(null,updateWrapper);
         return new Result(code,msg);
     }
 
