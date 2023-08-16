@@ -2,6 +2,7 @@ package com.flex.service.impl;
 
 import com.flex.dao.LogDao;
 import com.flex.domain.Log;
+import com.flex.pojo.dto.StudentLogScoreDto;
 import com.flex.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,10 @@ public class LogServiceImpl implements LogService {
     @Override
     public List<Log> getLogByClassType(String className, Integer logType) {
         return logDao.getLogByClassType(className,logType);
+    }
+
+    @Override
+    public List<StudentLogScoreDto> getStuScoreByClass(String className) {
+        return logDao.getStuScoreByClass(className);
     }
 }

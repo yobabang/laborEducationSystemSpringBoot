@@ -6,13 +6,17 @@ import com.flex.dao.ListPlanDao;
 import com.flex.dao.RegisterDiraryDao;
 import com.flex.domain.ListPlan;
 import com.flex.domain.RegisterDirary;
+import com.flex.pojo.dto.UserRdDto;
+import com.flex.pojo.po.UserPo;
 import com.flex.service.RegisterDiaryService;
+import com.flex.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +30,9 @@ public class RegisterDiraryController {
 
     @Autowired
     private ListPlanDao listPlanDao;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private RegisterDiaryService registerDiaryService;
@@ -133,11 +140,37 @@ public class RegisterDiraryController {
     @ApiOperation(value = "查询社会实践活动日志", notes = "根据班级名称查询社会实践活动日志")
     @ApiImplicitParam(name = "className", value = "班级名称", required = true, dataType = "String",paramType = "path")
     @GetMapping("/className/{className}")
-    public Result selectRdByClassName(@PathVariable String className){
+    public Result getRdByClassName(@PathVariable String className){
         List<RegisterDirary> registerDiraries = registerDiaryService.getByClass(className);
         Integer code = registerDiraries != null ? Code.GET_OK : Code.GET_ERR;
         String msg = registerDiraries != null ? "" : "数据查询失败";
         return new Result(code, registerDiraries, msg);
+
+    }
+
+
+    @ApiOperation(value = "查询社会实践活动日志状态和学生信息", notes = "根据班级名称查询社会实践活动日志")
+    @ApiImplicitParam(name = "className", value = "班级名称", required = true, dataType = "String",paramType = "path")
+    @GetMapping("/class/{className}")
+    public Result getUserRdStateBy(@PathVariable String className){
+        List<RegisterDirary> registerDiraries = registerDiaryService.getByClass(className);
+        List<UserRdDto> userRdDtos = new ArrayList<>();
+
+        for (RegisterDirary rd: registerDiraries
+             ) {
+            UserPo userPo = userService.selectByUserID(rd.getUserId());
+            userPo.setClassName(className);
+
+            UserRdDto userRdDto = new UserRdDto();
+            userRdDto.setUserPo(userPo);
+            userRdDto.setRegisterDirary(rd);
+
+            userRdDtos.add(userRdDto);
+        }
+
+        Integer code = userRdDtos != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = userRdDtos != null ? "" : "数据查询失败";
+        return new Result(code, userRdDtos, msg);
 
     }
 }

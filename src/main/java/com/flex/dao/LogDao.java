@@ -2,6 +2,7 @@ package com.flex.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.flex.domain.Log;
+import com.flex.pojo.dto.StudentLogScoreDto;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -23,4 +24,24 @@ public interface LogDao extends BaseMapper<Log>{
 
     @Select("select * from log where log_classes = #{className} and log_type = #{logType}")
     public List<Log> getLogByClassType(String className,Integer logType);
+
+    @Select("SELECT user_name, class_name, user_id, daily_score, service_score, production_score,\n" +
+            "    (daily_weighted_score + service_weighted_score + production_weighted_score) AS total_weighted_score\n" +
+            "FROM (\n" +
+            "    SELECT u.user_name, c.class_name, u.user_id,\n" +
+            "        l1.log_score AS daily_score,\n" +
+            "        l2.log_score AS service_score,\n" +
+            "        l3.log_score AS production_score,\n" +
+            "        ROUND(l1.log_score * w.daily_weight) AS daily_weighted_score,\n" +
+            "        ROUND(l2.log_score * w.service_weight) AS service_weighted_score,\n" +
+            "        ROUND(l3.log_score * w.production_weight) AS production_weighted_score\n" +
+            "    FROM user u\n" +
+            "    INNER JOIN classes c ON u.class_id = c.class_id\n" +
+            "    LEFT JOIN log l1 ON u.user_id = l1.user_id AND l1.log_type = 1\n" +
+            "    LEFT JOIN log l2 ON u.user_id = l2.user_id AND l2.log_type = 2\n" +
+            "    LEFT JOIN log l3 ON u.user_id = l3.user_id AND l3.log_type = 3\n" +
+            "    INNER JOIN weight w ON u.grade = w.grade\n" +
+            "    WHERE c.class_name = #{className}\n" +
+            ") AS weighted_scores;")
+    public List<StudentLogScoreDto> getStuScoreByClass(String className);
 }

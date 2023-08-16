@@ -7,6 +7,7 @@ import com.flex.dao.LogDao;
 import com.flex.domain.ListPlan;
 import com.flex.domain.Log;
 import com.flex.pojo.dto.LogScoreDto;
+import com.flex.pojo.dto.StudentLogScoreDto;
 import com.flex.service.LogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -179,4 +180,15 @@ public class LogController {
         }
         return new Result(code,msg);
     }
+
+    @ApiOperation(value = "查询学生成绩", notes = "根据学生班级查询总成绩")
+    @ApiImplicitParam(name = "className", value = "学生班级", required = true, dataType = "String",paramType = "path")
+    @GetMapping("/class/{className}")
+    public Result getStuScoreByClass(@PathVariable String className){
+        List<StudentLogScoreDto> stuScores = logService.getStuScoreByClass(className);
+        Integer code = stuScores != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = stuScores != null ? "数据查询成功" : "数据查询失败";
+        return new Result(code, stuScores, msg);
+    }
+
 }
