@@ -1,5 +1,8 @@
 package com.flex.pojo.dto;
 
+import lombok.Data;
+
+@Data
 public class StudentLogScoreDto {
     private String userName;
     private String className;
