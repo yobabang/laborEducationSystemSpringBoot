@@ -20,7 +20,7 @@
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header" id="headername">
     <ul class="layui-nav ">
-      <li class="layui-nav-item "><a href="">首页</a></li>
+      <li class="layui-nav-item "><a href="index.html">首页</a></li>
       <li class="layui-nav-item layui-this"><a href="">批阅列表</a></li>
       <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
@@ -63,25 +63,11 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-            <el-dropdown>
-              <el-button class="el-select-button" >
-                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)" >
-                  {{ option }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
-              <span>打回修改</span>
-            </button>
-            <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
             <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
           </div>
           <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
           <el-table
-                  ref="multipleTable"
+                  ref="multipleTable1"
                   :data="tableData_1"
                   tooltip-effect="dark"
                   style="width: 100%"
@@ -91,42 +77,37 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="regName"
                     label="姓名"
-                    min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+                    min-width="12%">
+              <template slot-scope="scope">{{ scope.row.regName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
                     label="学号"
-                    min-width="20%">
+                    min-width="22%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="regClass"
                     label="班级"
-                    min-width="15%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
-                    prop="logState"
+                    prop="regState"
                     label="提交状态"
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logMark"
+                    prop="regMark"
                     label="提交时间"
-                    min-width="15%">
-            </el-table-column>
-            <el-table-column
-                    prop="logScore"
-                    label="成绩"
-                    min-width="10%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    min-width="15%">
+                    min-width="17%">
               <template slot-scope="scope">
-                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button v-if="scope.row.regState === 2" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -136,21 +117,12 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-            <el-dropdown>
-              <el-button class="el-select-button">
-                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)">
-                  {{ option }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
             <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
-              <span>打回修改</span>
+              <span>批量打回</span>
             </button>
-            <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
-            <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
+            <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="pass()">
+              <span>批量通过</span>
+            </button>
           </div>
           <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
           <el-table
@@ -164,40 +136,35 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="regName"
                     label="姓名"
-                    min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+                    min-width="12%">
+              <template slot-scope="scope">{{ scope.row.regName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
                     label="学号"
-                    min-width="20%">
+                    min-width="22%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="regClass"
                     label="班级"
-                    min-width="15%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
-                    prop="logState"
+                    prop="regState"
                     label="提交状态"
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logMark"
+                    prop="regMark"
                     label="提交时间"
-                    min-width="15%">
-            </el-table-column>
-            <el-table-column
-                    prop="logScore"
-                    label="成绩"
-                    min-width="10%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    min-width="15%">
+                    min-width="17%">
               <template slot-scope="scope">
                 <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
               </template>
@@ -209,21 +176,6 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-            <el-dropdown>
-              <el-button class="el-select-button">
-                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)">
-                  {{ option }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
-              <span>打回修改</span>
-            </button>
-            <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
-            <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
           </div>
           <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
           <el-table
@@ -237,42 +189,37 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="regName"
                     label="姓名"
-                    min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+                    min-width="12%">
+              <template slot-scope="scope">{{ scope.row.regName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
                     label="学号"
-                    min-width="20%">
+                    min-width="22%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="regClass"
                     label="班级"
-                    min-width="15%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
-                    prop="logState"
+                    prop="regState"
                     label="提交状态"
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logMark"
+                    prop="regMark"
                     label="提交时间"
-                    min-width="15%">
-            </el-table-column>
-            <el-table-column
-                    prop="logScore"
-                    label="成绩"
-                    min-width="10%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    min-width="15%">
+                    min-width="17%">
               <template slot-scope="scope">
-                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button v-if="scope.row.regState === 3" @click="check(scope.row)" type="text" size="medium">打回</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -282,21 +229,7 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-            <el-dropdown>
-              <el-button class="el-select-button">
-                <span>批量给分 <i class="el-icon-caret-bottom el-icon--right"></i></span>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="option in options" :key="option" @click.native="selectOption(option)">
-                  {{ option }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <button type="button" class="el-button el-button--primary el-button--medium is-plain" @click="refuse()">
-              <span>打回修改</span>
-            </button>
             <button type="button" class="el-button el-button--primary el-button--medium" @click="notice()"><span>一键催交</span></button>
-            <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>下载表格</span></button>
           </div>
           <div style="width: 100%; height: 1px; background-color: #ccc; margin-top: 15px;"></div>
           <el-table
@@ -310,42 +243,37 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="logName"
+                    prop="regName"
                     label="姓名"
-                    min-width="10%">
-              <template slot-scope="scope">{{ scope.row.logName }}</template>
+                    min-width="12%">
+              <template slot-scope="scope">{{ scope.row.regName }}</template>
             </el-table-column>
             <el-table-column
                     prop="userId"
                     label="学号"
-                    min-width="20%">
+                    min-width="22%">
             </el-table-column>
             <el-table-column
-                    prop="logClasses"
+                    prop="regClass"
                     label="班级"
-                    min-width="15%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
-                    prop="logState"
+                    prop="regState"
                     label="提交状态"
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="logMark"
+                    prop="regMark"
                     label="提交时间"
-                    min-width="15%">
-            </el-table-column>
-            <el-table-column
-                    prop="logScore"
-                    label="成绩"
-                    min-width="10%">
+                    min-width="17%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    min-width="15%">
+                    min-width="17%">
               <template slot-scope="scope">
-                <el-button  @click="check(scope.row)" type="text" size="medium">批阅</el-button>
+                <el-button v-if="scope.row.logState === 3" @click="check(scope.row)" type="text" size="medium">批阅</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -415,10 +343,10 @@ function getUrlSearch(name) {
         state3Count: state3Count
       },
         activeName: 'first',
-        tableData_1: [{},],
-        tableData_2: [{},],
-        tableData_3: [{},],
-        tableData_4: [{},],
+        tableData_1: [],
+        tableData_2: [],
+        tableData_3: [],
+        tableData_4: [],
         multipleSelection: [],
         selectedOption: '',  // 当前选中的选项
         options: ['区间给分', '统一给分']  // 选项列表
@@ -426,16 +354,82 @@ function getUrlSearch(name) {
     },
     methods: {
       check(row){
-
+          let _this = this;
+          let reUrl = 'CheckSocialForm.html?userId='+ row.userId + '&listType=' + _this.detail_data.listType;
+          window.location.href = reUrl;
       },
       notice(){
         alert("催交")
       },
       load(){
-        alert("下载表格")
+        // 获取el-table的实例
+          const tableInstance = this.$refs.multipleTable1;
+
+          // 获取el-table中显示的数据
+          const visibleData = tableInstance.store.states.data;
+
+          // 创建表格内容
+          let tableContent = "<table>";
+
+          // 添加表头
+          const headers = ['regName', 'userId', 'regClass', 'regState', 'regMark'];
+          tableContent += "<tr>" + headers.map(header => `<th>${header}</th>`).join("") + "</tr>";
+
+          // 添加表格数据
+          for (const row of visibleData) {
+            tableContent += "<tr>" + headers.map(header => `<td>${row[header]}</td>`).join("") + "</tr>";
+          }
+
+          tableContent += "</table>";
+
+          // 创建Blob对象
+          const blob = new Blob([tableContent], { type: "application/vnd.ms-excel" });
+
+          // 创建下载链接
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = this.detail_data.className + getUrlSearch("listType") + "详情表.xls";
+          link.click();
       },
       refuse(){
-        alert("打回")
+        let selectedItems = this.multipleSelection;
+                  console.log(selectedItems)
+                  for (let item of selectedItems) {
+                     item.regState = 2; // 修改选中的行数据
+                  }
+                  console.log(selectedItems)
+                  axios({
+                    method:"post",
+                    url:"/regs/insert",
+                    data: selectedItems,
+                    }).then(response => {
+                        // 处理成功响应
+                        console.log(response.data);
+                      })
+                      .catch(error => {
+                        // 处理错误
+                        console.error(error);
+                      });
+      },
+      pass(){
+        let selectedItems = this.multipleSelection;
+                  console.log(selectedItems)
+                  for (let item of selectedItems) {
+                     item.regState = 1; // 修改选中的行数据
+                  }
+                  console.log(selectedItems)
+                  axios({
+                    method:"post",
+                    url:"/regs/insert",
+                    data: selectedItems,
+                    }).then(response => {
+                        // 处理成功响应
+                        console.log(response.data);
+                      })
+                      .catch(error => {
+                        // 处理错误
+                        console.error(error);
+                      });
       },
       handleClick(tab, event) {
         console.log(tab, event);
@@ -452,49 +446,33 @@ function getUrlSearch(name) {
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
-      selectOption(option) {
-         if (option === '区间给分') {
-              let range = prompt("请输入数字区间，格式为：最小值-最大值");
-              let [min, max] = range.split('-').map(Number);
-              let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-              console.log("生成的随机数字：" + randomNum);
-              if(range){
-                   alert("填写内容并“确定”")
-                }
-                else if(range === ""){
-                     alert("未填写但“确定”")
-                }
-                else{
-                    alert("“取消”事件")
-                }
-            } else if (option === '统一给分') {
-              let num = prompt("请输入一个分数");
-              console.log("输入的分数：" + num);
-              if(num){
-                   alert("填写内容并“确定”")
-                }
-                else if(num === ""){
-                     alert("未填写但“确定”")
-                }
-                else{
-                    alert("“取消”事件")
-                }
-            } else {
-              console.log("无效的选项");
-         }
-      },
     },
     mounted(){
             //当页面加载完成后来发送异步请求获取数据
             let _this = this;
             axios({
                 method:"get",
-                url:"/logs/classType/" + _this.detail_data.className + '/' + _this.detail_data.listType,
+                url:"/regs/classses/" + _this.detail_data.className,
             }).then(function (resp){
-                _this.tableData_1 = resp.data.data
-                _this.tableData_2 = _this.tableData_1.filter(item => item.logState === 3);
-                _this.tableData_3 = _this.tableData_1.filter(item => item.logState === 1);
-                _this.tableData_4 = _this.tableData_1.filter(item => item.logState === 0);
+                let num = resp.data.data.length
+                    for(let i = 0; i < num; i++){
+                        var date = new Date(resp.data.data[i].regMark); // 使用毫秒时间创建Date对象
+                        var year = date.getFullYear(); // 年份
+                        var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
+                        var day = date.getDate(); // 日期
+                        // 格式化输出时间
+                        var formattedTime = year + "-" + padZero(month) + "-" + padZero(day)
+                        console.log(formattedTime); // 输出格式化后的时间字符串
+                        // 在分钟、小时和秒钟不满两位数时，在其前面补零
+                        function padZero(number) {
+                            return number < 10 ? "0" + number : number;
+                        }
+                        resp.data.data[i].regMark = formattedTime
+                        _this.tableData_1.push(resp.data.data[i]);
+                    }
+                _this.tableData_2 = _this.tableData_1.filter(item => item.regState === 3);
+                _this.tableData_3 = _this.tableData_1.filter(item => item.regState === 1);
+                _this.tableData_4 = _this.tableData_1.filter(item => item.regState === 0);
                 console.log(_this.tableData_1)
                 console.log(_this.tableData_2)
                 console.log(_this.tableData_3)
