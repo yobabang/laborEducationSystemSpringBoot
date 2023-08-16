@@ -6,6 +6,7 @@ import com.flex.dao.ListPlanDao;
 import com.flex.dao.RegisterDiraryDao;
 import com.flex.domain.ListPlan;
 import com.flex.domain.RegisterDirary;
+import com.flex.service.RegisterDiaryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +26,9 @@ public class RegisterDiraryController {
 
     @Autowired
     private ListPlanDao listPlanDao;
+
+    @Autowired
+    private RegisterDiaryService registerDiaryService;
 
 
     @ApiOperation(value = "添加社会活动日志", notes = "添加社会活动日志")
@@ -126,4 +130,14 @@ public class RegisterDiraryController {
         listPlanDao.update(null,updateWrapper2);
     }
 
+    @ApiOperation(value = "查询社会实践活动日志", notes = "根据班级名称查询社会实践活动日志")
+    @ApiImplicitParam(name = "className", value = "班级名称", required = true, dataType = "String",paramType = "path")
+    @GetMapping("/className/{className}")
+    public Result selectRdByClassName(@PathVariable String className){
+        List<RegisterDirary> registerDiraries = registerDiaryService.getByClass(className);
+        Integer code = registerDiraries != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = registerDiraries != null ? "" : "数据查询失败";
+        return new Result(code, registerDiraries, msg);
+
+    }
 }

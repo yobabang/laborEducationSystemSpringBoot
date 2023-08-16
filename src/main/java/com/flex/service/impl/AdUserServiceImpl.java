@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdUserServiceIpml implements AdUserService {
+public class AdUserServiceImpl implements AdUserService {
     @Autowired
     private AdUserDao adUserDao;
 }
