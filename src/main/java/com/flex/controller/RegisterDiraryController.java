@@ -149,7 +149,7 @@ public class RegisterDiraryController {
     }
 
 
-    @ApiOperation(value = "查询社会实践活动日志状态和学生信息1", notes = "根据班级名称查询社会实践活动日志")
+    @ApiOperation(value = "查询社会实践活动日志状态和学生信息", notes = "根据班级名称查询社会实践活动日志")
     @ApiImplicitParam(name = "className", value = "班级名称", required = true, dataType = "String",paramType = "path")
     @GetMapping("/class/{className}")
     public Result getUserRdStateBy(@PathVariable String className){
