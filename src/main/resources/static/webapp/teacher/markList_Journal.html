@@ -98,11 +98,6 @@
                     min-width="10%">
             </el-table-column>
             <el-table-column
-                    prop="regMark"
-                    label="提交时间"
-                    min-width="17%">
-            </el-table-column>
-            <el-table-column
                     fixed="right"
                     label="操作"
                     min-width="17%">
@@ -136,7 +131,7 @@
                     min-width="5%">
             </el-table-column>
             <el-table-column
-                    prop="regName"
+                    prop="userName"
                     label="姓名"
                     min-width="12%">
               <template slot-scope="scope">{{ scope.row.regName }}</template>
@@ -147,19 +142,14 @@
                     min-width="22%">
             </el-table-column>
             <el-table-column
-                    prop="regClass"
+                    prop="className"
                     label="班级"
                     min-width="17%">
             </el-table-column>
             <el-table-column
-                    prop="regState"
+                    prop="repState"
                     label="提交状态"
                     min-width="10%">
-            </el-table-column>
-            <el-table-column
-                    prop="regMark"
-                    label="提交时间"
-                    min-width="17%">
             </el-table-column>
             <el-table-column
                     fixed="right"
@@ -343,6 +333,7 @@ function getUrlSearch(name) {
         state3Count: state3Count
       },
         activeName: 'first',
+        tableData: [],
         tableData_1: [],
         tableData_2: [],
         tableData_3: [],
@@ -452,11 +443,12 @@ function getUrlSearch(name) {
             let _this = this;
             axios({
                 method:"get",
-                url:"/regs/classses/" + _this.detail_data.className,
+                url:'/regdir/class/' + _this.detail_data.className,
             }).then(function (resp){
+                _this.tableData = resp.data.data
                 let num = resp.data.data.length
                     for(let i = 0; i < num; i++){
-                        var date = new Date(resp.data.data[i].regMark); // 使用毫秒时间创建Date对象
+                        var date = new Date(resp.data.data[i].registerDirary.rdTime); // 使用毫秒时间创建Date对象
                         var year = date.getFullYear(); // 年份
                         var month = date.getMonth() + 1; // 月份（注意需要加1，因为月份从0开始）
                         var day = date.getDate(); // 日期
@@ -467,9 +459,14 @@ function getUrlSearch(name) {
                         function padZero(number) {
                             return number < 10 ? "0" + number : number;
                         }
-                        resp.data.data[i].regMark = formattedTime
-                        _this.tableData_1.push(resp.data.data[i]);
-                    }
+                        resp.data.data[i].registerDirary.rdTime = formattedTime
+                        _this.tableData_1.push({
+                                userName: resp.data.data[i].userPo.userName,
+                                userId: resp.data.data[i].userPo.userId,
+                                className: resp.data.data[i].userPo.className,
+                                repState: resp.data.data[i].registerDirary.rdState,
+                              });
+                              }
                 _this.tableData_2 = _this.tableData_1.filter(item => item.regState === 3);
                 _this.tableData_3 = _this.tableData_1.filter(item => item.regState === 1);
                 _this.tableData_4 = _this.tableData_1.filter(item => item.regState === 0);

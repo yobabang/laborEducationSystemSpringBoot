@@ -49,38 +49,38 @@
       <el-table-column
               prop="userName"
               label="姓名"
-              min-width="7.5%">
+              min-width="15%">
       </el-table-column>
       <el-table-column
               prop="userId"
               label="学号"
               userId
-              min-width="10%">
+              min-width="15%">
       </el-table-column>
       <el-table-column
-              prop="class_id"
+              prop="className"
               label="班级"
-              min-width="10%">
+              min-width="24%">
       </el-table-column>
       <el-table-column
-              prop="daily_life_log"
+              prop="dailyScore"
               label="日常生活劳动"
-              min-width="10%">
+              min-width="11%">
       </el-table-column>
       <el-table-column
-              prop="service_log"
+              prop="serviceScore"
               label="服务性劳动"
               min-width="10%">
       </el-table-column>
       <el-table-column
-              prop="production_log"
+              prop="productionScore"
               label="生产型劳动"
               min-width="10%">
       </el-table-column>
       <el-table-column
-              prop="total_points"
+              prop="totalWeightedScore"
               label="总成绩"
-              min-width="10%">
+              min-width="15%">
       </el-table-column>
     </el-table>
   </template>
@@ -119,41 +119,31 @@ function getUrlSearch(name) {
   let tableVue = new Vue({
     el: ".con",
     methods: {
-      onSubmit(){
-        this.selectAll();
-      },
-
-      filterSex(value, row) {
-        return row.stuSex === value;
+      tableRowClassName({row, rowIndex}) {
+        if (rowIndex === 1) {
+          return 'warning-row';
+        } else if (rowIndex === 3) {
+          return 'success-row';
+        }
+        return '';
       },
     },
     data() {
       return {
         className: className,
-        tableData: [{},],
+        tableData: [],
       }
     },
     mounted(){
       //当页面加载完成后来发送异步请求获取数据
-      let _this = this;
-      $.ajax({
-        url: '/users/session/2',
-        type: 'GET', // 请求类型（GET/POST等）
-        dataType: 'json', // 期望的响应数据类型
-        success: function(response) {
-          // 请求成功时的回调函数
-          // 处理响应数据
-          console.log(response);
-          let adId = response.data.adId;
+          let _this = this;
           axios({
             method:"get",
-            url:"/users/adId/" + adId,
+            url:'/logs/class/' + className,
           }).then(function (resp){
             _this.tableData = resp.data.data;
             console.log(_this.tableData)
           })
-        }
-      });
     },
   })
 </script>
@@ -167,16 +157,6 @@ function getUrlSearch(name) {
         user:{
           adName:'玉米排骨汤',
         },
-      }
-    },
-    method(){
-      tableRowClassName({row, rowIndex}) {
-        if (rowIndex === 1) {
-          return 'warning-row';
-        } else if (rowIndex === 3) {
-          return 'success-row';
-        }
-        return '';
       }
     },
     mounted(){
