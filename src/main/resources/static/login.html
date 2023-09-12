@@ -52,6 +52,10 @@
         <div lay-radio>
           <span style="color: #909399;">教师</span>
         </div>
+        <input type="radio" name="identity" value="3" title="教师">
+        <div lay-radio>
+          <span style="color: #909399;">管理员</span>
+        </div>
       </div>
 
       <div class="password_op">
@@ -94,6 +98,9 @@
         location.href = "webapp/student/task_list.html"
       }else if(resp.data.msg== "登陆成功" && identity == "2"){
         location.href = "webapp/teacher/index.html"
+       }
+       else if(resp.data.msg== "登陆成功" && identity == "3"){
+        location.href = "webapp/admin/school_admin.html"
        }
       else if(resp.data.msg== "登陆失败"){
        alert("用户名或密码错误")
