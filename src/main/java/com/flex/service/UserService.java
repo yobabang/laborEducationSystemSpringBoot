@@ -3,6 +3,7 @@ package com.flex.service;
 import com.flex.domain.User;
 import com.flex.pojo.po.UserPo;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -57,4 +58,11 @@ public interface UserService {
      * @return
      */
     public UserPo selectByUserID(Long id);
+
+    /**
+     * 导入学生信息
+     * @param file
+     * @return
+     */
+    public void importUser(MultipartFile file);
 }

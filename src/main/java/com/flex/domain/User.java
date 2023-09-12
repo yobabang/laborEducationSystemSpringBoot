@@ -3,9 +3,15 @@ package com.flex.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.flex.pojo.po.UserPo;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("user")
 public class User {
     private Long userId;
@@ -16,7 +22,7 @@ public class User {
     private String unit;
     private String grade;
     private String major;
-    private Long classId;
+    private Integer classId;
     private String politics;
     private String phone;
     private String email;

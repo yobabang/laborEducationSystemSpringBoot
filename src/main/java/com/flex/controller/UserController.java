@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -141,4 +142,11 @@ public class UserController {
         return new Result(code,userPos,msg);
     }
 
+    @ApiOperation(value = "导入用户", notes = "导入用户")
+    @ApiImplicitParam(name = "file", value = "用户表格", required = true, dataType = "excle",paramType = "post")
+    @PostMapping("/import")
+    public void importUserByFile(@RequestParam("file")MultipartFile file){
+        System.out.println("进入importUserByFile接口");
+        userService.importUser(file);
+    }
 }
