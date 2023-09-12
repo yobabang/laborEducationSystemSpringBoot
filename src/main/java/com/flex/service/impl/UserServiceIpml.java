@@ -63,23 +63,26 @@ public class UserServiceIpml implements UserService {
 
     @Override
     public void importUser(MultipartFile file) {
-        System.out.println("进入service层");
         try{
             EasyExcel.read(file.getInputStream(), UserImportDto.class,new PageReadListener<UserImportDto>((dataList)->{
                 dataList.forEach(item->{
                     User user = User.builder()
                             .userId(item.getUserId())
                             .userName(item.getUserName())
+                            .userAccount(String.valueOf(item.getUserId()))
+                            .userPassword(String.valueOf(item.getUserId()))
+                            .userAlter(0)
                             .unit(item.getUnit())
                             .grade(item.getGrade())
                             .major(item.getMajor())
                             .classId(item.getClassId())
                             .phone(item.getPhone())
+                            .politics(item.getPolitics())
                             .email(item.getEmail())
                             .type(item.getType())
+                            .adId(10000001L)
                             .build();
-                    System.out.println("输出user"+user);
-                    userDao.save(user);
+                    userDao.insert(user);
                 });
             }))
                     .headRowNumber(1)
