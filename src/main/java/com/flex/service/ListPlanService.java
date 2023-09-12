@@ -1,6 +1,7 @@
 package com.flex.service;
 
 import com.flex.domain.ListPlan;
+import com.flex.domain.User;
 import com.flex.pojo.vo.ClassFinishVo;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,4 +50,10 @@ public interface ListPlanService {
      * @return
      */
     public ClassFinishVo getPlanByClassType(String listClass, Integer listType);
+
+    /**
+     * 按学号创建计划
+     * @param user
+     */
+    public void createPlanByUserId(User user);
 }

@@ -1,6 +1,7 @@
 package com.flex.service;
 
 import com.flex.domain.Log;
+import com.flex.domain.User;
 import com.flex.pojo.dto.StudentLogScoreDto;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,4 +52,10 @@ public interface LogService {
      * @return
      */
     public List<StudentLogScoreDto> getStuScoreByClass(String className);
+
+    /**
+     * 按学号创建日志
+     * @param user
+     */
+    public void createLogByUserId(User user);
 }

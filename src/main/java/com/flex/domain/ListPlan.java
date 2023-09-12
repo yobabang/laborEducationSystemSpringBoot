@@ -8,13 +8,14 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
+@Builder
 @TableName("list_plan")
 public class ListPlan {
     private Long listId;
     private Long adId;
     private Integer listType;
     private String listName;
-    private Date listTime;
+    private LocalDateTime listTime;
     private String listUnit;
     private String listGrade;
     private String listMajor;

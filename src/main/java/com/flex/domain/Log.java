@@ -9,6 +9,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
+@Builder
 @TableName("log")
 public class Log {
     @TableId(type = IdType.AUTO,value = "log_id")

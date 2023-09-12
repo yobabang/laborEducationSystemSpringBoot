@@ -2,11 +2,13 @@ package com.flex.service.impl;
 
 import com.flex.dao.LogDao;
 import com.flex.domain.Log;
+import com.flex.domain.User;
 import com.flex.pojo.dto.StudentLogScoreDto;
 import com.flex.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -44,4 +46,11 @@ public class LogServiceImpl implements LogService {
     public List<StudentLogScoreDto> getStuScoreByClass(String className) {
         return logDao.getStuScoreByClass(className);
     }
+
+    @Override
+    public void createLogByUserId(User user) {
+
+    }
+
+
 }
