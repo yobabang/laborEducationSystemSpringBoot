@@ -51,6 +51,7 @@ public class ListPlanServiceImpl implements ListPlanService {
     public void createPlanByUserId(User user) {
         for (int i = 1; i < 4; i++) {
             ListPlan listPlan = ListPlan.builder()
+                    .listId(null)
                     .listType(i)
                     .listTime(LocalDateTime.now())
                     .listUnit(user.getUnit())

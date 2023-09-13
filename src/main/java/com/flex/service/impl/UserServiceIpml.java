@@ -8,6 +8,7 @@ import com.flex.dao.UserDao;
 import com.flex.domain.User;
 import com.flex.pojo.dto.UserImportDto;
 import com.flex.pojo.po.UserPo;
+import com.flex.service.ListPlanService;
 import com.flex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class UserServiceIpml implements UserService {
 
     @Autowired
     private ClassesDao classesDao;
+
+    @Autowired
+    private ListPlanService listPlanService;
 
     @Override
     public boolean save(User user) {
@@ -83,6 +87,7 @@ public class UserServiceIpml implements UserService {
                             .adId(10000001L)
                             .build();
                     userDao.insert(user);
+                    listPlanService.createPlanByUserId(user);
                 });
             }))
                     .headRowNumber(1)
