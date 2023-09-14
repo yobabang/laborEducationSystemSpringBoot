@@ -13,6 +13,7 @@ import com.flex.pojo.dto.LoginUserDto;
 import com.flex.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,7 +147,36 @@ public class UserController {
     @ApiImplicitParam(name = "file", value = "用户表格", required = true, dataType = "excle",paramType = "post")
     @PostMapping("/import")
     public void importUserByFile(@RequestParam("file")MultipartFile file){
-        System.out.println("进入importUserByFile接口");
+
         userService.importUser(file);
     }
+
+    @GetMapping("/condition")
+    @ApiOperation(value = "根据条件查询用户", notes = "根据专业、班级、单位查询用户信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "major", value = "专业", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "className", value = "班级", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "unit", value = "单位", dataType = "String", paramType = "query")
+    })
+    public Result getUserByCondition(@RequestParam(required = false) String major,
+                                     @RequestParam(required = false) String className,
+                                     @RequestParam(required = false) String unit){
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        if(major != null) {
+            lambdaQueryWrapper.eq(User::getMajor,major);
+        }
+        if(unit != null) {
+            lambdaQueryWrapper.eq(User::getUnit,unit);
+        }
+        if(className != null) {
+            Classes classes = classesDao.getByClassName(className);
+            lambdaQueryWrapper.eq(User::getClassId,classes.getClassId());
+        }
+        List<User> userList = userDao.selectList(lambdaQueryWrapper);
+
+        Integer code = userList != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = userList != null ? "数据查询成功" : "数据查询失败";
+        return new Result(code,userList,msg);
+    }
+
 }
