@@ -35,7 +35,6 @@
     <template>
         <el-table
                 :data="tableData"
-                style="width: 80%;margin: auto"
                 :cell-style="{ textAlign: 'center' }"
                 :header-cell-style="{ textAlign: 'center' }"
                 max-height="100%">
@@ -44,7 +43,7 @@
                     label="年级"
                     min-width="50%">
                 <template slot-scope="scope">
-                    <el-link :href="'StuList.html?id='+scope.row['gradeName']" target="_blank" class="buttonText"  type="primary" :underline="false">{{ scope.row.gradeName }}</el-link>
+                    <el-link :href="'collegeAdmin_stuList.html?id='+scope.row['gradeName']" target="_blank" class="buttonText"  type="primary" :underline="false">{{ scope.row.gradeName }}</el-link>
                 </template>
             </el-table-column>
             <el-table-column label="操作">
@@ -54,6 +53,11 @@
                             type="primary"
                             plain
                             @click="checkStu(scope.row)">查看学生列表</el-button>
+                    <el-button
+                            size="medium"
+                            type="danger"
+                            plain
+                            @click="leadStu(scope.row)">导入学生信息</el-button>
                     <el-button
                             size="medium"
                             type="success"
@@ -90,10 +94,14 @@
             window.location.href = reUrl;
         },
         checkWork(row){
-            let reUrl = 'stuWork.html?gradeName='+ row.gradeName;
+            let reUrl = '.html?gradeName='+ row.gradeName;
             window.location.href = reUrl;
         },
         checkWorkALL(row){
+            let reUrl = '.html?gradeName='+ row.gradeName;
+            window.location.href = reUrl;
+        },
+        leadStu(row){
             let reUrl = 'markALL.html?gradeName='+ row.gradeName;
             window.location.href = reUrl;
         },

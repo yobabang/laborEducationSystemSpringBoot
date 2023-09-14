@@ -17,8 +17,8 @@
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header" id="headername">
     <ul class="layui-nav ">
-      <li class="layui-nav-item "><a href="college_admin.html.html">首页</a></li>
-      <li class="layui-nav-item layui-this"><a href="collegeAdmin_stuList.html.html">学生列表</a></li>
+      <li class="layui-nav-item "><a href="college_admin.html">首页</a></li>
+      <li class="layui-nav-item layui-this"><a href="collegeAdmin_stuList.html">学生列表</a></li>
     </ul>
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
@@ -36,7 +36,7 @@
 
   <template>
     <div>
-      <el-table :data="tableData" style="width:600px">
+      <el-table :data="tableData" max-height="100%">
         <el-table-column prop="name" label="Name" :filters="nameFilters" :filter-method="filterName">
           <template slot-scope="scope">
             {{ scope.row.name }}
