@@ -9,9 +9,10 @@ public class UserImportDto {
     private String unit;
     private String grade;
     private String major;
-    private Integer classId;
+    private String className;
     private String politics;
     private String phone;
     private String email;
-    private Integer type;
+    private String type;
+    private String adName;
 }

@@ -3,8 +3,11 @@ package com.flex.service.impl;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.read.listener.PageReadListener;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.flex.dao.AdUserDao;
 import com.flex.dao.ClassesDao;
 import com.flex.dao.UserDao;
+import com.flex.domain.AdUser;
+import com.flex.domain.Classes;
 import com.flex.domain.User;
 import com.flex.pojo.dto.UserImportDto;
 import com.flex.pojo.po.UserPo;
@@ -24,6 +27,9 @@ public class UserServiceIpml implements UserService {
 
     @Autowired
     private ClassesDao classesDao;
+
+    @Autowired
+    private AdUserDao adUserDao;
 
     @Autowired
     private ListPlanService listPlanService;
@@ -70,6 +76,16 @@ public class UserServiceIpml implements UserService {
         try{
             EasyExcel.read(file.getInputStream(), UserImportDto.class,new PageReadListener<UserImportDto>((dataList)->{
                 dataList.forEach(item->{
+                    Classes classes = classesDao.getByClassName(item.getClassName());
+                    AdUser adUser = adUserDao.getAdUserByAdName(item.getAdName());
+
+                    int imtype = 0;
+                    if (item.getType() == "专升本" ){
+                        imtype = 2;
+                    }else{
+                        imtype = 1;
+                    }
+
                     User user = User.builder()
                             .userId(item.getUserId())
                             .userName(item.getUserName())
@@ -79,18 +95,18 @@ public class UserServiceIpml implements UserService {
                             .unit(item.getUnit())
                             .grade(item.getGrade())
                             .major(item.getMajor())
-                            .classId(item.getClassId())
+                            .classId(Math.toIntExact(classes.getClassId()))
                             .phone(item.getPhone())
                             .politics(item.getPolitics())
                             .email(item.getEmail())
-                            .type(item.getType())
-                            .adId(10000001L)
+                            .type(imtype)
+                            .adId(adUser.getAdId())
                             .build();
                     userDao.insert(user);
                     listPlanService.createPlanByUserId(user);
                 });
             }))
-                    .headRowNumber(1)
+                    .headRowNumber(4)
                     .sheet()
                     .doRead();
         }catch (IOException e){

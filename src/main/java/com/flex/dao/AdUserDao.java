@@ -23,5 +23,11 @@ public interface AdUserDao extends BaseMapper<AdUser> {
             "WHERE ca.ad_id = #{id}")
     public List<AdClassVo> getClassById(Long id);
 
-
+    /**
+     * 根据姓名查询
+     * @param adName
+     * @return
+     */
+    @Select("select * from ad_user where ad_name = #{adName}")
+    public AdUser getAdUserByAdName(String adName);
 }
