@@ -17,7 +17,7 @@
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header" id="headername">
     <ul class="layui-nav ">
-      <li class="layui-nav-item layui-this"><a href="task_list.html">首页</a></li>
+      <li class="layui-nav-item layui-this"><a href="college_index.html">首页</a></li>
     </ul>
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
@@ -32,7 +32,10 @@
   </div>
 </div>
 <div class="con" style="margin-top: 70px;margin-left:15%;margin-right:15%;">
-
+  <div style="margin-top: 70px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+    <button style="margin-bottom: 10px;" onclick="importStudentInfo()">导入学生信息</button>
+    <button onclick="viewStudentInfo()">查看学生信息</button>
+  </div>
 </div>
 </body>
 </html>
@@ -46,6 +49,16 @@
 <link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
 <link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
 
+<script>
+  function importStudentInfo() {
+    // 在这里添加导入学生信息的处理逻辑
+    alert("点击了导入学生信息按钮");
+  }
+
+  function viewStudentInfo() {
+    window.location.href = 'college_stuList.html';
+  }
+</script>
 
 <script>
     let userName = new Vue({

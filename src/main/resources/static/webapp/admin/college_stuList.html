@@ -17,8 +17,8 @@
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header" id="headername">
     <ul class="layui-nav ">
-      <li class="layui-nav-item "><a href="college_admin.html">首页</a></li>
-      <li class="layui-nav-item layui-this"><a href="collegeAdmin_stuList.html">学生列表</a></li>
+      <li class="layui-nav-item "><a href="college_index.html">首页</a></li>
+      <li class="layui-nav-item layui-this"><a href="college_stuList.html">学生信息</a></li>
     </ul>
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
@@ -33,39 +33,39 @@
   </div>
 </div>
 <div class="con" style="margin-top: 70px;margin-left:15%;margin-right:15%;">
-
   <template>
+    <input type="text" v-model="searchKeyword" placeholder="输入关键字搜索">
     <div class="flex-between flex-align" style="display: flex;
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-      <button type="button" class="el-button el-button--primary el-button--medium" @click="load()"><span>导入学生信息</span></button>
+      <button type="button" class="el-button el-button--primary el-button--medium" @click="lead()"><span>导入学生信息</span></button>
     </div>
     <div style="margin-top: 20px;">
       <el-table :data="tableData" max-height="100%">
-        <el-table-column prop="name" label="Name" :filters="nameFilters" :filter-method="filterName">
+        <el-table-column prop="userName" label="姓名" >
           <template slot-scope="scope">
-            {{ scope.row.name }}
+            {{ scope.row.userName }}
           </template>
         </el-table-column>
-        <el-table-column prop="userId" label="User ID" :filters="userIdFilters" :filter-method="filterUserId">
+        <el-table-column prop="userId" label="学号" >
           <template slot-scope="scope">
             {{ scope.row.userId }}
           </template>
         </el-table-column>
-        <el-table-column prop="class" label="Class" :filters="classFilters" :filter-method="filterClass">
+        <el-table-column prop="unit" label="学院" >
           <template slot-scope="scope">
-            {{ scope.row.class }}
+            {{ scope.row.unit }}
           </template>
         </el-table-column>
-        <el-table-column prop="major" label="Major" :filters="majorFilters" :filter-method="filterMajor">
+        <el-table-column prop="major" label="专业" >
           <template slot-scope="scope">
             {{ scope.row.major }}
           </template>
         </el-table-column>
-        <el-table-column prop="teacher" label="Teacher" :filters="teacherFilters" :filter-method="filterTeacher">
+        <el-table-column prop="classId" label="班级编号" >
           <template slot-scope="scope">
-            {{ scope.row.teacher }}
+            {{ scope.row.classId }}
           </template>
         </el-table-column>
       </el-table>
@@ -83,79 +83,51 @@
 <script src="../static/element-ui/package/lib/index.js"></script>
 <link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
 <link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+
 <script>
  let tableVue = new Vue({
     el: ".con",
     methods: {
-	  filterName(value, row) {
-      return row.name === value;
-    },
-    filterUserId(value, row) {
-      return row.userId === value;
-    },
-    filterClass(value, row) {
-      return row.class === value;
-    },
-    filterMajor(value, row) {
-      return row.major === value;
-    },
-    filterTeacher(value, row) {
-      return row.teacher === value;
-    }
+
     },
     data() {
       return {
-        tableData: [
-        { name: 'John', userId: 25, class:'人工智能一班', major:'人工智能', teacher:'蔡潇'},
-        { name: 'Lee', userId: 30, class:'电子信息工程一班', major:'电子信息工程', teacher:'蔡潇'},
-        { name: 'Mary', userId: 40, class:'物联网一班', major:'物联网', teacher:'刘江枫'},
-      ],
-      nameFilters: [
-        { text: 'John', value: 'John' },
-        { text: 'Lee', value: 'Lee' },
-        { text: 'Mary', value: 'Mary' }
-      ],
-      userIdFilters: [
-        { text: '25', value: 25 },
-        { text: '30', value: 30 },
-        { text: '40', value: 40 }
-      ],
-      classFilters: [
-        { text: '人工智能一班', value: '人工智能一班' },
-        { text: '电子信息工程一班', value: '电子信息工程一班' },
-        { text: '物联网一班', value: '物联网一班' }
-      ],
-      majorFilters: [
-        { text: '人工智能', value: '人工智能' },
-        { text: '电子信息工程', value: '电子信息工程' },
-        { text: '物联网', value: '物联网' }
-      ],
-      teacherFilters: [
-        { text: '蔡潇', value: '蔡潇' },
-        { text: '刘江枫', value: '刘江枫' }
-      ]
+        searchKeyword: '', // 存储搜索关键字
+        tableData: [],
       }
     },
-
+    computed: {
+        // 根据搜索关键字筛选表格数据
+        filteredTableData() {
+          const keyword = this.searchKeyword.trim().toLowerCase();
+          if (!keyword) {
+            return this.tableData; // 如果关键字为空，返回全部数据
+          } else {
+            return this.tableData.filter(row => {
+              // 根据条件筛选数据
+              return (
+                row.userName.toLowerCase().includes(keyword) ||
+                row.userId.toLowerCase().includes(keyword) ||
+                row.unit.toLowerCase().includes(keyword) ||
+                row.major.toLowerCase().includes(keyword) ||
+                row.phone.toLowerCase().includes(keyword)
+              );
+            });
+          }
+        },
+      },
     mounted(){
             //当页面加载完成后来发送异步请求获取数据
             let _this = this;
             $.ajax({
-               url: '/users/session/2',
+               url: '/users',
                type: 'GET', // 请求类型（GET/POST等）
                dataType: 'json', // 期望的响应数据类型
                success: function(response) {
                    // 请求成功时的回调函数
                    // 处理响应数据
                    console.log(response);
-                   let adId = response.data.adId;
-                   axios({
-                    method:"get",
-                    url:"/users/adId/" + adId,
-                    }).then(function (resp){
-                    _this.tableData = resp.data.data;
-                    console.log(_this.tableData)
-                    })
+                   _this.tableData = response.data
                }
            });
     },
