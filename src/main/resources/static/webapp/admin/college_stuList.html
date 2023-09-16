@@ -128,11 +128,7 @@
           // 创建Blob对象
           const blob = new Blob([tableContent], { type: "application/vnd.ms-excel" });
 
-          // 创建下载链接
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = this.detail_data.className + getUrlSearch("listType") + "详情表.xls";
-          link.click();
+
       }
     },
     data() {
