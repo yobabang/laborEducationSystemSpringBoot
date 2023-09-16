@@ -33,6 +33,7 @@
 </div>
 <div class="con" style="margin-top: 70px;margin-left:15%;margin-right:15%;">
   <div style="margin-top: 70px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+    <input type="file" id="fileInput" accept=".csv">
     <button style="margin-bottom: 10px;" onclick="importStudentInfo()">导入学生信息</button>
     <button onclick="viewStudentInfo()">查看学生信息</button>
   </div>
@@ -51,8 +52,26 @@
 
 <script>
   function importStudentInfo() {
-    // 在这里添加导入学生信息的处理逻辑
-    alert("点击了导入学生信息按钮");
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const csvData = e.target.result;
+        Papa.parse(csvData, {
+          complete: function(results) {
+            // 解析CSV数据并保存到数据库中的逻辑
+            console.log(results.data);
+            // 这里可以使用AJAX请求将解析后的数据发送到后端保存到数据库
+            alert("学生信息导入成功！");
+          }
+        });
+      };
+      reader.readAsText(file);
+    } else {
+      alert("请选择要导入的文件");
+    }
   }
 
   function viewStudentInfo() {

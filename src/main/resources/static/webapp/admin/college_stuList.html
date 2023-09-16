@@ -103,34 +103,55 @@
 <script>
  let tableVue = new Vue({
     el: ".con",
-    methods: {
-      lead(){
-          // 获取el-table的实例
-          const tableInstance = this.$refs.multipleTable1;
+   methods: {
+     lead() {
+       // 获取el-table的实例
+       const tableInstance = this.$refs.multipleTable1;
 
-          // 获取el-table中显示的数据
-          const visibleData = tableInstance.store.states.data;
+       // 获取el-table中显示的数据
+       const visibleData = tableInstance.store.states.data;
 
-          // 创建表格内容
-          let tableContent = "<table>";
+       // 创建表格内容
+       let tableContent = "<table>";
 
-          // 添加表头
-          const headers = ['userName', 'userId', 'unit', 'major', 'classId'];
-          tableContent += "<tr>" + headers.map(header => `<th>${header}</th>`).join("") + "</tr>";
+       // 添加表头
+       const headers = ['userName', 'userId', 'unit', 'major', 'classId'];
+       tableContent += "<tr>" + headers.map(header => `<th>${header}</th>`).join("") + "</tr>";
 
-          // 添加表格数据
-          for (const row of visibleData) {
-            tableContent += "<tr>" + headers.map(header => `<td>${row[header]}</td>`).join("") + "</tr>";
-          }
+       // 添加表格数据
+       for (const row of visibleData) {
+         tableContent += "<tr>" + headers.map(header => `<td>${row[header]}</td>`).join("") + "</tr>";
+       }
 
-          tableContent += "</table>";
+       tableContent += "</table>";
 
-          // 创建Blob对象
-          const blob = new Blob([tableContent], { type: "application/vnd.ms-excel" });
+       // 将表格内容导出为 Excel 文件
+       const exportToExcel = (tableContent) => {
+         const link = document.createElement('a');
+         link.href = URL.createObjectURL(new Blob([tableContent], { type: 'application/vnd.ms-excel' }));
+         link.download = 'data.xlsx';
+         link.click();
+       };
 
+       exportToExcel(tableContent);
 
-      }
-    },
+       // 创建Blob对象
+       const blob = new Blob([tableContent], { type: "application/vnd.ms-excel" });
+
+       // 使用fetch方法上传文件到服务器
+       fetch('/users/import', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/vnd.ms-excel'
+         },
+         body: blob
+       }).then(response => {
+         // 处理上传结果
+       }).catch(error => {
+         // 处理上传出错
+       });
+     }
+   },
     data() {
       return {
         tableData: [],
