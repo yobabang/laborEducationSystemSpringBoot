@@ -39,15 +39,23 @@
                           justify-content: flex-start;
                           align-items: center;
                           gap: 30px;">
-      <button type="button" class="el-button el-button--primary el-button--medium" @click="lead()"><span>导入学生信息</span></button>
+      <button type="button" class="el-button el-button--primary el-button--medium" @click="lead()"><span>下载学生信息</span></button>
+      <el-upload
+              action="/users/import"
+              :file-list="fileList"
+              :on-success="handleSuccess"
+              :on-error="handleError"
+              :on-remove="handleRemove">
+        <el-button>点击上传</el-button>
+      </el-upload>
     </div>
     <div style="margin-top: 20px;">
       <el-table ref="multipleTable1"
-                data="tableData.filter(data => {
+                :data="tableData.filter(data => {
                 const classId = String(data.classId);
-                return (!search || data.major.toLowerCase() === search.toLowerCase()) ||
-                       (!search || data.unit.toLowerCase() === search.toLowerCase()) ||
-                       (!search || classId.toLowerCase() === search.toLowerCase());
+                return (!search || data.major.toLowerCase().includes(search.toLowerCase())) ||
+                       (!search || data.unit.toLowerCase().includes(search.toLowerCase())) ||
+                       (!search || classId.toLowerCase().includes(search.toLowerCase()));
               })"
                 max-height="100%">
         <el-table-column prop="userName" label="姓名" >
@@ -104,37 +112,57 @@
  let tableVue = new Vue({
     el: ".con",
     methods: {
-      lead(){
-          // 获取el-table的实例
-          const tableInstance = this.$refs.multipleTable1;
+          lead(){
+            // 获取el-table的实例
+            const tableInstance = this.$refs.multipleTable1;
 
-          // 获取el-table中显示的数据
-          const visibleData = tableInstance.store.states.data;
+            // 获取el-table中显示的数据
+            const visibleData = tableInstance.store.states.data;
 
-          // 创建表格内容
-          let tableContent = "<table>";
+            // 创建表格内容
+            let tableContent = "<table>";
 
-          // 添加表头
-          const headers = ['userName', 'userId', 'unit', 'major', 'classId'];
-          tableContent += "<tr>" + headers.map(header => `<th>${header}</th>`).join("") + "</tr>";
+            // 添加表头
+            const headers = ['userName', 'userId', 'unit', 'major', 'classId'];
+            tableContent += "<tr>" + headers.map(header => `<th>${header}</th>`).join("") + "</tr>";
 
-          // 添加表格数据
-          for (const row of visibleData) {
-            tableContent += "<tr>" + headers.map(header => `<td>${row[header]}</td>`).join("") + "</tr>";
-          }
+            // 添加表格数据
+            for (const row of visibleData) {
+              tableContent += "<tr>" + headers.map(header => `<td>${row[header]}</td>`).join("") + "</tr>";
+            }
 
-          tableContent += "</table>";
+            tableContent += "</table>";
 
-          // 创建Blob对象
-          const blob = new Blob([tableContent], { type: "application/vnd.ms-excel" });
+            // 创建Blob对象
+            const blob = new Blob([tableContent], { type: "application/vnd.ms-excel" });
 
-
-      }
+            // 创建下载链接
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "学生信息表.xls";
+            link.click();
+          },
+          handleSuccess(response, file) {
+            // 上传成功的处理逻辑
+            this.$message.success('文件上传成功');
+            // 可以根据需要使用服务器返回的响应数据进行后续操作
+          },
+          handleError(error, file) {
+            // 上传失败的处理逻辑
+            this.$message.error('文件上传失败');
+          },
+          handleRemove(file, fileList) {
+            // 删除文件的处理逻辑
+            this.$message.warning('文件已删除');
+            // 可以根据需要进行其他操作，如清空已上传的文件列表等
+            this.fileList = [];
+          },
     },
     data() {
       return {
         tableData: [],
-        search: ''
+        search: '',
+        fileList: [],
       }
     },
 

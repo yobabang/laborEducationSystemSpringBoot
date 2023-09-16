@@ -33,8 +33,17 @@
 </div>
 <div class="con" style="margin-top: 70px;margin-left:15%;margin-right:15%;">
   <div style="margin-top: 70px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-    <button style="margin-bottom: 10px;" onclick="importStudentInfo()">导入学生信息</button>
-    <button onclick="viewStudentInfo()">查看学生信息</button>
+    <template>
+      <el-upload
+              action="/users/import"
+              :file-list="fileList"
+              :on-success="handleSuccess"
+              :on-error="handleError"
+              :on-remove="handleRemove">
+        <el-button>点击上传</el-button>
+      </el-upload>
+    </template>
+    <button onclick="viewStudentInfo()"  style="margin-top: 70px;" >查看学生信息</button>
   </div>
 </div>
 </body>
@@ -50,10 +59,34 @@
 <link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
 
 <script>
-  function importStudentInfo() {
-    // 在这里添加导入学生信息的处理逻辑
-    alert("点击了导入学生信息按钮");
-  }
+ let tableVue = new Vue({
+    el: ".con",
+    methods: {
+          handleSuccess(response, file) {
+            // 上传成功的处理逻辑
+            this.$message.success('文件上传成功');
+            // 可以根据需要使用服务器返回的响应数据进行后续操作
+          },
+          handleError(error, file) {
+            // 上传失败的处理逻辑
+            this.$message.error('文件上传失败');
+          },
+          handleRemove(file, fileList) {
+            // 删除文件的处理逻辑
+            this.$message.warning('文件已删除');
+            // 可以根据需要进行其他操作，如清空已上传的文件列表等
+            this.fileList = [];
+          },
+    },
+    data() {
+      return {
+        fileList: [],
+      }
+    },
+  })
+</script>
+
+<script>
 
   function viewStudentInfo() {
     window.location.href = 'college_stuList.html';
