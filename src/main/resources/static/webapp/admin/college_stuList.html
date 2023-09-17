@@ -32,7 +32,7 @@
     </ul>
   </div>
 </div>
-<div class="con" style="margin-top: 70px;margin-left:15%;margin-right:15%;">
+<div class="con" style="margin-top: 70px;margin-left:2%;margin-right:2%;">
   <template>
 
     <div class="flex-between flex-align" style="display: flex;
@@ -49,23 +49,34 @@
         <el-button>点击上传</el-button>
       </el-upload>
     </div>
+    <div style="margin-top: 10px;">
+      <el-form @submit="handleSubmit" ref="searchForm" :model="formData">
+        <el-row>
+          <el-col :span="8">
+            <el-input v-model="formData.keyword" placeholder="请输入搜索关键字"></el-input>
+          </el-col>
+          <el-col :span="4" :offset="4">
+            <el-button type="primary" native-type="submit">搜索</el-button>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
     <div style="margin-top: 20px;">
       <el-table ref="multipleTable1"
                 :data="tableData.filter(data => {
-                const classId = String(data.classId);
                 return (!search || data.major.toLowerCase().includes(search.toLowerCase())) ||
                        (!search || data.unit.toLowerCase().includes(search.toLowerCase())) ||
-                       (!search || classId.toLowerCase().includes(search.toLowerCase()));
+                       (!search || data.classId.toLowerCase().includes(search.toLowerCase()));
               })"
                 max-height="100%">
-        <el-table-column prop="userName" label="姓名" >
-          <template slot-scope="scope">
-            {{ scope.row.userName }}
-          </template>
-        </el-table-column>
         <el-table-column prop="userId" label="学号" >
           <template slot-scope="scope">
             {{ scope.row.userId }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="userName" label="姓名" >
+          <template slot-scope="scope">
+            {{ scope.row.userName }}
           </template>
         </el-table-column>
         <el-table-column prop="unit" label="学院" >
@@ -73,14 +84,44 @@
             {{ scope.row.unit }}
           </template>
         </el-table-column>
+        <el-table-column prop="grade" label="年级" >
+          <template slot-scope="scope">
+            {{ scope.row.grade }}
+          </template>
+        </el-table-column>
         <el-table-column prop="major" label="专业" >
           <template slot-scope="scope">
             {{ scope.row.major }}
           </template>
         </el-table-column>
-        <el-table-column prop="classId" label="班级编号" >
+        <el-table-column prop="classId" label="班级" >
           <template slot-scope="scope">
             {{ scope.row.classId }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="politics" label="政治面貌" >
+          <template slot-scope="scope">
+            {{ scope.row.politics }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="phone" label="联系方式" >
+          <template slot-scope="scope">
+            {{ scope.row.phone }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="email" label="邮箱" >
+          <template slot-scope="scope">
+            {{ scope.row.email }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="type" label="本科类型" >
+          <template slot-scope="scope">
+            {{ scope.row.type }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="adId" label="辅导员" >
+          <template slot-scope="scope">
+            {{ scope.row.adId }}
           </template>
         </el-table-column>
         <el-table-column
@@ -124,7 +165,8 @@
 
             // 添加表头
             const headers = ['userName', 'userId', 'unit', 'major', 'classId'];
-            tableContent += "<tr>" + headers.map(header => `<th>${header}</th>`).join("") + "</tr>";
+            const headersA = ['学号', '姓名', '学院', '年级', '专业', '班级', '政治面貌', '联系方式', '邮箱', '本科类型', '辅导员'];
+            tableContent += "<tr>" + headersA.map(header => `<th>${header}</th>`).join("") + "</tr>";
 
             // 添加表格数据
             for (const row of visibleData) {
@@ -157,12 +199,33 @@
             // 可以根据需要进行其他操作，如清空已上传的文件列表等
             this.fileList = [];
           },
+          handleSubmit() {
+            // 提交表单时将搜索框中的关键字传递给后端
+            // 可以通过 formData.keyword 获取搜索框的值
+            // 在这里执行提交操作，如发送请求到后端
+            console.log(this.formData.keyword);
+            axios({
+                    method: 'post',
+                    url: '/users/condition',
+                    data: this.formData.keyword,
+                }).then(function (response) {
+                    console.log(response.data);
+                    _this.tableData = response.data
+                }).catch(function (error) {
+                    console.error(error);
+                    alert('链接失败' + error)
+                });
+            this.$refs.searchForm.resetFields(); // 提交后可以重置表单
+          },
     },
     data() {
       return {
         tableData: [],
         search: '',
         fileList: [],
+        formData: {
+        keyword: ""
+      },
       }
     },
 
