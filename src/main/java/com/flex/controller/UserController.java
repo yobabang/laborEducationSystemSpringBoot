@@ -8,6 +8,7 @@ import com.flex.dao.UserDao;
 import com.flex.domain.AdUser;
 import com.flex.domain.Classes;
 import com.flex.domain.User;
+import com.flex.pojo.dto.UserDto;
 import com.flex.pojo.po.UserPo;
 import com.flex.pojo.dto.LoginUserDto;
 import com.flex.service.UserService;
@@ -64,9 +65,10 @@ public class UserController {
     @GetMapping
     public Result getAll(){
         List<User> userList = userService.getAll();
-        Integer code = userList != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = userList != null ? "数据查询成功" : "数据查询失败";
-        return  new Result(code,userList,msg);
+        List<UserDto> userDtoByUser = userService.createUserDtoByUser(userList);
+        Integer code = userDtoByUser != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = userDtoByUser != null ? "数据查询成功" : "数据查询失败";
+        return  new Result(code,userDtoByUser,msg);
     }
 
     @ApiOperation(value = "用户登陆", notes = "用户登陆")
@@ -126,7 +128,7 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "获取用户信息", notes = "根据管理员ID获取用户信息")
+    @ApiOperation(value = "根据管理员ID获取用户信息", notes = "根据管理员ID获取用户信息")
     @ApiImplicitParam(name = "adId", value = "管理员ID", required = true, dataType = "Long",paramType = "path")
     @GetMapping("/adId/{adId}")
     public Result getUserByAdId(@PathVariable Long adId){

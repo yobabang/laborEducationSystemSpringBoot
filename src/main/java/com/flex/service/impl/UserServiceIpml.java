@@ -9,6 +9,7 @@ import com.flex.dao.UserDao;
 import com.flex.domain.AdUser;
 import com.flex.domain.Classes;
 import com.flex.domain.User;
+import com.flex.pojo.dto.UserDto;
 import com.flex.pojo.dto.UserImportDto;
 import com.flex.pojo.po.UserPo;
 import com.flex.service.ListPlanService;
@@ -18,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceIpml implements UserService {
@@ -112,5 +115,30 @@ public class UserServiceIpml implements UserService {
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public List<UserDto> createUserDtoByUser(List<User> users) {
+        return users.stream()
+                .map(item -> {
+                    Classes classes = classesDao.selectById(item.getClassId());
+                    AdUser adUser = adUserDao.selectById(item.getAdId());
+                    String typeName = (item.getType() == 1) ? "本科" : "专升本";
+
+                    return UserDto.builder()
+                            .userId(item.getUserId())
+                            .userName(item.getUserName())
+                            .unit(item.getUnit())
+                            .grade(item.getUnit())
+                            .major(item.getMajor())
+                            .className(classes.getClassName())
+                            .politics(item.getPolitics())
+                            .phone(item.getPhone())
+                            .email(item.getEmail())
+                            .typeName(typeName)
+                            .adName(adUser.getAdName())
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package com.flex.service;
 
 import com.flex.domain.User;
+import com.flex.pojo.dto.UserDto;
 import com.flex.pojo.po.UserPo;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,4 +66,11 @@ public interface UserService {
      * @return
      */
     public void importUser(MultipartFile file);
+
+    /**
+     * user转化为userDto
+     * @param users
+     * @return
+     */
+    public List<UserDto> createUserDtoByUser(List<User> users);
 }
