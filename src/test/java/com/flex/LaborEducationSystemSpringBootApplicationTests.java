@@ -31,7 +31,7 @@ class LaborEducationSystemSpringBootApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println(listPlanDao.getPlanByClassType("2020级车辆工程（本科）1班", 1));
+        System.out.println(adUserDao.getByAdId(10000001l));
     }
 
 }

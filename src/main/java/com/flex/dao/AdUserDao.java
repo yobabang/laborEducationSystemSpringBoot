@@ -30,4 +30,7 @@ public interface AdUserDao extends BaseMapper<AdUser> {
      */
     @Select("select * from ad_user where ad_name = #{adName}")
     public AdUser getAdUserByAdName(String adName);
+
+    @Select("select * from ad_user where ad_Id = #{id}")
+    public AdUser getByAdId(Long id);
 }

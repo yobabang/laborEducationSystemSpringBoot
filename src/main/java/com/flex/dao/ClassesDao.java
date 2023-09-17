@@ -10,4 +10,7 @@ public interface ClassesDao extends BaseMapper<Classes> {
 
     @Select("Select * from classes where class_name = #{className}")
     public Classes getByClassName(String className);
+
+    @Select("Select * from classes where class_id = #{id}")
+    public Classes getByClassId(int id);
 }

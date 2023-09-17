@@ -121,8 +121,8 @@ public class UserServiceIpml implements UserService {
     public List<UserDto> createUserDtoByUser(List<User> users) {
         return users.stream()
                 .map(item -> {
-                    Classes classes = classesDao.selectById(item.getClassId());
-                    AdUser adUser = adUserDao.selectById(item.getAdId());
+                    Classes classes = classesDao.getByClassId(item.getClassId());
+                    AdUser adUser = adUserDao.getByAdId(item.getAdId());
                     String typeName = (item.getType() == 1) ? "本科" : "专升本";
 
                     return UserDto.builder()
