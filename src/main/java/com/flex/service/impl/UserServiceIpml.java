@@ -129,7 +129,7 @@ public class UserServiceIpml implements UserService {
                             .userId(item.getUserId())
                             .userName(item.getUserName())
                             .unit(item.getUnit())
-                            .grade(item.getUnit())
+                            .grade(item.getGrade())
                             .major(item.getMajor())
                             .className(classes.getClassName())
                             .politics(item.getPolitics())
