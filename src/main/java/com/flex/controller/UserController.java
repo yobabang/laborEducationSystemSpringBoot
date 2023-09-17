@@ -175,9 +175,10 @@ public class UserController {
         }
         List<User> userList = userDao.selectList(lambdaQueryWrapper);
 
-        Integer code = userList != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = userList != null ? "数据查询成功" : "数据查询失败";
-        return new Result(code,userList,msg);
+        List<UserDto> userDtoByUser = userService.createUserDtoByUser(userList);
+        Integer code = userDtoByUser != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = userDtoByUser != null ? "数据查询成功" : "数据查询失败";
+        return new Result(code,userDtoByUser,msg);
     }
 
 }
