@@ -50,24 +50,24 @@
       </el-upload>
     </div>
     <div style="margin-top: 10px;">
-      <el-form @submit="handleSubmit" ref="searchForm" :model="formData">
-        <el-row>
-          <el-col :span="8">
-            <el-input v-model="formData.keyword" placeholder="请输入搜索关键字"></el-input>
-          </el-col>
-          <el-col :span="4" :offset="4">
-            <el-button type="primary" native-type="submit">搜索</el-button>
-          </el-col>
-        </el-row>
+      <el-form :inline="true" :model="projects" class="demo-form-inline">
+        <el-form-item label="班级">
+          <el-input v-model="projects.className" placeholder="班级"></el-input>
+        </el-form-item>
+        <el-form-item label="专业">
+          <el-input v-model="projects.major" placeholder="专业"></el-input>
+        </el-form-item>
+        <el-form-item label="学院">
+          <el-input v-model="projects.unit" placeholder="学院"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="searchA">查询</el-button>
+        </el-form-item>
       </el-form>
     </div>
-    <div style="margin-top: 20px;">
+    <div style="margin-top: 10px;">
       <el-table ref="multipleTable1"
-                :data="tableData.filter(data => {
-                return (!search || data.major.toLowerCase().includes(search.toLowerCase())) ||
-                       (!search || data.unit.toLowerCase().includes(search.toLowerCase())) ||
-                       (!search || data.classId.toLowerCase().includes(search.toLowerCase()));
-              })"
+                :data="tableData"
                 max-height="100%">
         <el-table-column prop="userId" label="学号" >
           <template slot-scope="scope">
@@ -94,9 +94,9 @@
             {{ scope.row.major }}
           </template>
         </el-table-column>
-        <el-table-column prop="classId" label="班级" >
+        <el-table-column prop="className" label="班级" >
           <template slot-scope="scope">
-            {{ scope.row.classId }}
+            {{ scope.row.className }}
           </template>
         </el-table-column>
         <el-table-column prop="politics" label="政治面貌" >
@@ -114,23 +114,14 @@
             {{ scope.row.email }}
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="本科类型" >
+        <el-table-column prop="typeName" label="本科类型" >
           <template slot-scope="scope">
-            {{ scope.row.type }}
+            {{ scope.row.typeName }}
           </template>
         </el-table-column>
-        <el-table-column prop="adId" label="辅导员" >
+        <el-table-column prop="adName" label="辅导员" >
           <template slot-scope="scope">
-            {{ scope.row.adId }}
-          </template>
-        </el-table-column>
-        <el-table-column
-                align="right">
-          <template slot="header" slot-scope="scope">
-            <el-input
-                    v-model="search"
-                    size="mini"
-                    placeholder="输入关键字搜索"/>
+            {{ scope.row.adName }}
           </template>
         </el-table-column>
       </el-table>
@@ -164,7 +155,7 @@
             let tableContent = "<table>";
 
             // 添加表头
-            const headers = ['userName', 'userId', 'unit', 'major', 'classId'];
+            const headers = ['userId', 'userName', 'unit', 'grade', 'major', 'className', 'politics', 'phone', 'email', 'typeName', 'adName'];
             const headersA = ['学号', '姓名', '学院', '年级', '专业', '班级', '政治面貌', '联系方式', '邮箱', '本科类型', '辅导员'];
             tableContent += "<tr>" + headersA.map(header => `<th>${header}</th>`).join("") + "</tr>";
 
@@ -199,33 +190,51 @@
             // 可以根据需要进行其他操作，如清空已上传的文件列表等
             this.fileList = [];
           },
-          handleSubmit() {
-            // 提交表单时将搜索框中的关键字传递给后端
-            // 可以通过 formData.keyword 获取搜索框的值
-            // 在这里执行提交操作，如发送请求到后端
-            console.log(this.formData.keyword);
-            axios({
-                    method: 'post',
-                    url: '/users/condition',
-                    data: this.formData.keyword,
-                }).then(function (response) {
-                    console.log(response.data);
-                    _this.tableData = response.data
-                }).catch(function (error) {
-                    console.error(error);
-                    alert('链接失败' + error)
-                });
-            this.$refs.searchForm.resetFields(); // 提交后可以重置表单
-          },
+          searchA() {
+            alert('进入搜索')
+            console.log(this.projects);
+
+            // 将查询条件构建为查询字符串
+            const queryString = Object.entries(this.projects)
+              .filter(([key, value]) => value !== '') // 过滤掉空值
+              .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+              .join("&");
+            const encodedQueryString = decodeURIComponent(queryString);
+            // 发起HTTP GET请求
+            fetch(`/users/condition?${encodedQueryString}`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json" // 可根据需要设置请求头
+              }
+            })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                // 处理从后端接收到的数据
+                console.log("Response Data:", data);
+                this.tableData = data.data
+                console.log(`${encodedQueryString}`);
+              })
+              .catch(error => {
+                console.error("Error:", error);
+                // 处理请求错误，例如显示错误消息给用户
+              });
+          }
     },
     data() {
       return {
         tableData: [],
         search: '',
         fileList: [],
-        formData: {
-        keyword: ""
-      },
+        projects:{
+			className:'',
+			major:'',
+			unit:'',
+		},
       }
     },
 
