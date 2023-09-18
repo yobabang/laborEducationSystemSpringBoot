@@ -41,5 +41,9 @@ public interface AssessmentService {
      */
     public List<Assessment> getAll();
 
-
+    /**
+     * 生成成绩表文件
+     */
+    @Transactional
+    public void createAssessmentFile(List<Assessment> assessments,String unit);
 }
