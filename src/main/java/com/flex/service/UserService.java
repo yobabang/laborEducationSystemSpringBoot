@@ -65,7 +65,6 @@ public interface UserService {
      * @param file
      * @return
      */
-    @Transactional
     public void importUser(MultipartFile file);
 
     /**

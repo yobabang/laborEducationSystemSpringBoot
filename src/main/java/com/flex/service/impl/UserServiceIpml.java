@@ -16,6 +16,7 @@ import com.flex.service.ListPlanService;
 import com.flex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -75,6 +76,7 @@ public class UserServiceIpml implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void importUser(MultipartFile file) {
         try{
             EasyExcel.read(file.getInputStream(), UserImportDto.class,new PageReadListener<UserImportDto>((dataList)->{

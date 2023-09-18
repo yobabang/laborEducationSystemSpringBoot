@@ -7,6 +7,7 @@ import com.flex.service.AssessmentService;
 import com.flex.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,42 +48,47 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void createAssessmentFile(List<Assessment> assessments,String unit) {
-        String filePath = "./file/Assessment_" + unit + ".xlsx";
-        // 定义表头数据
-        List<List<String>> head = new ArrayList<>();
-        head.add(Arrays.asList("评分表编号"));
-        head.add(Arrays.asList("姓名"));
-        head.add(Arrays.asList("学号"));
-        head.add(Arrays.asList("班级"));
-        head.add(Arrays.asList("专业"));
-        head.add(Arrays.asList("学院"));
-        head.add(Arrays.asList("辅导员"));
-        head.add(Arrays.asList("管理部门"));
-        head.add(Arrays.asList("日志得分"));
-        head.add(Arrays.asList("报告得分"));
-        head.add(Arrays.asList("成绩评定"));
-        head.add(Arrays.asList("意见"));
+        try {
+            String filePath = "./file/Assessment_" + unit + ".xlsx";
+            // 定义表头数据
+            List<List<String>> head = new ArrayList<>();
+            head.add(Arrays.asList("评分表编号"));
+            head.add(Arrays.asList("姓名"));
+            head.add(Arrays.asList("学号"));
+            head.add(Arrays.asList("班级"));
+            head.add(Arrays.asList("专业"));
+            head.add(Arrays.asList("学院"));
+            head.add(Arrays.asList("辅导员"));
+            head.add(Arrays.asList("管理部门"));
+            head.add(Arrays.asList("日志得分"));
+            head.add(Arrays.asList("报告得分"));
+            head.add(Arrays.asList("成绩评定"));
+            head.add(Arrays.asList("意见"));
 
 
-
-        List<List<Object>> data = new ArrayList<>();
-        for (Assessment ass: assessments
-             ) {
-            List<Object> rowData = new ArrayList<>();
-            rowData.add(ass.getAssId());
-            rowData.add(ass.getAssName());
-            rowData.add(ass.getUserId());
-            rowData.add(ass.getClassId());
-            rowData.add(ass.getAssMajor());
-            rowData.add(ass.getAssUnit());
-            rowData.add(ass.getAdId());
-            rowData.add(ass.getAssDep());
-            rowData.add(ass.getAssLog());
-            rowData.add(ass.getAssReport());
-            rowData.add(ass.getAssGrade());
-            data.add(rowData);
+            List<List<Object>> data = new ArrayList<>();
+            for (Assessment ass : assessments
+            ) {
+                List<Object> rowData = new ArrayList<>();
+                rowData.add(ass.getAssId());
+                rowData.add(ass.getAssName());
+                rowData.add(ass.getUserId());
+                rowData.add(ass.getClassId());
+                rowData.add(ass.getAssMajor());
+                rowData.add(ass.getAssUnit());
+                rowData.add(ass.getAdId());
+                rowData.add(ass.getAssDep());
+                rowData.add(ass.getAssLog());
+                rowData.add(ass.getAssReport());
+                rowData.add(ass.getAssGrade());
+                data.add(rowData);
+            }
+            EasyExcel.write(filePath).head(head).sheet("Sheet1").doWrite(data);
+            throw new RuntimeException("Something went wrong");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        EasyExcel.write(filePath).head(head).sheet("Sheet1").doWrite(data);
     }
 }
