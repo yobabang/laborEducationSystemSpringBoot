@@ -2,6 +2,8 @@ package com.flex.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.flex.dao.AdUserDao;
 import com.flex.dao.ClassesDao;
 import com.flex.dao.UserDao;
@@ -161,7 +163,9 @@ public class UserController {
     })
     public Result getUserByCondition(@RequestParam(required = false) String major,
                                      @RequestParam(required = false) String className,
-                                     @RequestParam(required = false) String unit){
+                                     @RequestParam(required = false) String unit,
+                                     @RequestParam(defaultValue = "1") Integer page,
+                                     @RequestParam(defaultValue = "10") Integer pageSize){
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         if(major != null) {
             lambdaQueryWrapper.eq(User::getMajor,major);
@@ -173,8 +177,10 @@ public class UserController {
             Classes classes = classesDao.getByClassName(className);
             lambdaQueryWrapper.eq(User::getClassId,classes.getClassId());
         }
-        List<User> userList = userDao.selectList(lambdaQueryWrapper);
+        Page<User> userPage = new Page<>(page, pageSize);
+        IPage<User> userIPage = userDao.selectPage(userPage, lambdaQueryWrapper);
 
+        List<User> userList = userIPage.getRecords();
         List<UserDto> userDtoByUser = userService.createUserDtoByUser(userList);
         Integer code = userDtoByUser != null ? Code.GET_OK : Code.GET_ERR;
         String msg = userDtoByUser != null ? "数据查询成功" : "数据查询失败";
