@@ -61,7 +61,7 @@
           <el-input v-model="projects.unit" placeholder="学院"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="searchA">查询</el-button>
+          <el-button type="primary" @click="searchA(1)">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -125,6 +125,10 @@
           </template>
         </el-table-column>
       </el-table>
+      <div style="margin-top: 10px;">
+        <el-pagination layout="prev, pager, next" :total="totalItems" :page-size="pageSize" @current-change="onPageChange">
+        </el-pagination>
+      </div>
     </div>
   </template>
 </div>
@@ -143,6 +147,12 @@
 <script>
  let tableVue = new Vue({
     el: ".con",
+    computed: {
+      tableHeight() {
+        // 动态计算表格的最大高度，根据页面布局调整数值
+        return parseInt(document.documentElement.clientHeight) - 250 + 'px';
+      },
+    },
     methods: {
           lead(){
             // 获取el-table的实例
@@ -190,46 +200,54 @@
             // 可以根据需要进行其他操作，如清空已上传的文件列表等
             this.fileList = [];
           },
-          searchA() {
+          searchA(currentPage) {
             alert('进入搜索')
             console.log(this.projects);
 
             // 将查询条件构建为查询字符串
             const queryString = Object.entries(this.projects)
-              .filter(([key, value]) => value !== '') // 过滤掉空值
-              .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-              .join("&");
+            .filter(([key, value]) => value !== '') // 过滤掉空值
+            .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+            .join("&");
             const encodedQueryString = decodeURIComponent(queryString);
             // 发起HTTP GET请求
-            fetch(`/users/condition?${encodedQueryString}`, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json" // 可根据需要设置请求头
-              }
+            fetch(`/users/condition?${encodedQueryString}&currentPage=${currentPage}&pageSize=${this.pageSize}`, {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json" // 可根据需要设置请求头
+            }
             })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then(data => {
-                // 处理从后端接收到的数据
-                console.log("Response Data:", data);
-                this.tableData = data.data
-                console.log(`${encodedQueryString}`);
-              })
-              .catch(error => {
-                console.error("Error:", error);
-                // 处理请求错误，例如显示错误消息给用户
-              });
-          }
+            .then(response => {
+            if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+            })
+            .then(data => {
+            // 处理从后端接收到的数据
+            console.log("Response Data:", data);
+            this.tableData = data.data
+            console.log(`${encodedQueryString}`);
+            })
+            .catch(error => {
+            console.error("Error:", error);
+            // 处理请求错误，例如显示错误消息给用户
+            });
+            },
+          onPageChange(currentPage) {
+            this.searchA(currentPage);
+          },
+
     },
+
     data() {
       return {
         tableData: [],
         search: '',
         fileList: [],
+        currentPage: 1,
+        pageSize: 15,
+        totalItems: 0,
         projects:{
 			className:'',
 			major:'',
@@ -249,7 +267,8 @@
                    // 请求成功时的回调函数
                    // 处理响应数据
                    console.log(response);
-                   _this.tableData = response.data
+                   _this.totalItems = response.data.length
+                   _this.searchA(1);
                }
            });
     },
