@@ -166,7 +166,12 @@ function getUrlSearch(name) {
         xhr1.onreadystatechange = function() {
             if (xhr1.readyState === 4 && xhr1.status === 200) {
                 data = JSON.parse(xhr1.responseText);
-                document.getElementById("userType").value = data.data.type
+                if (data.data.type === 1) {
+                      type = "本科";
+                   } else if(data.data.type === 2){
+                      type = "专升本";
+                   }
+                document.getElementById("userType").value = type
                 document.getElementById("logClasses").value = data.data.className
             }
         }
