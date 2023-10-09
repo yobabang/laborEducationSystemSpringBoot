@@ -12,9 +12,7 @@ import java.util.Date;
 @TableName("list_plan")
 public class ListPlan {
     private Long listId;
-    private Long adId;
     private Integer listType;
-    private String listName;
     private LocalDateTime listTime;
     private String listUnit;
     private String listGrade;
