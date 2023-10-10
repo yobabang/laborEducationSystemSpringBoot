@@ -58,4 +58,10 @@ public interface LogService {
      * @param user
      */
     public void createLogByUserId(User user);
+
+    /**
+     *  导出日志文件
+     * @param log
+     */
+    public String createLogFile(Log log);
 }

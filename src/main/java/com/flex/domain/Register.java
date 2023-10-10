@@ -25,5 +25,4 @@ public class Register {
     private Long praId;
     private Integer regState;
     private Date regMark;
-    private Long reportId;
 }
