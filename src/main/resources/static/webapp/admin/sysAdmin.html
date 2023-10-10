@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>吉利学院劳动教育平台</title>
+    <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" id="headername">
+        <ul class="layui-nav ">
+            <li class="layui-nav-item layui-this"><a href="college_admin.html">首页</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="../static/img/head.png" class="layui-nav-img">
+                    {{user.userName}}
+                </a>
+
+            </li>
+            <li class="layui-nav-item"><a href="../../login.html">退出</a></li>
+        </ul>
+    </div>
+</div>
+<div class="con" style="margin-top: 70px;margin-left:15%;margin-right:15%;">
+    <template>
+        <el-table
+                :data="tableData"
+                :cell-style="{ textAlign: 'center' }"
+                :header-cell-style="{ textAlign: 'center' }"
+                max-height="100%">
+            <el-table-column
+                    prop="gradeName"
+                    label="年级"
+                    min-width="50%">
+                <template slot-scope="scope">
+                    <el-link :href="'collegeAdmin_stuList.html?id='+scope.row['gradeName']" target="_blank" class="buttonText"  type="primary" :underline="false">{{ scope.row.gradeName }}</el-link>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button
+                            size="medium"
+                            type="primary"
+                            plain
+                            @click="checkStu(scope.row)">查看学生列表</el-button>
+                    <el-button
+                            size="medium"
+                            type="danger"
+                            plain
+                            @click="leadStu(scope.row)">导入学生信息</el-button>
+                    <el-button
+                            size="medium"
+                            type="success"
+                            plain
+                            @click="checkWork(scope.row)">查看辅导员列表</el-button>
+                    <el-button
+                            size="medium"
+                            type="danger"
+                            plain
+                            @click="checkWorkALL(scope.row)">查看院级管理员列表</el-button>
+                </template>
+            </el-table-column>
+
+        </el-table>
+    </template>
+</div>
+</body>
+</html>
+
+<script src="../static/layui/layui.js" charset="utf-8"></script>
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/vue.js"></script>
+<script src="../static/element-ui/package/lib/index.js"></script>
+<link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
+<link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+<script>
+ let tableVue = new Vue({
+    el: ".con",
+    methods: {
+        checkStu(row){
+            let reUrl = 'StuList.html?gradeName='+ row.gradeName;
+            window.location.href = reUrl;
+        },
+        checkWork(row){
+            let reUrl = '.html?gradeName='+ row.gradeName;
+            window.location.href = reUrl;
+        },
+        checkWorkALL(row){
+            let reUrl = '.html?gradeName='+ row.gradeName;
+            window.location.href = reUrl;
+        },
+        leadStu(row){
+            let reUrl = 'markALL.html?gradeName='+ row.gradeName;
+            window.location.href = reUrl;
+        },
+    },
+    data() {
+      return {
+        tableData: [{gradeName: '2020级（本科）'},
+        {gradeName: '2021级（本科）'},
+        {gradeName: '2022级（本科）'},
+        {gradeName: '2020级（专升本）'},],
+        }
+        },
+        mounted(){
+            let _this = this
+            $.ajax({
+               url: '/users/session/2',
+               type: 'GET', // 请求类型（GET/POST等）
+               dataType: 'json', // 期望的响应数据类型
+               success: function(response) {
+                   // 请求成功时的回调函数
+                   // 处理响应数据
+                   console.log(response);
+                   let ad_id = response.data.adId;
+                  //当页面加载完成后来发送异步请求获取数据
+                  axios({
+                      method:"get",
+                      url:"/aduser/" + ad_id,
+                  }).then(function (resp){
+                      _this.tableData = Array(resp.data.data.length);
+                      for (let i = 0; i < resp.data.data.length; i++) {
+                        _this.tableData[i] = { gradeName: resp.data.data[i].gradeName };
+                      }
+                      console.log(_this.tableData);
+                  })
+               }
+            })
+        },
+  })
+</script>
+
+<script>
+    let userName = new Vue({
+        el: "#headername",
+        data(){
+            return{
+                user:{
+                    userName:'学院管理员',
+                },
+            }
+        },
+        mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            var _this = this;
+            axios({
+                method:"get",
+                url:"/users/session/1",
+            }).then(function (resp){
+                _this.user = resp.data.data;
+            })
+        },
+    })
+</script>

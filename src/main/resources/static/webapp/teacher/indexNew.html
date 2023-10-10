@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>吉利学院劳动教育平台</title>
+  <link rel="shortcut icon" href="../static/img/head2.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../static/css/task.css">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header" id="headername">
+    <ul class="layui-nav ">
+      <li class="layui-nav-item layui-this"><a href="index.html">首页</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="../static/img/head.png" class="layui-nav-img">
+          {{user.adName}}
+        </a>
+
+      </li>
+      <li class="layui-nav-item"><a href="../../login.html">退出</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="con" style="margin-top: 70px;margin-left:10%;margin-right:10%;">
+  <template>
+    <el-select v-model="selectedBatch" placeholder="选择学生批次" @change="filterData">
+      <el-option v-for="batch in batches" :key="batch" :value="batch" :label="batch"></el-option>
+    </el-select>
+
+    <el-table :data="filteredTableData" style="width: 80%; margin: auto" :cell-style="{ textAlign: 'center' }" :header-cell-style="{ textAlign: 'center' }" max-height="100%">
+      <el-table-column
+              prop="className"
+              label="班级"
+              min-width="50%">
+        <template slot-scope="scope">
+          <el-link :href="'StuList.html?id='+scope.row['className']" target="_blank" class="buttonText"  type="primary" :underline="false">{{ scope.row.className }}</el-link>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button
+                  size="medium"
+                  type="primary"
+                  plain
+                  @click="checkStu(scope.row)">查看学生</el-button>
+          <el-button
+                  size="medium"
+                  type="success"
+                  plain
+                  @click="checkWork(scope.row)">查看作业详情</el-button>
+          <el-button
+                  size="medium"
+                  type="danger"
+                  plain
+                  @click="checkWorkALL(scope.row)">查看所有作业详情</el-button>
+        </template>
+      </el-table-column>
+
+    </el-table>
+  </template>
+
+</div>
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="../static/layui/layui.js" charset="utf-8"></script>
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/axios-0.18.0.js"></script>
+<script src="../static/js/vue.js"></script>
+<script src="../static/element-ui/package/lib/index.js"></script>
+<link rel="stylesheet" href="../static/element-ui/package/lib/theme-chalk/index.css">
+<link rel="stylesheet" type="text/css" href="../static/css/task_detail.css">
+
+<script>
+ let tableVue = new Vue({
+    el: ".con",
+    methods: {
+        checkStu(row){
+            let reUrl = 'StuList.html?className='+ row.className;
+            window.location.href = reUrl;
+        },
+        checkWork(row){
+            let reUrl = 'stuWork.html?className='+ row.className;
+            window.location.href = reUrl;
+        },
+        checkWorkALL(row){
+            let reUrl = 'markALL.html?className='+ row.className;
+            window.location.href = reUrl;
+        },
+        fetchBatches() {
+          axios.get('/api/batches') // 假设后端接口路径为/api/batches
+            .then(response => {
+              this.batches = response.data; // 假设接口返回学生批次数据的数组
+            })
+            .catch(error => {
+              console.error('获取学生批次失败', error);
+            });
+        },
+        filterData() {
+          // 根据选中的学生批次筛选数据
+          if (this.selectedBatch) {
+            this.filteredTableData = this.tableData.filter((item) => item.batch === this.selectedBatch);
+          } else {
+            this.filteredTableData = this.tableData;
+          }
+        },
+    },
+    data() {
+      return {
+          selectedBatch: '', // 选择的学生批次
+          tableData: [], // 原始表格数据
+          filteredTableData: [], // 筛选后的表格数据
+          batches: [],
+        }
+        },
+        mounted(){
+            let _this = this;
+            _this.fetchBatches(); // 获取学生批次数据
+            $.ajax({
+               url: '/users/session/2',
+               type: 'GET', // 请求类型（GET/POST等）
+               dataType: 'json', // 期望的响应数据类型
+               success: function(response) {
+                   // 请求成功时的回调函数
+                   // 处理响应数据
+                   console.log(response);
+                   let ad_id = response.data.adId;
+                  //当页面加载完成后来发送异步请求获取数据
+                  axios({
+                      method:"get",
+                      url:"/aduser/" + ad_id,
+                  }).then(function (resp){
+                      _this.tableData = Array(resp.data.data.length);
+                      for (let i = 0; i < resp.data.data.length; i++) {
+                        _this.tableData[i] = { className: resp.data.data[i].className };
+                      }
+                      this.filteredTableData = this.tableData;
+                  })
+               }
+            })
+        },
+  })
+</script>
+
+<script>
+    let userName = new Vue({
+        el: "#headername",
+        data(){
+            return{
+                user:{
+                    adName:'测试',
+                },
+            }
+        },
+        mounted(){
+            //当页面加载完成后来发送异步请求获取数据
+            var _this = this;
+            axios({
+                method:"get",
+                url:"/users/session/2",
+            }).then(function (resp){
+                _this.user = resp.data.data;
+            })
+        },
+    })
+</script>
+</body>
+</html>
