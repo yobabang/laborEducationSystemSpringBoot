@@ -44,5 +44,5 @@ public interface AssessmentService {
     /**
      * 生成成绩表文件
      */
-    public void createAssessmentFile(List<Assessment> assessments,String unit);
+    public String createAssessmentFile(List<Assessment> assessments,String unit);
 }

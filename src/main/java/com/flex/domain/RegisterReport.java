@@ -12,6 +12,7 @@ import java.util.Date;
 @TableName("register_report")
 public class RegisterReport {
     private Long repId;
+    private Long regId;
     private Long userId;
     private Integer repNature;
     private String repBackground;

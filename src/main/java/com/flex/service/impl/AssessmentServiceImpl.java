@@ -49,9 +49,9 @@ public class AssessmentServiceImpl implements AssessmentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createAssessmentFile(List<Assessment> assessments,String unit) {
+    public String createAssessmentFile(List<Assessment> assessments,String unit) {
+        String filePath = "./file/Assessment_" + unit + ".xlsx";
         try {
-            String filePath = "./file/Assessment_" + unit + ".xlsx";
             // 定义表头数据
             List<List<String>> head = new ArrayList<>();
             head.add(Arrays.asList("评分表编号"));
@@ -90,5 +90,6 @@ public class AssessmentServiceImpl implements AssessmentService {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return filePath.substring(7);
     }
 }
