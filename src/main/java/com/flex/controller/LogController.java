@@ -195,8 +195,8 @@ public class LogController {
 
     @ApiOperation(value = "查询文件名", notes = "根据用户ID和日志类型查询文件名")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "logType", value = "日志类型", required = true, dataType = "String", paramType = "path")
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "long", paramType = "path"),
+            @ApiImplicitParam(name = "logType", value = "日志类型", required = true, dataType = "int", paramType = "path")
     })
     @GetMapping("/fileName/{userId}/{logType}")
     public Result getLogFileName(@PathVariable long userId,@PathVariable int logType){
