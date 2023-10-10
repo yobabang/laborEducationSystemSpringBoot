@@ -15,18 +15,19 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="../static/layui/css/layui.css" media="all">
     <style>
-        .box {
-            width: 70%;
-            padding: 30px;
-            margin: 0 auto;
-            margin-top: 60px;
+        .vertical-options {
+            position: absolute;
+            top: -55px; // 将选项框定位到大按钮的上方，根据实际情况调整距离
+        left: 0;
+            display: flex;
+            justify-content: center;
         }
-        .layui-btn-container{
-             margin-top: 30px;
-             margin-bottom: 30px;
-             margin-left: 55%;
+
+        .vertical-options .rate-option {
+            margin: 0 3px; // 调整按钮之间的间距
         }
     </style>
+
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -37,21 +38,17 @@
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-
-
                 <a href="javascript:">
                     <img src="../static/img/head.png" class="layui-nav-img">
                     {{user.adname}}
                 </a>
-
             </li>
             <li class="layui-nav-item"><a href="../../login.html">退出</a></li>
         </ul>
     </div>
 </div>
-<div class="box">
+<div class="box" style="margin-top: 60px;margin-left:15%;margin-right:15%;">
     <table class="layui-table">
-
         <thead >
         <tr>
             <th>本科类型</th>
@@ -69,10 +66,8 @@
             <td></td>
             <td></td>
         </tr>
-
         </tbody>
     </table>
-
     <div id="target-test" style="width: 100%; height: 500px; overflow: auto;">
         <h1>劳动过程</h1>
         <p></p>
@@ -96,23 +91,31 @@
         </tr>
     </table>
     </div>
-    <br>
-    <br>
-    <br>
-    <form class="layui-form layui-form-pane">
-    <div class="layui-col-md6">
-    <div class="layui-form-item">
-        <label class="layui-form-label" style="height: 100px;">成<br><br><br>绩</label>
-        <div class="layui-input-block">
-            <input type="text" name="location" autocomplete="off" class="layui-input" id="logScore" required style="height: 100px;font-size: 50px;">
-        </div>
-    </div>
-    </div>
 
-    <!--提交评分是属性value的值ABCD对应分数90~100\75~90\60~75\50~60-->
-    <div class="layui-btn-container">
-        <button class="layui-btn" lay-submit lay-filter="demo2" id="demo2">提交</button>
-    </div>
+    <form class="layui-form layui-form-pane" style="padding: 20px;">
+        <div class="layui-row">
+            <div class="layui-col-md7">
+                <div class="layui-form-item layui-col-md12">
+                    <label class="layui-form-label" style="height: 100px;line-height: 100px;">成绩</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="location" readonly autocomplete="off" class="layui-input" id="logScore" required style="height: 100px;font-size: 50px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md5" style="text-align: right;">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="generateScore" id="rateButton">打分</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="submitForm" id="submitButton">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 
@@ -191,7 +194,7 @@ layui.use(['jquery', 'form'], function () {
     var form = layui.form;
     var layer = layui.layer;
     // 提交事件
-    layui.$('#demo2').on('click', function () {
+    layui.$('#submitButton').on('click', function () {
                 alert("提交按钮")
                 let log = {};
                 alert("数据创建成功")
@@ -221,13 +224,6 @@ layui.use(['jquery', 'form'], function () {
         var util = layui.util;
 // 自定义固定条
         util.fixbar({
-// bar1: true,
-// bar2: true,
-// default: false, // 是否显示默认的 bar 列表 -- v2.8.0 新增
-// bgcolor: '#393D52', // bar 的默认背景色
-// css: {right: 100, bottom: 100},
-// target: '#target-test', // 插入 fixbar 节点的目标元素选择器
-// duration: 300, // top bar 等动画时长（毫秒）
             on: { // 任意事件 -- v2.8.0 新增
                 mouseenter: function(type){
                     layer.tips(type, this, {
@@ -269,9 +265,73 @@ layui.use(['jquery', 'form'], function () {
         },
     })
 </script>
+<script>
+<!--浮动打分-->
 
+layui.use(['form', 'layer'], function () {
+    var form = layui.form;
+    var layer = layui.layer;
+    var index;
+    var closeTimer;
 
+    function showOptions() {
+        var options = '<div class="rate-options">' +
+            '<button class="layui-btn layui-btn-normal rate-option">优</button>' +
+            '<button class="layui-btn layui-btn-primary rate-option">良</button>' +
+            '<button class="layui-btn layui-btn-warm rate-option">中</button>' +
+            '<button class="layui-btn layui-btn-danger rate-option">差</button>' +
+            '</div>';
 
+        index = layer.tips(options, '#rateButton', {
+            tips: [1, '#fff'], // 将提示框箭头调整为向上
+            area: 'auto',
+            shade: false,
+            time: -1,
+            skin: 'layui-layer-molv',
+            success: function (layero, index) {
+                bindOptionClick(layero);
+                layero.addClass('vertical-options'); // 添加垂直排序的样式类
+            }
+        });
+    }
 
+    function bindOptionClick(layero) {
+        layero.find('.rate-option').on('click', function () {
+            var selectedOption = $(this).text();
+            console.log(selectedOption);
+            layer.close(index);
+
+            // 生成成绩并显示在输入框中
+            var minScore, maxScore;
+            if (selectedOption === "优") {
+                minScore = 90;
+                maxScore = 100;
+            } else if (selectedOption === "良") {
+                minScore = 80;
+                maxScore = 90;
+            } else if (selectedOption === "中") {
+                minScore = 70;
+                maxScore = 80;
+            } else if (selectedOption === "差") {
+                minScore = 60;
+                maxScore = 70;
+            }
+            var randomScore = Math.floor(Math.random() * (maxScore - minScore + 1)) + minScore;
+            document.getElementById('logScore').value = randomScore;
+        });
+    }
+
+    $('#rateButton').on('mouseenter', function () {
+        clearTimeout(closeTimer); // 在鼠标进入按钮时清除计时器，确保选项框不会关闭
+        showOptions();
+    });
+
+    $('#rateButton').on('mouseleave', function () {
+        closeTimer = setTimeout(function () {
+            layer.close(index); // 在鼠标离开按钮并经过一段时间后关闭选项框
+        }, 1000); // 设置为5秒后关闭选项框
+    });
+});
+</script>
 </body>
 </html>
