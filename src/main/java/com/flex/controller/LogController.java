@@ -11,6 +11,7 @@ import com.flex.pojo.dto.StudentLogScoreDto;
 import com.flex.service.LogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -191,4 +192,21 @@ public class LogController {
         return new Result(code, stuScores, msg);
     }
 
+
+    @ApiOperation(value = "查询文件名", notes = "根据用户ID和日志类型查询文件名")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "logType", value = "日志类型", required = true, dataType = "String", paramType = "path")
+    })
+    @GetMapping("/fileName/{userId}/{logType}")
+    public Result getLogFileName(@PathVariable long userId,@PathVariable int logType){
+        LambdaQueryWrapper<Log> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Log::getUserId,userId)
+                .eq(Log::getLogType,logType);
+        Log log = logDao.selectOne(queryWrapper);
+        String logFileName = logService.createLogFile(log);
+        Integer code = logFileName != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = logFileName != null ? "" : "生成失败";
+        return new Result(code,logFileName,msg);
+    }
 }
