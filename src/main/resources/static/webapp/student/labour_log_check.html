@@ -182,7 +182,12 @@ function getUrlSearch(name) {
        if (xhr2.readyState === 4 && xhr2.status === 200) {
            let data2 = JSON.parse(xhr2.responseText);
            console.log(data2)
-           document.getElementById("userType").value = data2.data[0].userType
+           if (data2.data[0].userType === 1) {
+                      type = "本科";
+                   } else if(data2.data[0].userType === 2){
+                      type = "专升本";
+                   }
+           document.getElementById("userType").value = type
            document.getElementById("logClasses").value = data2.data[0].logClasses
            document.getElementById("logContent").value = data2.data[0].logContent
            document.getElementById("location").value = data2.data[0].location
@@ -198,12 +203,12 @@ function getUrlSearch(name) {
            console.log(formattedTime); // 输出格式化后的时间字符串
            // 在分钟、小时和秒钟不满两位数时，在其前面补零
            function padZero(number) {
-           return number < 10 ? "0" + number : number;
+             return number < 10 ? "0" + number : number;
            }
            data2.data[0].logTime = formattedTime
            document.getElementById("ID-laydate-shortcut-date").value = data2.data[0].logTime
-     }
-   };
+         }
+       };
    xhr2.send()
      }
    };
@@ -217,7 +222,55 @@ layui.use(['jquery', 'form'], function () {
     // 提交事件
     layui.$('#downloadFile').on('click', function () {
         alert("下载按钮")
-
+        let xhr1 = new XMLHttpRequest();
+        xhr1.open('GET', '/users/session/1', true);
+        alert("xhr1创建成功")
+        xhr1.onreadystatechange = function() {
+            if (xhr1.readyState === 4 && xhr1.status === 200) {
+               let data = JSON.parse(xhr1.responseText);
+               console.log(data)
+               let noticeReceiver  = data.data.userId;
+               console.log('user-id为' + noticeReceiver)
+               let xhr2 = new XMLHttpRequest();
+               let logType = getUrlSearch("listType")
+               document.getElementById("logType").value = getUrlSearch("listType")
+               let num;
+               if (logType === "日常生活劳动日志") {
+                  num = 1;
+               } else if(logType === "服务性劳动日志"){
+                  num = 2;
+               }else if(logType === "生产劳动日志"){
+                  num = 3;
+               }else if(logType === "社会实践活动登记表"){
+                  num = 4;
+               }else if(logType === "社会实践活动日志"){
+                  num = 5;
+               }else if(logType === "社会实践调查报告"){
+                  num = 6;
+               }
+               xhr2.open('GET', '/logs/fileName/' + noticeReceiver + '/' + num, true);
+               alert("xhr2创建成功")
+               xhr2.onreadystatechange = function() {
+               if (xhr2.readyState === 4 && xhr2.status === 200) {
+                    alert("进入异步");
+                    let data2 = JSON.parse(xhr2.responseText);
+                    console.log(data2);
+                    alert("文件生成");
+                    let xhr3 = new XMLHttpRequest();
+                    xhr3.open('GET', '/downloads/' + data2.data, true);
+                    xhr3.onreadystatechange = function() {
+                        if (xhr3.readyState === 4 && xhr3.status === 200) {
+                            alert("文件下载成功");
+                            window.location.href = "task_list.html";
+                        }
+                    };
+                    xhr3.send();
+                }
+            };
+            xhr2.send();
+            }
+        }
+        xhr1.send();
     });
 });
 </script>

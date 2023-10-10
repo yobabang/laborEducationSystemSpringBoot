@@ -34,7 +34,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">本科类型</label>
             <div class="layui-input-block">
-                <input type="text" name="userType" autocomplete="off" class="layui-input" id="userType" required>
+                <input type="text" name="userType" autocomplete="off" readonly class="layui-input" id="userType" required>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">年级班级</label>
             <div class="layui-input-block">
-                <input type="text" name="logClasses" autocomplete="off" class="layui-input" id="logClasses" required>
+                <input type="text" name="logClasses" autocomplete="off" readonly class="layui-input" id="logClasses" required>
             </div>
         </div>
     </div>
@@ -198,6 +198,7 @@ layui.use(['jquery', 'form'], function () {
                 console.log('session中user-id为' + userId)
                 log.userType = data.data.type;
                 log.logName = data.data.userName
+                log.grade = data.data.grade
                 log.logClasses = document.getElementById("logClasses").value;
                 let logType = document.getElementById("logType").value;
                 let num;
@@ -225,7 +226,6 @@ layui.use(['jquery', 'form'], function () {
                 var year = currentDate.getFullYear();
                 var month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
                 var day = ("0" + currentDate.getDate()).slice(-2);
-
                 var logmark = year + "-" + month + "-" + day;
                 log.logMark = logmark
                 log.logState = 3;
